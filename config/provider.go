@@ -10,12 +10,12 @@ import (
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	"github.com/spotinst/crossplane-provider-spot/config/null"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	resourcePrefix = "spot"
+	modulePath     = "github.com/spotinst/crossplane-provider-spot"
 )
 
 //go:embed schema.json
