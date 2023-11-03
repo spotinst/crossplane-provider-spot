@@ -19,6 +19,9 @@ import (
 )
 
 const (
+	keyAccount = "spot_account"
+	keyToken   = "spot_token"
+
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
@@ -67,6 +70,14 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"username": creds["username"],
 			"password": creds["password"],
 		}*/
+		if v, ok := creds[keyAccount]; ok {
+			ps.Configuration[keyAccount] = v
+		}
+
+		if v, ok := creds[keyToken]; ok {
+			ps.Configuration[keyToken] = v
+		}
+
 		return ps, nil
 	}
 }
