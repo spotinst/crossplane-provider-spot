@@ -1,0 +1,76 @@
+apiVersion: oceanaksvng.spot.upbound.io/v1alpha1
+kind: OceanAksVng
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceanaksvng/v1alpha1/oceanaksvng
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    availabilityZones:
+    - "1"
+    - "2"
+    - "3"
+    enableNodePublicIp: true
+    fallbackToOndemand: true
+    filters:
+    - acceleratedNetworking: Enabled
+      architectures:
+      - x86_64
+      - arm64
+      diskPerformance: Premium
+      excludeSeries:
+      - Av2
+      - A
+      - Bs
+      - D
+      - E
+      maxGpu: 2
+      maxMemoryGib: 128
+      maxVcpu: 16
+      minData: 1
+      minGpu: 1
+      minMemoryGib: 8
+      minNics: 1
+      minVcpu: 2
+      series:
+      - D v3
+      - Dds_v4
+      - Dsv2
+      vmTypes:
+      - generalPurpose
+      - GPU
+    headrooms:
+    - cpuPerUnit: 1024
+      gpuPerUnit: 0
+      memoryPerUnit: 512
+      numOfUnits: 2
+    kubernetesVersion: "1.26"
+    labels:
+      key: env
+      value: test
+    maxCount: 100
+    maxPodsPerNode: 30
+    minCount: 1
+    name: testVng
+    oceanId: o-134abcd
+    osDiskSizeGb: 30
+    osDiskType: Managed
+    osSku: Ubuntu
+    osType: Linux
+    podSubnetIds:
+    - /subscriptions/123456-1234-1234-1234-123456789/resourceGroups/ExampleResourceGroup/providers/Microsoft.Network/virtualNetworks/ExampleVirtualNetwork/subnets/default
+    spotPercentage: 50
+    tags:
+      tagKey: env
+      tagValue: staging
+    taints:
+    - effect: NoSchedule
+      key: taintKey
+      value: taintValue
+    vnetSubnetIds:
+    - /subscriptions/123456-1234-1234-1234-123456789/resourceGroups/ExampleResourceGroup/providers/Microsoft.Network/virtualNetworks/ExampleVirtualNetwork/subnets/default
+
+---
+

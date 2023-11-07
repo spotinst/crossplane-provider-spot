@@ -1,0 +1,23 @@
+apiVersion: oceanaks.spot.upbound.io/v1alpha1
+kind: OceanAks
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceanaks/v1alpha1/oceanaks
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    aksClusterName: test-cluster
+    aksInfrastructureResourceGroupName: MC_TestResourceGroup_test-cluster_eastus
+    aksRegion: eastus
+    aksResourceGroupName: TestResourceGroup
+    availabilityZones:
+    - "1"
+    - "2"
+    - "3"
+    controllerClusterId: test-123124
+    name: test
+
+---
+
