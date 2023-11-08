@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	keyAccount = "spot_account"
-	keyToken   = "spot_token"
+	keyAccount = "account"
+	keyToken   = "token"
 
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
@@ -41,7 +41,6 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 				Version: providerVersion,
 			},
 		}
-
 		configRef := mg.GetProviderConfigReference()
 		if configRef == nil {
 			return ps, errors.New(errNoProviderConfig)
@@ -66,10 +65,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		ps.Configuration = map[string]any{}
 		if v, ok := creds[keyAccount]; ok {
 			ps.Configuration[keyAccount] = v
 		}

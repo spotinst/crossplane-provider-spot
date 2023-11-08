@@ -1,0 +1,44 @@
+apiVersion: oceanaks.spot.upbound.io/v1alpha1
+kind: OceanAks
+metadata:
+  name: crossplane-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: "ocean-cluster-name"
+    controllerClusterId: "controllerClusterId"
+    aksClusterName: "aksClusterName"
+    aksInfrastructureResourceGroupName: "aksInfrastructureResourceGroupName"
+    aksRegion: "eastus"
+    aksResourceGroupName: "aksResourceGroupName"
+    autoscaler:
+      - autoscaleDown:
+          - maxScaleDownPercentage: 30
+        autoscaleHeadroom:
+          - automatic:
+              - percentage: 10
+        autoscaleIsEnabled: true
+        resourceLimits:
+          - maxMemoryGib: 1500
+            maxVcpu: 750
+    scheduling:
+      - shutdownHours:
+          - isEnabled: true
+            timeWindows:
+              - Sat:08:00-Sun:08:00
+    health :
+      - gracePeriod: 700
+    availabilityZones:
+      - "1"
+      - "2"
+    maxPodsPerNode: 110
+    enableNodePublicIp: false
+    osDiskSizeGb: 128
+    osDiskType: Managed
+    osType: Linux
+    minCount: 1
+    maxCount: 100
+    spotPercentage: 100
+    fallbackToOndemand: true
+  providerConfigRef:
+    name: default
