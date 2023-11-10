@@ -1,0 +1,15 @@
+apiVersion: oceanawslaunchspec.spot.upbound.io/v1alpha1
+kind: OceanAwsLaunchSpec
+metadata:
+  labels:
+    testing.upbound.io/example-name: example
+  name: testvng
+spec:
+  forProvider:
+    oceanId: o-12345
+    name: testvng
+    tags:
+      - key: Env
+        value: prod
+  providerConfigRef:
+    name: default
