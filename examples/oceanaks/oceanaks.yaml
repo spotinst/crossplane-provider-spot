@@ -40,5 +40,31 @@ spec:
     maxCount: 100
     spotPercentage: 100
     fallbackToOndemand: true
+    headrooms:
+      - cpuPerUnit: 1024
+        gpuPerUnit: 0
+        memoryPerUnit: 512
+        numOfUnits: 2
+    labels:
+      key: env
+      value: test
+    taints:
+      - effect: NoSchedule
+        key: taintKey
+        value: taintValue
+    tags:
+      tagKey: env
+      tagValue: staging
+    filters:
+      - architectures:
+          - X86_64
+        maxMemoryGib: 18
+        maxVcpu: 16
+        minMemoryGib: 10
+        minVcpu: 2
+        series:
+          - D v3
+          - Dds_v4
+          - Dsv2
   providerConfigRef:
     name: default
