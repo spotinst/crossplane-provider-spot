@@ -39,6 +39,8 @@ spec:
     - tagSelector:
       - tagKey: key
         tagValue: value
+    ephemeralStorage:
+    - ephemeralStorageDeviceName: /dev/xvda
     iamInstanceProfile: iam-profile
     imageId: ami-123456
     images:

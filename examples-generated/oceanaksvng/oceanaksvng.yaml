@@ -26,10 +26,12 @@ spec:
       - Bs
       - D
       - E
+      gpuTypes:
+      - nvidia-tesla-t4
       maxGpu: 2
       maxMemoryGib: 128
       maxVcpu: 16
-      minData: 1
+      minDisk: 1
       minGpu: 1
       minMemoryGib: 8
       minNics: 1

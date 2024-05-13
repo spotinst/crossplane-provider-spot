@@ -109,6 +109,12 @@ spec:
                           items:
                             type: string
                           type: array
+                        gpuTypes:
+                          description: The filtered gpu types will belong to one of
+                            the gpu types from this list.
+                          items:
+                            type: string
+                          type: array
                         maxGpu:
                           description: Maximum number of GPUs available.
                           type: number
@@ -118,7 +124,7 @@ spec:
                         maxVcpu:
                           description: Maximum number of vcpus available.
                           type: number
-                        minData:
+                        minDisk:
                           description: Minimum number of data disks available.
                           type: number
                         minGpu:
@@ -253,6 +259,85 @@ spec:
                       - effect
                       - key
                       - value
+                      type: object
+                    type: array
+                  updatePolicy:
+                    items:
+                      properties:
+                        conditionedRoll:
+                          description: Spot will perform a cluster Roll in accordance
+                            with a relevant modification of the cluster’s settings.
+                            When set to true , only specific changes in the cluster’s
+                            configuration will trigger a cluster roll (such as availability_zones,
+                            max_pods_per_node, enable_node_public_ip, os_disk_size_gb,
+                            os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids,
+                            pod_subnet_ids, labels, taints and tags).
+                          type: boolean
+                        rollConfig:
+                          description: While used, you can control whether the group
+                            should perform a deployment after an update to the configuration.
+                          items:
+                            properties:
+                              batchMinHealthyPercentage:
+                                description: Indicates the threshold of minimum healthy
+                                  nodes in single batch. If the amount of healthy
+                                  nodes in single batch is under the threshold, the
+                                  roll will fail. If exists, the parameter value will
+                                  be in range of 1-100. In case of null as value,
+                                  the default value in the backend will be 50%. Value
+                                  of param should represent the number in percentage
+                                  (%) of the batch.
+                                type: number
+                              batchSizePercentage:
+                                description: Value as a percent to set the size of
+                                  a batch in a roll. Valid values are 0-100. In case
+                                  of null as value, the default value in the backend
+                                  will be 20%.
+                                type: number
+                              comment:
+                                description: Add a comment description for the roll.
+                                  The comment is limited to 256 chars and optional.
+                                type: string
+                              nodeNames:
+                                description: List of node names to be rolled. Each
+                                  identifier is a string. nodeNames can be null, and
+                                  cannot be used together with nodePoolNames and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              nodePoolNames:
+                                description: List of node pools to be rolled. Each
+                                  node pool name is a string. nodePoolNames can be
+                                  null, and cannot be used together with nodeNames
+                                  and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the nodes replacement.
+                                type: boolean
+                              respectRestrictScaleDown:
+                                description: During the roll, if the parameter is
+                                  set to true we honor Restrict Scale Down label during
+                                  the nodes replacement.
+                                type: boolean
+                              vngIds:
+                                description: List of virtual node group identifiers
+                                  to be rolled. Each identifier is a string. vngIds
+                                  can be null, and cannot be used together with nodeNames
+                                  and nodePoolNames.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        shouldRoll:
+                          description: If set to true along with the vng update, roll
+                            will be triggered.
+                          type: boolean
+                      required:
+                      - shouldRoll
                       type: object
                     type: array
                   vnetSubnetIds:
@@ -499,6 +584,12 @@ spec:
                           items:
                             type: string
                           type: array
+                        gpuTypes:
+                          description: The filtered gpu types will belong to one of
+                            the gpu types from this list.
+                          items:
+                            type: string
+                          type: array
                         maxGpu:
                           description: Maximum number of GPUs available.
                           type: number
@@ -508,7 +599,7 @@ spec:
                         maxVcpu:
                           description: Maximum number of vcpus available.
                           type: number
-                        minData:
+                        minDisk:
                           description: Minimum number of data disks available.
                           type: number
                         minGpu:
@@ -641,6 +732,83 @@ spec:
                         value:
                           description: Set label value.
                           type: string
+                      type: object
+                    type: array
+                  updatePolicy:
+                    items:
+                      properties:
+                        conditionedRoll:
+                          description: Spot will perform a cluster Roll in accordance
+                            with a relevant modification of the cluster’s settings.
+                            When set to true , only specific changes in the cluster’s
+                            configuration will trigger a cluster roll (such as availability_zones,
+                            max_pods_per_node, enable_node_public_ip, os_disk_size_gb,
+                            os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids,
+                            pod_subnet_ids, labels, taints and tags).
+                          type: boolean
+                        rollConfig:
+                          description: While used, you can control whether the group
+                            should perform a deployment after an update to the configuration.
+                          items:
+                            properties:
+                              batchMinHealthyPercentage:
+                                description: Indicates the threshold of minimum healthy
+                                  nodes in single batch. If the amount of healthy
+                                  nodes in single batch is under the threshold, the
+                                  roll will fail. If exists, the parameter value will
+                                  be in range of 1-100. In case of null as value,
+                                  the default value in the backend will be 50%. Value
+                                  of param should represent the number in percentage
+                                  (%) of the batch.
+                                type: number
+                              batchSizePercentage:
+                                description: Value as a percent to set the size of
+                                  a batch in a roll. Valid values are 0-100. In case
+                                  of null as value, the default value in the backend
+                                  will be 20%.
+                                type: number
+                              comment:
+                                description: Add a comment description for the roll.
+                                  The comment is limited to 256 chars and optional.
+                                type: string
+                              nodeNames:
+                                description: List of node names to be rolled. Each
+                                  identifier is a string. nodeNames can be null, and
+                                  cannot be used together with nodePoolNames and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              nodePoolNames:
+                                description: List of node pools to be rolled. Each
+                                  node pool name is a string. nodePoolNames can be
+                                  null, and cannot be used together with nodeNames
+                                  and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the nodes replacement.
+                                type: boolean
+                              respectRestrictScaleDown:
+                                description: During the roll, if the parameter is
+                                  set to true we honor Restrict Scale Down label during
+                                  the nodes replacement.
+                                type: boolean
+                              vngIds:
+                                description: List of virtual node group identifiers
+                                  to be rolled. Each identifier is a string. vngIds
+                                  can be null, and cannot be used together with nodeNames
+                                  and nodePoolNames.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        shouldRoll:
+                          description: If set to true along with the vng update, roll
+                            will be triggered.
+                          type: boolean
                       type: object
                     type: array
                   vnetSubnetIds:

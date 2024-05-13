@@ -74,6 +74,23 @@ spec:
                   associatePublicIpAddress:
                     description: Configure public IP address allocation.
                     type: boolean
+                  attachLoadBalancer:
+                    description: Attach load balancers to the cluster.
+                    items:
+                      properties:
+                        arn:
+                          description: Required if type is set to TARGET_GROUP
+                          type: string
+                        name:
+                          description: The cluster name.
+                          type: string
+                        type:
+                          description: Can be set to CLASSIC or TARGET_GROUP
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
                   autoscaler:
                     description: Describes the Ocean Kubernetes Auto Scaler.
                     items:
@@ -93,6 +110,10 @@ spec:
                             properties:
                               evaluationPeriods:
                                 type: number
+                              isAggressiveScaleDownEnabled:
+                                description: When set to 'true', the Aggressive Scale
+                                  Down feature is enabled.
+                                type: boolean
                               maxScaleDownPercentage:
                                 description: Would represent the maximum % to scale-down.
                                   Number between 1-100.
@@ -287,6 +308,23 @@ spec:
                     description: The number of instances to launch and maintain in
                       the cluster.
                     type: number
+                  detachLoadBalancer:
+                    description: Detach load balancers from the cluster.
+                    items:
+                      properties:
+                        arn:
+                          description: Required if type is set to TARGET_GROUP
+                          type: string
+                        name:
+                          description: The cluster name.
+                          type: string
+                        type:
+                          description: Can be set to CLASSIC or TARGET_GROUP
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
                   drainingTimeout:
                     description: The time in seconds, the instance is allowed to run
                       while detached from the ELB. This is to allow the instance time
@@ -400,6 +438,12 @@ spec:
                   gracePeriod:
                     description: The amount of time, in seconds, after the instance
                       has launched to start checking its health.
+                    type: number
+                  healthCheckUnhealthyDurationBeforeReplacement:
+                    description: The amount of time, in seconds, an existing instance
+                      should remain active after becoming unhealthy. After the set
+                      time out the instance will be replaced. The minimum value allowed
+                      is 60, and it must be a multiple of 60.
                     type: number
                   iamInstanceProfile:
                     description: The instance profile iam role.
@@ -551,9 +595,111 @@ spec:
                                 description: 'Toggle the shutdown hours task. (Example:
                                   true).'
                                 type: boolean
+                              parameters:
+                                description: This filed will be compatible to the
+                                  task_type field. If task_type is defined as clusterRoll,
+                                  user cluster roll object in parameters.
+                                items:
+                                  properties:
+                                    amiAutoUpdate:
+                                      description: Set amiAutoUpdate object
+                                      items:
+                                        properties:
+                                          amiAutoUpdateClusterRoll:
+                                            description: Set clusterRoll object
+                                            items:
+                                              properties:
+                                                batchMinHealthyPercentage:
+                                                  description: 'Default: 50. Indicates
+                                                    the threshold of minimum healthy
+                                                    instances in single batch. If
+                                                    the amount of healthy instances
+                                                    in single batch is under the threshold,
+                                                    the cluster roll will fail. If
+                                                    exists, the parameter value will
+                                                    be in range of 1-100. In case
+                                                    of null as value, the default
+                                                    value in the backend will be 50%.
+                                                    Value of param should represent
+                                                    the number in percentage (%) of
+                                                    the batch.'
+                                                  type: number
+                                                batchSizePercentage:
+                                                  description: Sets the percentage
+                                                    of the instances to deploy in
+                                                    each batch.
+                                                  type: number
+                                                comment:
+                                                  description: Add a comment description
+                                                    for the roll. The comment is limited
+                                                    to 256 chars
+                                                  type: string
+                                                respectPdb:
+                                                  description: During the roll, if
+                                                    the parameter is set to True we
+                                                    honor PDB during the instance
+                                                    replacement.
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          applyRoll:
+                                            description: When the AMI is updated according
+                                              to the configuration set, a cluster
+                                              roll can be triggered
+                                            type: boolean
+                                          minorVersion:
+                                            description: When set to 'true', the auto-update
+                                              process will update the VNGs’ AMI with
+                                              the AMI to match the Kubernetes control
+                                              plane version. either "patch" or "minor_version"
+                                              must be true.
+                                            type: boolean
+                                          patch:
+                                            description: When set to 'true', the auto-update
+                                              process will update the VNGs’ images
+                                              with the latest security patches. either
+                                              "patch" or "minorVersion" must be true.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    parametersClusterRoll:
+                                      description: Set clusterRoll object
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: 'Default: 50. Indicates the
+                                              threshold of minimum healthy instances
+                                              in single batch. If the amount of healthy
+                                              instances in single batch is under the
+                                              threshold, the cluster roll will fail.
+                                              If exists, the parameter value will
+                                              be in range of 1-100. In case of null
+                                              as value, the default value in the backend
+                                              will be 50%. Value of param should represent
+                                              the number in percentage (%) of the
+                                              batch.'
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Sets the percentage of the
+                                              instances to deploy in each batch.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to True we honor PDB during the
+                                              instance replacement.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               taskType:
-                                description: 'Valid values: clusterRoll. Required
-                                  for cluster.scheduling.tasks object. (Example: clusterRoll).'
+                                description: 'Valid values: clusterRoll amiAutoUpdate.
+                                  Required for cluster.scheduling.tasks'
                                 type: string
                             required:
                             - cronExpression
@@ -614,6 +760,14 @@ spec:
                             configuration will trigger a cluster roll (such as AMI,
                             Key Pair, user data, instance types, load balancers, etc).
                           type: boolean
+                        conditionedRollParams:
+                          description: 'A custom list of attributes will trigger the
+                            cluster roll operation (overrides the predefined list
+                            of parameters). Valid only when the conditioned_roll parameter
+                            is set to true. (Valid values: "subnet_ids","whitelist","blacklist","user_data","image_id","security_groups","key_name","iam_instance_profile","associate_public_ip_address","load_balancers","instance_metadata_options","ebs_optimized","root_volume_size")'
+                          items:
+                            type: string
+                          type: array
                         rollConfig:
                           description: While used, you can control whether the group
                             should perform a deployment after an update to the configuration.
@@ -868,6 +1022,8 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: imageId is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.imageId)
             - message: securityGroups is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroups)
             - message: subnetIds is a required parameter
@@ -883,6 +1039,21 @@ spec:
                   associatePublicIpAddress:
                     description: Configure public IP address allocation.
                     type: boolean
+                  attachLoadBalancer:
+                    description: Attach load balancers to the cluster.
+                    items:
+                      properties:
+                        arn:
+                          description: Required if type is set to TARGET_GROUP
+                          type: string
+                        name:
+                          description: The cluster name.
+                          type: string
+                        type:
+                          description: Can be set to CLASSIC or TARGET_GROUP
+                          type: string
+                      type: object
+                    type: array
                   autoscaler:
                     description: Describes the Ocean Kubernetes Auto Scaler.
                     items:
@@ -902,6 +1073,10 @@ spec:
                             properties:
                               evaluationPeriods:
                                 type: number
+                              isAggressiveScaleDownEnabled:
+                                description: When set to 'true', the Aggressive Scale
+                                  Down feature is enabled.
+                                type: boolean
                               maxScaleDownPercentage:
                                 description: Would represent the maximum % to scale-down.
                                   Number between 1-100.
@@ -1088,6 +1263,21 @@ spec:
                     description: The number of instances to launch and maintain in
                       the cluster.
                     type: number
+                  detachLoadBalancer:
+                    description: Detach load balancers from the cluster.
+                    items:
+                      properties:
+                        arn:
+                          description: Required if type is set to TARGET_GROUP
+                          type: string
+                        name:
+                          description: The cluster name.
+                          type: string
+                        type:
+                          description: Can be set to CLASSIC or TARGET_GROUP
+                          type: string
+                      type: object
+                    type: array
                   drainingTimeout:
                     description: The time in seconds, the instance is allowed to run
                       while detached from the ELB. This is to allow the instance time
@@ -1201,6 +1391,12 @@ spec:
                   gracePeriod:
                     description: The amount of time, in seconds, after the instance
                       has launched to start checking its health.
+                    type: number
+                  healthCheckUnhealthyDurationBeforeReplacement:
+                    description: The amount of time, in seconds, an existing instance
+                      should remain active after becoming unhealthy. After the set
+                      time out the instance will be replaced. The minimum value allowed
+                      is 60, and it must be a multiple of 60.
                     type: number
                   iamInstanceProfile:
                     description: The instance profile iam role.
@@ -1350,9 +1546,111 @@ spec:
                                 description: 'Toggle the shutdown hours task. (Example:
                                   true).'
                                 type: boolean
+                              parameters:
+                                description: This filed will be compatible to the
+                                  task_type field. If task_type is defined as clusterRoll,
+                                  user cluster roll object in parameters.
+                                items:
+                                  properties:
+                                    amiAutoUpdate:
+                                      description: Set amiAutoUpdate object
+                                      items:
+                                        properties:
+                                          amiAutoUpdateClusterRoll:
+                                            description: Set clusterRoll object
+                                            items:
+                                              properties:
+                                                batchMinHealthyPercentage:
+                                                  description: 'Default: 50. Indicates
+                                                    the threshold of minimum healthy
+                                                    instances in single batch. If
+                                                    the amount of healthy instances
+                                                    in single batch is under the threshold,
+                                                    the cluster roll will fail. If
+                                                    exists, the parameter value will
+                                                    be in range of 1-100. In case
+                                                    of null as value, the default
+                                                    value in the backend will be 50%.
+                                                    Value of param should represent
+                                                    the number in percentage (%) of
+                                                    the batch.'
+                                                  type: number
+                                                batchSizePercentage:
+                                                  description: Sets the percentage
+                                                    of the instances to deploy in
+                                                    each batch.
+                                                  type: number
+                                                comment:
+                                                  description: Add a comment description
+                                                    for the roll. The comment is limited
+                                                    to 256 chars
+                                                  type: string
+                                                respectPdb:
+                                                  description: During the roll, if
+                                                    the parameter is set to True we
+                                                    honor PDB during the instance
+                                                    replacement.
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          applyRoll:
+                                            description: When the AMI is updated according
+                                              to the configuration set, a cluster
+                                              roll can be triggered
+                                            type: boolean
+                                          minorVersion:
+                                            description: When set to 'true', the auto-update
+                                              process will update the VNGs’ AMI with
+                                              the AMI to match the Kubernetes control
+                                              plane version. either "patch" or "minor_version"
+                                              must be true.
+                                            type: boolean
+                                          patch:
+                                            description: When set to 'true', the auto-update
+                                              process will update the VNGs’ images
+                                              with the latest security patches. either
+                                              "patch" or "minorVersion" must be true.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    parametersClusterRoll:
+                                      description: Set clusterRoll object
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: 'Default: 50. Indicates the
+                                              threshold of minimum healthy instances
+                                              in single batch. If the amount of healthy
+                                              instances in single batch is under the
+                                              threshold, the cluster roll will fail.
+                                              If exists, the parameter value will
+                                              be in range of 1-100. In case of null
+                                              as value, the default value in the backend
+                                              will be 50%. Value of param should represent
+                                              the number in percentage (%) of the
+                                              batch.'
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Sets the percentage of the
+                                              instances to deploy in each batch.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to True we honor PDB during the
+                                              instance replacement.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               taskType:
-                                description: 'Valid values: clusterRoll. Required
-                                  for cluster.scheduling.tasks object. (Example: clusterRoll).'
+                                description: 'Valid values: clusterRoll amiAutoUpdate.
+                                  Required for cluster.scheduling.tasks'
                                 type: string
                             type: object
                           type: array
@@ -1406,6 +1704,14 @@ spec:
                             configuration will trigger a cluster roll (such as AMI,
                             Key Pair, user data, instance types, load balancers, etc).
                           type: boolean
+                        conditionedRollParams:
+                          description: 'A custom list of attributes will trigger the
+                            cluster roll operation (overrides the predefined list
+                            of parameters). Valid only when the conditioned_roll parameter
+                            is set to true. (Valid values: "subnet_ids","whitelist","blacklist","user_data","image_id","security_groups","key_name","iam_instance_profile","associate_public_ip_address","load_balancers","instance_metadata_options","ebs_optimized","root_volume_size")'
+                          items:
+                            type: string
+                          type: array
                         rollConfig:
                           description: While used, you can control whether the group
                             should perform a deployment after an update to the configuration.
