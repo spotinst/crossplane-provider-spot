@@ -13,8 +13,106 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AMIAutoUpdateClusterRollObservation struct {
+
+	// Default: 50. Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the cluster roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Sets the percentage of the instances to deploy in each batch.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+}
+
+type AMIAutoUpdateClusterRollParameters struct {
+
+	// Default: 50. Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the cluster roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	// +kubebuilder:validation:Optional
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Sets the percentage of the instances to deploy in each batch.
+	// +kubebuilder:validation:Optional
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars
+	// +kubebuilder:validation:Optional
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+}
+
+type AMIAutoUpdateObservation struct {
+
+	// Set clusterRoll object
+	AMIAutoUpdateClusterRoll []AMIAutoUpdateClusterRollObservation `json:"amiAutoUpdateClusterRoll,omitempty" tf:"ami_auto_update_cluster_roll,omitempty"`
+
+	// When the AMI is updated according to the configuration set, a cluster roll can be triggered
+	ApplyRoll *bool `json:"applyRoll,omitempty" tf:"apply_roll,omitempty"`
+
+	// When set to 'true', the auto-update process will update the VNGs’ AMI with the AMI to match the Kubernetes control plane version. either "patch" or "minor_version" must be true.
+	MinorVersion *bool `json:"minorVersion,omitempty" tf:"minor_version,omitempty"`
+
+	// When set to 'true', the auto-update process will update the VNGs’ images with the latest security patches. either "patch" or "minorVersion" must be true.
+	Patch *bool `json:"patch,omitempty" tf:"patch,omitempty"`
+}
+
+type AMIAutoUpdateParameters struct {
+
+	// Set clusterRoll object
+	// +kubebuilder:validation:Optional
+	AMIAutoUpdateClusterRoll []AMIAutoUpdateClusterRollParameters `json:"amiAutoUpdateClusterRoll,omitempty" tf:"ami_auto_update_cluster_roll,omitempty"`
+
+	// When the AMI is updated according to the configuration set, a cluster roll can be triggered
+	// +kubebuilder:validation:Optional
+	ApplyRoll *bool `json:"applyRoll,omitempty" tf:"apply_roll,omitempty"`
+
+	// When set to 'true', the auto-update process will update the VNGs’ AMI with the AMI to match the Kubernetes control plane version. either "patch" or "minor_version" must be true.
+	// +kubebuilder:validation:Optional
+	MinorVersion *bool `json:"minorVersion,omitempty" tf:"minor_version,omitempty"`
+
+	// When set to 'true', the auto-update process will update the VNGs’ images with the latest security patches. either "patch" or "minorVersion" must be true.
+	// +kubebuilder:validation:Optional
+	Patch *bool `json:"patch,omitempty" tf:"patch,omitempty"`
+}
+
+type AttachLoadBalancerObservation struct {
+
+	// Required if type is set to TARGET_GROUP
+	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+
+	// The cluster name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type AttachLoadBalancerParameters struct {
+
+	// Required if type is set to TARGET_GROUP
+	// +kubebuilder:validation:Optional
+	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+
+	// The cluster name.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	// +kubebuilder:validation:Required
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
 type AutoscaleDownObservation struct {
 	EvaluationPeriods *float64 `json:"evaluationPeriods,omitempty" tf:"evaluation_periods,omitempty"`
+
+	// When set to 'true', the Aggressive Scale Down feature is enabled.
+	IsAggressiveScaleDownEnabled *bool `json:"isAggressiveScaleDownEnabled,omitempty" tf:"is_aggressive_scale_down_enabled,omitempty"`
 
 	// Would represent the maximum % to scale-down. Number between 1-100.
 	MaxScaleDownPercentage *float64 `json:"maxScaleDownPercentage,omitempty" tf:"max_scale_down_percentage,omitempty"`
@@ -24,6 +122,10 @@ type AutoscaleDownParameters struct {
 
 	// +kubebuilder:validation:Optional
 	EvaluationPeriods *float64 `json:"evaluationPeriods,omitempty" tf:"evaluation_periods,omitempty"`
+
+	// When set to 'true', the Aggressive Scale Down feature is enabled.
+	// +kubebuilder:validation:Optional
+	IsAggressiveScaleDownEnabled *bool `json:"isAggressiveScaleDownEnabled,omitempty" tf:"is_aggressive_scale_down_enabled,omitempty"`
 
 	// Would represent the maximum % to scale-down. Number between 1-100.
 	// +kubebuilder:validation:Optional
@@ -164,6 +266,33 @@ type ClusterOrientationParameters struct {
 	// You can control the approach that Ocean takes while launching nodes by configuring this value. Possible values: costOriented,balanced,cheapest.
 	// +kubebuilder:validation:Optional
 	AvailabilityVsCost *string `json:"availabilityVsCost,omitempty" tf:"availability_vs_cost,omitempty"`
+}
+
+type DetachLoadBalancerObservation struct {
+
+	// Required if type is set to TARGET_GROUP
+	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+
+	// The cluster name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type DetachLoadBalancerParameters struct {
+
+	// Required if type is set to TARGET_GROUP
+	// +kubebuilder:validation:Optional
+	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
+
+	// The cluster name.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	// +kubebuilder:validation:Required
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type DynamicIopsObservation struct {
@@ -516,6 +645,9 @@ type OceanAwsObservation struct {
 	// Configure public IP address allocation.
 	AssociatePublicIPAddress *bool `json:"associatePublicIpAddress,omitempty" tf:"associate_public_ip_address,omitempty"`
 
+	// Attach load balancers to the cluster.
+	AttachLoadBalancer []AttachLoadBalancerObservation `json:"attachLoadBalancer,omitempty" tf:"attach_load_balancer,omitempty"`
+
 	// Describes the Ocean Kubernetes Auto Scaler.
 	Autoscaler []AutoscalerObservation `json:"autoscaler,omitempty" tf:"autoscaler,omitempty"`
 
@@ -533,6 +665,9 @@ type OceanAwsObservation struct {
 	// The number of instances to launch and maintain in the cluster.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// Detach load balancers from the cluster.
+	DetachLoadBalancer []DetachLoadBalancerObservation `json:"detachLoadBalancer,omitempty" tf:"detach_load_balancer,omitempty"`
+
 	// The time in seconds, the instance is allowed to run while detached from the ELB. This is to allow the instance time to be drained from incoming TCP connections before terminating it, during a scale down operation.
 	DrainingTimeout *float64 `json:"drainingTimeout,omitempty" tf:"draining_timeout,omitempty"`
 
@@ -547,6 +682,9 @@ type OceanAwsObservation struct {
 
 	// The amount of time, in seconds, after the instance has launched to start checking its health.
 	GracePeriod *float64 `json:"gracePeriod,omitempty" tf:"grace_period,omitempty"`
+
+	// The amount of time, in seconds, an existing instance should remain active after becoming unhealthy. After the set time out the instance will be replaced. The minimum value allowed is 60, and it must be a multiple of 60.
+	HealthCheckUnhealthyDurationBeforeReplacement *float64 `json:"healthCheckUnhealthyDurationBeforeReplacement,omitempty" tf:"health_check_unhealthy_duration_before_replacement,omitempty"`
 
 	// The instance profile iam role.
 	IAMInstanceProfile *string `json:"iamInstanceProfile,omitempty" tf:"iam_instance_profile,omitempty"`
@@ -637,6 +775,10 @@ type OceanAwsParameters struct {
 	// +kubebuilder:validation:Optional
 	AssociatePublicIPAddress *bool `json:"associatePublicIpAddress,omitempty" tf:"associate_public_ip_address,omitempty"`
 
+	// Attach load balancers to the cluster.
+	// +kubebuilder:validation:Optional
+	AttachLoadBalancer []AttachLoadBalancerParameters `json:"attachLoadBalancer,omitempty" tf:"attach_load_balancer,omitempty"`
+
 	// Describes the Ocean Kubernetes Auto Scaler.
 	// +kubebuilder:validation:Optional
 	Autoscaler []AutoscalerParameters `json:"autoscaler,omitempty" tf:"autoscaler,omitempty"`
@@ -660,6 +802,10 @@ type OceanAwsParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
+	// Detach load balancers from the cluster.
+	// +kubebuilder:validation:Optional
+	DetachLoadBalancer []DetachLoadBalancerParameters `json:"detachLoadBalancer,omitempty" tf:"detach_load_balancer,omitempty"`
+
 	// The time in seconds, the instance is allowed to run while detached from the ELB. This is to allow the instance time to be drained from incoming TCP connections before terminating it, during a scale down operation.
 	// +kubebuilder:validation:Optional
 	DrainingTimeout *float64 `json:"drainingTimeout,omitempty" tf:"draining_timeout,omitempty"`
@@ -679,6 +825,10 @@ type OceanAwsParameters struct {
 	// The amount of time, in seconds, after the instance has launched to start checking its health.
 	// +kubebuilder:validation:Optional
 	GracePeriod *float64 `json:"gracePeriod,omitempty" tf:"grace_period,omitempty"`
+
+	// The amount of time, in seconds, an existing instance should remain active after becoming unhealthy. After the set time out the instance will be replaced. The minimum value allowed is 60, and it must be a multiple of 60.
+	// +kubebuilder:validation:Optional
+	HealthCheckUnhealthyDurationBeforeReplacement *float64 `json:"healthCheckUnhealthyDurationBeforeReplacement,omitempty" tf:"health_check_unhealthy_duration_before_replacement,omitempty"`
 
 	// The instance profile iam role.
 	// +kubebuilder:validation:Optional
@@ -779,6 +929,60 @@ type OceanAwsParameters struct {
 	// Instance types allowed in the Ocean cluster. Cannot be configured if blacklist is configured.
 	// +kubebuilder:validation:Optional
 	Whitelist []*string `json:"whitelist,omitempty" tf:"whitelist,omitempty"`
+}
+
+type ParametersClusterRollObservation struct {
+
+	// Default: 50. Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the cluster roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Sets the percentage of the instances to deploy in each batch.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+}
+
+type ParametersClusterRollParameters struct {
+
+	// Default: 50. Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the cluster roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	// +kubebuilder:validation:Optional
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Sets the percentage of the instances to deploy in each batch.
+	// +kubebuilder:validation:Optional
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars
+	// +kubebuilder:validation:Optional
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+}
+
+type ParametersObservation struct {
+
+	// Set amiAutoUpdate object
+	AMIAutoUpdate []AMIAutoUpdateObservation `json:"amiAutoUpdate,omitempty" tf:"ami_auto_update,omitempty"`
+
+	// Set clusterRoll object
+	ParametersClusterRoll []ParametersClusterRollObservation `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
+}
+
+type ParametersParameters struct {
+
+	// Set amiAutoUpdate object
+	// +kubebuilder:validation:Optional
+	AMIAutoUpdate []AMIAutoUpdateParameters `json:"amiAutoUpdate,omitempty" tf:"ami_auto_update,omitempty"`
+
+	// Set clusterRoll object
+	// +kubebuilder:validation:Optional
+	ParametersClusterRoll []ParametersClusterRollParameters `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
 }
 
 type ResourceLimitsObservation struct {
@@ -929,7 +1133,10 @@ type TasksObservation struct {
 	// Toggle the shutdown hours task. (Example: true).
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// Valid values: clusterRoll. Required for cluster.scheduling.tasks object. (Example: clusterRoll).
+	// This filed will be compatible to the task_type field. If task_type is defined as clusterRoll, user cluster roll object in parameters.
+	Parameters []ParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// Valid values: clusterRoll amiAutoUpdate. Required for cluster.scheduling.tasks
 	TaskType *string `json:"taskType,omitempty" tf:"task_type,omitempty"`
 }
 
@@ -943,7 +1150,11 @@ type TasksParameters struct {
 	// +kubebuilder:validation:Required
 	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
 
-	// Valid values: clusterRoll. Required for cluster.scheduling.tasks object. (Example: clusterRoll).
+	// This filed will be compatible to the task_type field. If task_type is defined as clusterRoll, user cluster roll object in parameters.
+	// +kubebuilder:validation:Optional
+	Parameters []ParametersParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// Valid values: clusterRoll amiAutoUpdate. Required for cluster.scheduling.tasks
 	// +kubebuilder:validation:Required
 	TaskType *string `json:"taskType" tf:"task_type,omitempty"`
 }
@@ -955,6 +1166,9 @@ type UpdatePolicyObservation struct {
 
 	// Spot will perform a cluster Roll in accordance with a relevant modification of the cluster’s settings. When set to true , only specific changes in the cluster’s configuration will trigger a cluster roll (such as AMI, Key Pair, user data, instance types, load balancers, etc).
 	ConditionedRoll *bool `json:"conditionedRoll,omitempty" tf:"conditioned_roll,omitempty"`
+
+	// A custom list of attributes will trigger the cluster roll operation (overrides the predefined list of parameters). Valid only when the conditioned_roll parameter is set to true. (Valid values: "subnet_ids","whitelist","blacklist","user_data","image_id","security_groups","key_name","iam_instance_profile","associate_public_ip_address","load_balancers","instance_metadata_options","ebs_optimized","root_volume_size")
+	ConditionedRollParams []*string `json:"conditionedRollParams,omitempty" tf:"conditioned_roll_params,omitempty"`
 
 	// While used, you can control whether the group should perform a deployment after an update to the configuration.
 	RollConfig []RollConfigObservation `json:"rollConfig,omitempty" tf:"roll_config,omitempty"`
@@ -972,6 +1186,10 @@ type UpdatePolicyParameters struct {
 	// Spot will perform a cluster Roll in accordance with a relevant modification of the cluster’s settings. When set to true , only specific changes in the cluster’s configuration will trigger a cluster roll (such as AMI, Key Pair, user data, instance types, load balancers, etc).
 	// +kubebuilder:validation:Optional
 	ConditionedRoll *bool `json:"conditionedRoll,omitempty" tf:"conditioned_roll,omitempty"`
+
+	// A custom list of attributes will trigger the cluster roll operation (overrides the predefined list of parameters). Valid only when the conditioned_roll parameter is set to true. (Valid values: "subnet_ids","whitelist","blacklist","user_data","image_id","security_groups","key_name","iam_instance_profile","associate_public_ip_address","load_balancers","instance_metadata_options","ebs_optimized","root_volume_size")
+	// +kubebuilder:validation:Optional
+	ConditionedRollParams []*string `json:"conditionedRollParams,omitempty" tf:"conditioned_roll_params,omitempty"`
 
 	// While used, you can control whether the group should perform a deployment after an update to the configuration.
 	// +kubebuilder:validation:Optional
@@ -1006,6 +1224,7 @@ type OceanAwsStatus struct {
 type OceanAws struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.imageId)",message="imageId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroups)",message="securityGroups is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.subnetIds)",message="subnetIds is a required parameter"
 	Spec   OceanAwsSpec   `json:"spec"`

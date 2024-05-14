@@ -15,11 +15,18 @@ import (
 
 type AutomaticObservation struct {
 
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
 	// Optionally set a number between 0-100 to control the percentage of total cluster resources dedicated to headroom.
 	Percentage *float64 `json:"percentage,omitempty" tf:"percentage,omitempty"`
 }
 
 type AutomaticParameters struct {
+
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Optionally set a number between 0-100 to control the percentage of total cluster resources dedicated to headroom.
 	// +kubebuilder:validation:Optional
@@ -100,6 +107,9 @@ type FiltersObservation struct {
 	// Vm sizes belonging to a series from the list will not be available for scaling
 	ExcludeSeries []*string `json:"excludeSeries,omitempty" tf:"exclude_series,omitempty"`
 
+	// The filtered gpu types will belong to one of the gpu types from this list.
+	GpuTypes []*string `json:"gpuTypes,omitempty" tf:"gpu_types,omitempty"`
+
 	// Maximum number of GPUs available.
 	MaxGpu *float64 `json:"maxGpu,omitempty" tf:"max_gpu,omitempty"`
 
@@ -110,7 +120,7 @@ type FiltersObservation struct {
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 
 	// Minimum number of data disks available.
-	MinData *float64 `json:"minData,omitempty" tf:"min_data,omitempty"`
+	MinDisk *float64 `json:"minDisk,omitempty" tf:"min_disk,omitempty"`
 
 	// Minimum number of GPUs available.
 	MinGpu *float64 `json:"minGpu,omitempty" tf:"min_gpu,omitempty"`
@@ -149,6 +159,10 @@ type FiltersParameters struct {
 	// +kubebuilder:validation:Optional
 	ExcludeSeries []*string `json:"excludeSeries,omitempty" tf:"exclude_series,omitempty"`
 
+	// The filtered gpu types will belong to one of the gpu types from this list.
+	// +kubebuilder:validation:Optional
+	GpuTypes []*string `json:"gpuTypes,omitempty" tf:"gpu_types,omitempty"`
+
 	// Maximum number of GPUs available.
 	// +kubebuilder:validation:Optional
 	MaxGpu *float64 `json:"maxGpu,omitempty" tf:"max_gpu,omitempty"`
@@ -163,7 +177,7 @@ type FiltersParameters struct {
 
 	// Minimum number of data disks available.
 	// +kubebuilder:validation:Optional
-	MinData *float64 `json:"minData,omitempty" tf:"min_data,omitempty"`
+	MinDisk *float64 `json:"minDisk,omitempty" tf:"min_disk,omitempty"`
 
 	// Minimum number of GPUs available.
 	// +kubebuilder:validation:Optional
@@ -321,6 +335,8 @@ type OceanAksObservation struct {
 	// Add taints to a virtual node group. Only custom user taints are allowed, and not Kubernetes well-known taints or Azure AKS ScaleSetPrioirty (Spot VM) taint. For all Spot VMs, AKS injects a taint kubernetes.azure.com/scalesetpriority=spot:NoSchedule, to ensure that only workloads that can handle interruptions are scheduled on Spot nodes. To schedule a pod to run on Spot node, add a toleration but dont include the nodeAffinity (not supported for Spot Ocean), this will prevent the pod from being scheduled using Spot Ocean.
 	Taints []TaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 
+	UpdatePolicy []UpdatePolicyObservation `json:"updatePolicy,omitempty" tf:"update_policy,omitempty"`
+
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
 }
@@ -434,6 +450,9 @@ type OceanAksParameters struct {
 	// +kubebuilder:validation:Optional
 	Taints []TaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	UpdatePolicy []UpdatePolicyParameters `json:"updatePolicy,omitempty" tf:"update_policy,omitempty"`
+
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	// +kubebuilder:validation:Optional
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
@@ -459,6 +478,68 @@ type ResourceLimitsParameters struct {
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 }
 
+type RollConfigObservation struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// List of node names to be rolled. Each identifier is a string. nodeNames can be null, and cannot be used together with nodePoolNames and vngIds.
+	NodeNames []*string `json:"nodeNames,omitempty" tf:"node_names,omitempty"`
+
+	// List of node pools to be rolled. Each node pool name is a string. nodePoolNames can be null, and cannot be used together with nodeNames and vngIds.
+	NodePoolNames []*string `json:"nodePoolNames,omitempty" tf:"node_pool_names,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+
+	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
+	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
+type RollConfigParameters struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	// +kubebuilder:validation:Optional
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	// +kubebuilder:validation:Optional
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	// +kubebuilder:validation:Optional
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// List of node names to be rolled. Each identifier is a string. nodeNames can be null, and cannot be used together with nodePoolNames and vngIds.
+	// +kubebuilder:validation:Optional
+	NodeNames []*string `json:"nodeNames,omitempty" tf:"node_names,omitempty"`
+
+	// List of node pools to be rolled. Each node pool name is a string. nodePoolNames can be null, and cannot be used together with nodeNames and vngIds.
+	// +kubebuilder:validation:Optional
+	NodePoolNames []*string `json:"nodePoolNames,omitempty" tf:"node_pool_names,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+
+	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
+	// +kubebuilder:validation:Optional
+	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
 type SchedulingObservation struct {
 
 	// Shutdown HoursAn object used to specify times that the nodes in the cluster will be taken down.
@@ -474,7 +555,7 @@ type SchedulingParameters struct {
 
 type ShutdownHoursObservation struct {
 
-	// Flag to enable or disable the shutdown hours mechanism. When False, the mechanism is deactivated, and the cluster remains in its current state.
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The times that the shutdown hours will apply.
@@ -483,7 +564,7 @@ type ShutdownHoursObservation struct {
 
 type ShutdownHoursParameters struct {
 
-	// Flag to enable or disable the shutdown hours mechanism. When False, the mechanism is deactivated, and the cluster remains in its current state.
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
@@ -519,6 +600,33 @@ type TaintsParameters struct {
 	Value *string `json:"value" tf:"value,omitempty"`
 }
 
+type UpdatePolicyObservation struct {
+
+	// Spot will perform a cluster Roll in accordance with a relevant modification of the cluster’s settings. When set to true , only specific changes in the cluster’s configuration will trigger a cluster roll (such as availability_zones, max_pods_per_node, enable_node_public_ip, os_disk_size_gb, os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids, pod_subnet_ids, labels, taints and tags).
+	ConditionedRoll *bool `json:"conditionedRoll,omitempty" tf:"conditioned_roll,omitempty"`
+
+	// While used, you can control whether the group should perform a deployment after an update to the configuration.
+	RollConfig []RollConfigObservation `json:"rollConfig,omitempty" tf:"roll_config,omitempty"`
+
+	// If set to true along with the cluster update, roll will be triggered.
+	ShouldRoll *bool `json:"shouldRoll,omitempty" tf:"should_roll,omitempty"`
+}
+
+type UpdatePolicyParameters struct {
+
+	// Spot will perform a cluster Roll in accordance with a relevant modification of the cluster’s settings. When set to true , only specific changes in the cluster’s configuration will trigger a cluster roll (such as availability_zones, max_pods_per_node, enable_node_public_ip, os_disk_size_gb, os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids, pod_subnet_ids, labels, taints and tags).
+	// +kubebuilder:validation:Optional
+	ConditionedRoll *bool `json:"conditionedRoll,omitempty" tf:"conditioned_roll,omitempty"`
+
+	// While used, you can control whether the group should perform a deployment after an update to the configuration.
+	// +kubebuilder:validation:Optional
+	RollConfig []RollConfigParameters `json:"rollConfig,omitempty" tf:"roll_config,omitempty"`
+
+	// If set to true along with the cluster update, roll will be triggered.
+	// +kubebuilder:validation:Required
+	ShouldRoll *bool `json:"shouldRoll" tf:"should_roll,omitempty"`
+}
+
 // OceanAksSpec defines the desired state of OceanAks
 type OceanAksSpec struct {
 	v1.ResourceSpec `json:",inline"`
@@ -548,6 +656,7 @@ type OceanAks struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.aksRegion)",message="aksRegion is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.aksResourceGroupName)",message="aksResourceGroupName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.availabilityZones)",message="availabilityZones is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.controllerClusterId)",message="controllerClusterId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
 	Spec   OceanAksSpec   `json:"spec"`
 	Status OceanAksStatus `json:"status,omitempty"`

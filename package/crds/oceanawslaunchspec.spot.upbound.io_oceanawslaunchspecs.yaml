@@ -259,6 +259,19 @@ spec:
                           type: array
                       type: object
                     type: array
+                  ephemeralStorage:
+                    items:
+                      properties:
+                        ephemeralStorageDeviceName:
+                          description: Specify an alternative device name from which
+                            ephemeral storage calculations should be derived. This
+                            parameter is used when the ephemeral storage should not
+                            utilize the root device. Provide the device name configured
+                            in the VNG's BDM or AMI's BDM that differs from the default
+                            root device.
+                          type: string
+                      type: object
+                    type: array
                   iamInstanceProfile:
                     description: The ARN or name of an IAM instance profile to associate
                       with launched instances.
@@ -976,6 +989,19 @@ spec:
                                 type: string
                             type: object
                           type: array
+                      type: object
+                    type: array
+                  ephemeralStorage:
+                    items:
+                      properties:
+                        ephemeralStorageDeviceName:
+                          description: Specify an alternative device name from which
+                            ephemeral storage calculations should be derived. This
+                            parameter is used when the ephemeral storage should not
+                            utilize the root device. Provide the device name configured
+                            in the VNG's BDM or AMI's BDM that differs from the default
+                            root device.
+                          type: string
                       type: object
                     type: array
                   iamInstanceProfile:

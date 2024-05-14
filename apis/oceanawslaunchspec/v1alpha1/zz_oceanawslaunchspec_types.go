@@ -249,6 +249,19 @@ type ElasticIPPoolParameters struct {
 	TagSelector []TagSelectorParameters `json:"tagSelector,omitempty" tf:"tag_selector,omitempty"`
 }
 
+type EphemeralStorageObservation struct {
+
+	// Specify an alternative device name from which ephemeral storage calculations should be derived. This parameter is used when the ephemeral storage should not utilize the root device. Provide the device name configured in the VNG's BDM or AMI's BDM that differs from the default root device.
+	EphemeralStorageDeviceName *string `json:"ephemeralStorageDeviceName,omitempty" tf:"ephemeral_storage_device_name,omitempty"`
+}
+
+type EphemeralStorageParameters struct {
+
+	// Specify an alternative device name from which ephemeral storage calculations should be derived. This parameter is used when the ephemeral storage should not utilize the root device. Provide the device name configured in the VNG's BDM or AMI's BDM that differs from the default root device.
+	// +kubebuilder:validation:Optional
+	EphemeralStorageDeviceName *string `json:"ephemeralStorageDeviceName,omitempty" tf:"ephemeral_storage_device_name,omitempty"`
+}
+
 type ImagesObservation struct {
 
 	// ID of the image used to launch the instances.
@@ -458,6 +471,8 @@ type OceanAwsLaunchSpecObservation struct {
 	// Assign an Elastic IP to the instances spun by the Virtual Node Group. Can be null.
 	ElasticIPPool []ElasticIPPoolObservation `json:"elasticIpPool,omitempty" tf:"elastic_ip_pool,omitempty"`
 
+	EphemeralStorage []EphemeralStorageObservation `json:"ephemeralStorage,omitempty" tf:"ephemeral_storage,omitempty"`
+
 	// The ARN or name of an IAM instance profile to associate with launched instances.
 	IAMInstanceProfile *string `json:"iamInstanceProfile,omitempty" tf:"iam_instance_profile,omitempty"`
 
@@ -558,6 +573,9 @@ type OceanAwsLaunchSpecParameters struct {
 	// Assign an Elastic IP to the instances spun by the Virtual Node Group. Can be null.
 	// +kubebuilder:validation:Optional
 	ElasticIPPool []ElasticIPPoolParameters `json:"elasticIpPool,omitempty" tf:"elastic_ip_pool,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	EphemeralStorage []EphemeralStorageParameters `json:"ephemeralStorage,omitempty" tf:"ephemeral_storage,omitempty"`
 
 	// The ARN or name of an IAM instance profile to associate with launched instances.
 	// +kubebuilder:validation:Optional
