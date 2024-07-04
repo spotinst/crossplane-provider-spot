@@ -434,6 +434,10 @@ spec:
                   oceanId:
                     description: The ID of the Ocean cluster.
                     type: string
+                  preferredOdTypes:
+                    items:
+                      type: string
+                    type: array
                   preferredSpotTypes:
                     description: A list of instance types. Takes the preferred types
                       into consideration while maintaining a variety of machine types
@@ -1164,6 +1168,10 @@ spec:
                   oceanId:
                     description: The ID of the Ocean cluster.
                     type: string
+                  preferredOdTypes:
+                    items:
+                      type: string
+                    type: array
                   preferredSpotTypes:
                     description: A list of instance types. Takes the preferred types
                       into consideration while maintaining a variety of machine types

@@ -15,6 +15,6 @@ func Configure(p *ujconfig.Provider) {
 		// we need to override the default group that upjet generated for
 		// this resource, which would be "spotinst"
 		r.ShortGroup = "oceanrightsizingrule"
-		r.Kind = "OceanRightsizingRule"
+		r.Kind = "OceanRightSizingRule"
 	})
 }

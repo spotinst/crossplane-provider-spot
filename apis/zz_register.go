@@ -10,7 +10,8 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/spotinst/crossplane-provider-spot/apis/oceanaks/v1alpha1"
+	v1alpha1 "github.com/spotinst/crossplane-provider-spot/apis/ocean/v1alpha1"
+	v1alpha1oceanaks "github.com/spotinst/crossplane-provider-spot/apis/oceanaks/v1alpha1"
 	v1alpha1oceanaksvng "github.com/spotinst/crossplane-provider-spot/apis/oceanaksvng/v1alpha1"
 	v1alpha1oceanaws "github.com/spotinst/crossplane-provider-spot/apis/oceanaws/v1alpha1"
 	v1alpha1oceanawslaunchspec "github.com/spotinst/crossplane-provider-spot/apis/oceanawslaunchspec/v1alpha1"
@@ -22,6 +23,7 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1oceanaks.SchemeBuilder.AddToScheme,
 		v1alpha1oceanaksvng.SchemeBuilder.AddToScheme,
 		v1alpha1oceanaws.SchemeBuilder.AddToScheme,
 		v1alpha1oceanawslaunchspec.SchemeBuilder.AddToScheme,

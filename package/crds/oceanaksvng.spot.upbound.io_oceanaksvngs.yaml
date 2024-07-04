@@ -188,6 +188,18 @@ spec:
                       custom user labels are allowed, and not Kubernetes built-in
                       labels or Spot internal labels.
                     type: object
+                  linuxOsConfig:
+                    items:
+                      properties:
+                        sysctls:
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   maxCount:
                     description: Maximum node count limit.
                     type: number
@@ -665,6 +677,18 @@ spec:
                       custom user labels are allowed, and not Kubernetes built-in
                       labels or Spot internal labels.
                     type: object
+                  linuxOsConfig:
+                    items:
+                      properties:
+                        sysctls:
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   maxCount:
                     description: Maximum node count limit.
                     type: number

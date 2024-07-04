@@ -251,6 +251,16 @@ type HealthParameters struct {
 	GracePeriod *float64 `json:"gracePeriod,omitempty" tf:"grace_period,omitempty"`
 }
 
+type LinuxOsConfigObservation struct {
+	Sysctls []SysctlsObservation `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
+}
+
+type LinuxOsConfigParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Sysctls []SysctlsParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
+}
+
 type OceanAksObservation struct {
 
 	// The name of the AKS Cluster.
@@ -296,6 +306,8 @@ type OceanAksObservation struct {
 
 	// An array of labels to add to the virtual node group. Only custom user labels are allowed, and not Kubernetes well-known labels or  Azure AKS labels or Spot labels.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	LinuxOsConfig []LinuxOsConfigObservation `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
 	// Maximum node count limit.
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
@@ -399,6 +411,9 @@ type OceanAksParameters struct {
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	LinuxOsConfig []LinuxOsConfigParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
+
 	// Maximum node count limit.
 	// +kubebuilder:validation:Optional
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
@@ -456,6 +471,64 @@ type OceanAksParameters struct {
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	// +kubebuilder:validation:Optional
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
+}
+
+type ParametersClusterRollObservation struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+
+	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
+	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
+type ParametersClusterRollParameters struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	// +kubebuilder:validation:Optional
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	// +kubebuilder:validation:Optional
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	// +kubebuilder:validation:Optional
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+
+	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
+	// +kubebuilder:validation:Optional
+	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
+type ParametersObservation struct {
+	ParametersClusterRoll []ParametersClusterRollObservation `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
+}
+
+type ParametersParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ParametersClusterRoll []ParametersClusterRollParameters `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
 }
 
 type ResourceLimitsObservation struct {
@@ -544,6 +617,8 @@ type SchedulingObservation struct {
 
 	// Shutdown HoursAn object used to specify times that the nodes in the cluster will be taken down.
 	ShutdownHours []ShutdownHoursObservation `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+
+	Tasks []TasksObservation `json:"tasks,omitempty" tf:"tasks,omitempty"`
 }
 
 type SchedulingParameters struct {
@@ -551,6 +626,9 @@ type SchedulingParameters struct {
 	// Shutdown HoursAn object used to specify times that the nodes in the cluster will be taken down.
 	// +kubebuilder:validation:Optional
 	ShutdownHours []ShutdownHoursParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tasks []TasksParameters `json:"tasks,omitempty" tf:"tasks,omitempty"`
 }
 
 type ShutdownHoursObservation struct {
@@ -569,8 +647,18 @@ type ShutdownHoursParameters struct {
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The times that the shutdown hours will apply.
-	// +kubebuilder:validation:Required
-	TimeWindows []*string `json:"timeWindows" tf:"time_windows,omitempty"`
+	// +kubebuilder:validation:Optional
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type SysctlsObservation struct {
+	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
+}
+
+type SysctlsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
 }
 
 type TaintsObservation struct {
@@ -598,6 +686,33 @@ type TaintsParameters struct {
 	// Set label value.
 	// +kubebuilder:validation:Required
 	Value *string `json:"value" tf:"value,omitempty"`
+}
+
+type TasksObservation struct {
+	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
+
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	Parameters []ParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	TaskType *string `json:"taskType,omitempty" tf:"task_type,omitempty"`
+}
+
+type TasksParameters struct {
+
+	// +kubebuilder:validation:Required
+	CronExpression *string `json:"cronExpression" tf:"cron_expression,omitempty"`
+
+	// Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.
+	// +kubebuilder:validation:Required
+	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Parameters []ParametersParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// +kubebuilder:validation:Required
+	TaskType *string `json:"taskType" tf:"task_type,omitempty"`
 }
 
 type UpdatePolicyObservation struct {

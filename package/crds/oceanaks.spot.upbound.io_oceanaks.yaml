@@ -282,6 +282,18 @@ spec:
                       Only custom user labels are allowed, and not Kubernetes well-known
                       labels or  Azure AKS labels or Spot labels.
                     type: object
+                  linuxOsConfig:
+                    items:
+                      properties:
+                        sysctls:
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   maxCount:
                     description: Maximum node count limit.
                     type: number
@@ -335,8 +347,76 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                            type: object
+                          type: array
+                        tasks:
+                          items:
+                            properties:
+                              cronExpression:
+                                type: string
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  True, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              parameters:
+                                items:
+                                  properties:
+                                    parametersClusterRoll:
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: Indicates the threshold of
+                                              minimum healthy nodes in single batch.
+                                              If the amount of healthy nodes in single
+                                              batch is under the threshold, the roll
+                                              will fail. If exists, the parameter
+                                              value will be in range of 1-100. In
+                                              case of null as value, the default value
+                                              in the backend will be 50%. Value of
+                                              param should represent the number in
+                                              percentage (%) of the batch.
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Value as a percent to set
+                                              the size of a batch in a roll. Valid
+                                              values are 0-100. In case of null as
+                                              value, the default value in the backend
+                                              will be 20%.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars and optional.
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor PDB during the
+                                              nodes replacement.
+                                            type: boolean
+                                          respectRestrictScaleDown:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor Restrict Scale
+                                              Down label during the nodes replacement.
+                                            type: boolean
+                                          vngIds:
+                                            description: List of virtual node group
+                                              identifiers to be rolled. Each identifier
+                                              is a string. vngIds can be null, and
+                                              cannot be used together with nodeNames
+                                              and nodePoolNames.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              taskType:
+                                type: string
                             required:
-                            - timeWindows
+                            - cronExpression
+                            - isEnabled
+                            - taskType
                             type: object
                           type: array
                       type: object
@@ -893,6 +973,18 @@ spec:
                       Only custom user labels are allowed, and not Kubernetes well-known
                       labels or  Azure AKS labels or Spot labels.
                     type: object
+                  linuxOsConfig:
+                    items:
+                      properties:
+                        sysctls:
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   maxCount:
                     description: Maximum node count limit.
                     type: number
@@ -946,6 +1038,72 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                            type: object
+                          type: array
+                        tasks:
+                          items:
+                            properties:
+                              cronExpression:
+                                type: string
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  True, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              parameters:
+                                items:
+                                  properties:
+                                    parametersClusterRoll:
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: Indicates the threshold of
+                                              minimum healthy nodes in single batch.
+                                              If the amount of healthy nodes in single
+                                              batch is under the threshold, the roll
+                                              will fail. If exists, the parameter
+                                              value will be in range of 1-100. In
+                                              case of null as value, the default value
+                                              in the backend will be 50%. Value of
+                                              param should represent the number in
+                                              percentage (%) of the batch.
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Value as a percent to set
+                                              the size of a batch in a roll. Valid
+                                              values are 0-100. In case of null as
+                                              value, the default value in the backend
+                                              will be 20%.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars and optional.
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor PDB during the
+                                              nodes replacement.
+                                            type: boolean
+                                          respectRestrictScaleDown:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor Restrict Scale
+                                              Down label during the nodes replacement.
+                                            type: boolean
+                                          vngIds:
+                                            description: List of virtual node group
+                                              identifiers to be rolled. Each identifier
+                                              is a string. vngIds can be null, and
+                                              cannot be used together with nodeNames
+                                              and nodePoolNames.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              taskType:
+                                type: string
                             type: object
                           type: array
                       type: object

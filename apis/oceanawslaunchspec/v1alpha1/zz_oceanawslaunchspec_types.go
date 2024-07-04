@@ -505,6 +505,8 @@ type OceanAwsLaunchSpecObservation struct {
 	// The ID of the Ocean cluster.
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
+	PreferredOdTypes []*string `json:"preferredOdTypes,omitempty" tf:"preferred_od_types,omitempty"`
+
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
 
@@ -614,6 +616,9 @@ type OceanAwsLaunchSpecParameters struct {
 	// The ID of the Ocean cluster.
 	// +kubebuilder:validation:Optional
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PreferredOdTypes []*string `json:"preferredOdTypes,omitempty" tf:"preferred_od_types,omitempty"`
 
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	// +kubebuilder:validation:Optional

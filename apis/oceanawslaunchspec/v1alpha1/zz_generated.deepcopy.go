@@ -1216,6 +1216,17 @@ func (in *OceanAwsLaunchSpecObservation) DeepCopyInto(out *OceanAwsLaunchSpecObs
 		*out = new(string)
 		**out = **in
 	}
+	if in.PreferredOdTypes != nil {
+		in, out := &in.PreferredOdTypes, &out.PreferredOdTypes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.PreferredSpotTypes != nil {
 		in, out := &in.PreferredSpotTypes, &out.PreferredSpotTypes
 		*out = make([]*string, len(*in))
@@ -1447,6 +1458,17 @@ func (in *OceanAwsLaunchSpecParameters) DeepCopyInto(out *OceanAwsLaunchSpecPara
 		in, out := &in.OceanID, &out.OceanID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PreferredOdTypes != nil {
+		in, out := &in.PreferredOdTypes, &out.PreferredOdTypes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.PreferredSpotTypes != nil {
 		in, out := &in.PreferredSpotTypes, &out.PreferredSpotTypes

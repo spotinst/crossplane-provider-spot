@@ -9,6 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	rightsizingrule "github.com/spotinst/crossplane-provider-spot/internal/controller/ocean/rightsizingrule"
 	oceanaks "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanaks/oceanaks"
 	oceanaksvng "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanaksvng/oceanaksvng"
 	oceanaws "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanaws/oceanaws"
@@ -20,6 +21,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		rightsizingrule.Setup,
 		oceanaks.Setup,
 		oceanaksvng.Setup,
 		oceanaws.Setup,

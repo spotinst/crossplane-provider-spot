@@ -158,6 +158,16 @@ type HeadroomsParameters struct {
 	NumOfUnits *float64 `json:"numOfUnits,omitempty" tf:"num_of_units,omitempty"`
 }
 
+type LinuxOsConfigObservation struct {
+	Sysctls []SysctlsObservation `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
+}
+
+type LinuxOsConfigParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Sysctls []SysctlsParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
+}
+
 type OceanAksVngObservation struct {
 
 	// An Array holding Availability Zones, this configures the availability zones the Ocean may launch instances in per VNG.
@@ -182,6 +192,8 @@ type OceanAksVngObservation struct {
 
 	// An array of labels to add to the virtual node group.Only custom user labels are allowed, and not Kubernetes built-in labels or Spot internal labels.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	LinuxOsConfig []LinuxOsConfigObservation `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
 	// Maximum node count limit.
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
@@ -256,6 +268,9 @@ type OceanAksVngParameters struct {
 	// An array of labels to add to the virtual node group.Only custom user labels are allowed, and not Kubernetes built-in labels or Spot internal labels.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	LinuxOsConfig []LinuxOsConfigParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
 	// Maximum node count limit.
 	// +kubebuilder:validation:Optional
@@ -376,6 +391,16 @@ type RollConfigParameters struct {
 	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
 	// +kubebuilder:validation:Optional
 	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
+type SysctlsObservation struct {
+	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
+}
+
+type SysctlsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
 }
 
 type TaintsObservation struct {
