@@ -1,0 +1,25 @@
+apiVersion: ocean.spot.upbound.io/v1alpha1
+kind: RightSizingRule
+metadata:
+  name: test-rule-crossplane
+spec:
+  forProvider:
+    ruleName: "test-rule-crossplane"
+    oceanId: "o-123456"
+    recommendationApplicationIntervals:
+      - repetitionBasis: "MONTHLY"
+        monthlyRepetitionBasis:
+          - weekOfTheMonth:
+              - "FIRST"
+              - "SECOND"
+            intervalMonths:
+              - 2
+              - 12
+            weeklyRepetitionBasis:
+              - intervalDays:
+                  - "TUESDAY"
+                intervalHoursStartTime: "14:00"
+                intervalHoursEndTime: "17:00"
+
+  providerConfigRef:
+    name: default
