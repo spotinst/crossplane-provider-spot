@@ -4,16 +4,13 @@ Copyright 2022 Upbound Inc.
 
 package config
 
-import "github.com/upbound/upjet/pkg/config"
+import "github.com/crossplane/upjet/pkg/config"
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"spotinst_ocean_aws":                       config.IdentifierFromProvider,
-	"spotinst_ocean_aws_launch_spec":           config.IdentifierFromProvider,
-	"spotinst_ocean_aks_np":                    config.IdentifierFromProvider,
-	"spotinst_ocean_aks_np_virtual_node_group": config.IdentifierFromProvider,
+	"null_resource": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

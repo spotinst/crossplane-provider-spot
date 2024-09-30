@@ -9,9 +9,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/upbound/upjet/pkg/pipeline"
+	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/spotinst/crossplane-provider-spot/config"
+	"github.com/upbound/upjet-provider-template/config"
 )
 
 func main() {

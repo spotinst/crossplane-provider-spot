@@ -1,4 +1,4 @@
-apiVersion: spot.upbound.io/v1alpha1
+apiVersion: template.upbound.io/v1alpha1
 kind: StoreConfig
 metadata:
   name: vault
