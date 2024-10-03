@@ -29,12 +29,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
-	"github.com/spotinst/provider-crossplane-provider-spot/apis"
-	"github.com/spotinst/provider-crossplane-provider-spot/apis/v1alpha1"
-	"github.com/spotinst/provider-crossplane-provider-spot/config"
-	"github.com/spotinst/provider-crossplane-provider-spot/internal/clients"
-	"github.com/spotinst/provider-crossplane-provider-spot/internal/controller"
-	"github.com/spotinst/provider-crossplane-provider-spot/internal/features"
+	"github.com/spotinst/crossplane-provider-spot/apis"
+	"github.com/spotinst/crossplane-provider-spot/apis/v1alpha1"
+	"github.com/spotinst/crossplane-provider-spot/config"
+	"github.com/spotinst/crossplane-provider-spot/internal/clients"
+	"github.com/spotinst/crossplane-provider-spot/internal/controller"
+	"github.com/spotinst/crossplane-provider-spot/internal/features"
 )
 
 func main() {

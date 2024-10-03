@@ -7,10 +7,10 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
-	"github.com/spotinst/provider-crossplane-provider-spot/config/oceanaks"
-	"github.com/spotinst/provider-crossplane-provider-spot/config/oceanaksvng"
-	"github.com/spotinst/provider-crossplane-provider-spot/config/oceanaws"
-	"github.com/spotinst/provider-crossplane-provider-spot/config/oceanawslaunchspec"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaks"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaksvng"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaws"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanawslaunchspec"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 )

@@ -1,4 +1,4 @@
-module github.com/spotinst/provider-crossplane-provider-spot
+module github.com/spotinst/crossplane-provider-spot
 
 go 1.21
 
