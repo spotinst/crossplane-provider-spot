@@ -17,7 +17,7 @@ import (
 
 const (
 	resourcePrefix = "crossplane-provider-spot"
-	modulePath     = "github.com/spotinst/provider-crossplane-provider-spot"
+	modulePath     = "github.com/spotinst/crossplane-provider-spot"
 )
 
 //go:embed schema.json

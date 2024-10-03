@@ -1,6 +1,6 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-crossplane-provider-spot
+  name: crossplane-provider-spot
 spec:
-  package: spotinst/provider-crossplane-provider-spot:v0.1.0
+  package: spotinst/crossplane-provider-spot:v0.1.0
