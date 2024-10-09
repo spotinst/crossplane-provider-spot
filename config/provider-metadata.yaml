@@ -732,6 +732,7 @@ resources:
             action: '- (Required) Scaling action to take when the policy is triggered.'
             additional_ip_configs: '- (Optional) Array of additional IP configuration objects.'
             adjustment: '- (Optional)  Value to which the action type will be adjusted. Required if using the next action types: "numeric", "percentageAdjustment"'
+            api_version: '- (Required) The API version of the extension. Required if extension specified.'
             application_security_group: '- (Optional) - List of Application Security Groups that will be associated to the primary ip configuration of the network interface.'
             assign_public_up: '- (Optional, Default: false) Assign a public IP to each VM in the Elastigroup.'
             cooldown: '- (Required) Time (seconds) to wait after a scaling action before resuming monitoring.'
@@ -740,7 +741,9 @@ resources:
             desired_capacity: '- (Required) The desired number of instances the group should have at any time.'
             dimensions: '- (Optional) A list of dimensions describing qualities of the metric. Required if scaling.up.namespace is different from ''Microsoft.Compute'''
             draining_timeout: '- (Optional, Default 120) Time (seconds) to allow the instance to be drained from incoming TCP connections and detached from MLB before terminating it during a scale-down operation.'
+            enable_automatic_upgrade: '- (Optional) Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.'
             evaluation_periods: '- (Required) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
+            extensions: '- (Optional) An object for an Azure extensions.'
             fallback_to_on_demand: '-'
             gallery_image: '- (Optional) Gallery image to launch Elastigroup with. Cannot be used with marketplace or custom.'
             gallery_name: '- (Optional) Name of the gallery. Required if gallery image is specified.'
@@ -757,6 +760,7 @@ resources:
             metric_name: '- (Required) Metric to monitor by Azure metric display name.'
             min_size: '- (Required) The minimum number of instances the group should have at any time.'
             minimum: '- (Optional)  Lower limit of instances that you can scale down to. Also you must indicate “target” and “maximum” amounts. Required if selected as action type: "updateCapacity"'
+            minor_version_auto_upgrade: '- (Required) Enable minor version upgrades of the extension. Required if extension specified.'
             name: '- (Required) The group name.'
             namespace: '- (Required) The namespace for the alarm''s associated metric. Select one of the next namespaces presented in Azure configurator - Namespace'
             network: '- (Required) Defines the Virtual Network and Subnet for your Elastigroup.'
@@ -770,11 +774,16 @@ resources:
             period: '- (Required) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
             policy_name: '- (Required) The name of the policy.'
             private_ip_version: '- (Optional) Available from Azure Api-Version 2017-03-30 onwards, it represents whether the specific ip configuration is IPv4 or IPv6. Valid values: IPv4, IPv6.'
+            protected_settings: '- (Optional) Object for protected settings. This must not exist simultaneously with protected_settings_from_key_vault'
+            protected_settings_from_key_vault: '- (Optional) The extensions protected settings that are passed by reference, and consumed from key vault.'
+            public_settings: '- (Optional) Object for public settings.'
             publisher: '- (Optional) Image publisher. Required if marketplace image is specified.'
             region: '- (Required) The region your Azure group will be created in.'
             resource_group_name: '- (Required) Name of the Resource Group for Elastigroup.'
+            secret_url: '- (Required) The URL referencing a secret in a Key Vault.'
             sku: '- (Optional) Image''s Stock Keeping Unit, which is the specific version of the image. Required if marketplace image is specified.'
             source: '- (Optional) The source of the metric.'
+            sourcevault: '- (Required) The relative URL of the Key Vault containing the secret.'
             spot_account_id: '- (Optional) The Spot account ID that connected to the Azure subscription to which the gallery belongs. Relevant only in case of cross-subscription shared galleries. Read more (https://docs.spot.io/elastigroup/features-azure/shared-image-galleries) about cross-subscription shared galleries in Elastigroup.'
             spot_percentage: '- (Optional) Percentage of Spot-VMs to maintain. Required if on_demand_count is not specified.'
             spot_sizes: '- (Required) Available Low-Priority sizes.'
@@ -784,7 +793,7 @@ resources:
             tags: '- (Optional) Key-Value pairs for VMs in the Elastigroup.'
             target: '- (Optional)  Desired number of instances. Also you must indicate “minimum” and “maximum” amounts. Required if selected as action type: "updateCapacity"'
             threshold: '- (Required) The value at which the scaling action is triggered.'
-            type: '- (Required) Type of scaling action to take when the scaling policy is triggered. Valid Values: "adjustment", "updateCapacity"'
+            type: '- (Required) Type of the extension.'
             unit: '- (Optional) Unit to measure to evaluate the selected metric: Valid Values: "percent, "seconds", "milliseconds", "bytes", "countPerSecond", "bytesPerSecond", "seconds"'
             user_name: '- (Required) Set admin access for accessing your VMs.'
             value: '- (Required) Tag Value for Vms in Elastigroup.'
@@ -4032,10 +4041,8 @@ resources:
                       "protected_settings": {
                         "script": "IyEvYmluL2Jhc2gKZWNobyAibmlyIiA+IC9ob29uaXIudHh0Cg=="
                       },
-                      "publicSettings": {
-                        "fileUris": [
-                          "https://testspot/Azuretest.sh"
-                        ]
+                      "public_settings": {
+                        "fileUris": "https://testspot/Azuretest.sh"
                       },
                       "publisher": "Microsoft.Azure.Extensions",
                       "type": "customScript"
