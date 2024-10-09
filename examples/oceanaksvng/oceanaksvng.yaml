@@ -1,0 +1,21 @@
+apiVersion: oceanaksvng.crossplane.io/v1alpha1
+kind: OceanAksVng
+metadata:
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: testVng
+    oceanId: o-123456
+    headrooms:
+      - cpuPerUnit: 1024
+        gpuPerUnit: 0
+        memoryPerUnit: 512
+        numOfUnits: 2
+    maxCount: 100
+    maxPodsPerNode: 30
+    minCount: 1
+    tags:
+      tagKey: env
+      tagValue: prod
