@@ -4,7 +4,7 @@
 PROJECT_NAME := crossplane-provider-spot
 PROJECT_REPO := github.com/spotinst/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.3.3
+export TERRAFORM_VERSION := 1.5.7
 
 # Do not allow a version of terraform greater than 1.5.x, due to versions 1.6+ being
 # licensed under BSL, which is not permitted.
@@ -16,7 +16,7 @@ export TERRAFORM_PROVIDER_VERSION := 1.194.1
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-spotinst
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := $(TERRAFORM_PROVIDER_REPO)/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_NATIVE_PROVIDER_BINARY := $(TERRAFORM_PROVIDER_DOWNLOAD_NAME)_v$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_DOCS_PATH ?= docs/resources
+export TERRAFORM_DOCS_PATH := docs/resources
 
 
 PLATFORMS ?= linux_amd64 linux_arm64
