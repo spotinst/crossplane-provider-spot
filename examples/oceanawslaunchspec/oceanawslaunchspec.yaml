@@ -1,0 +1,15 @@
+apiVersion: oceanawslaunchspec.spot.crossplane.io/v1alpha1
+kind: OceanAwsLaunchSpec
+metadata:
+  labels:
+    testing.upbound.io/example-name: example
+  name: testvng
+spec:
+  forProvider:
+    oceanId: o-123456
+    name: testvng
+    strategy:
+      - spotPercentage: 80
+        utilizeReservedInstances: true
+  providerConfigRef:
+    name: default
