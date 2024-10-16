@@ -4,6 +4,7 @@ set -euox pipefail
 read -r -p "Lower case provider name (ex. github): " PROVIDER_NAME_LOWER
 read -r -p "Normal case provider name (ex. GitHub): " PROVIDER_NAME_NORMAL
 read -r -p "Organization (ex. upbound, my-org-name): " ORGANIZATION_NAME
+read -r -p "CRD rootGroup (ex. upbound.io, crossplane.io): " CRD_ROOT_GROUP
 
 REPLACE_FILES='./* ./.github :!build/** :!go.* :!hack/prepare.sh'
 # shellcheck disable=SC2086
@@ -14,10 +15,16 @@ git grep -l 'template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/template/${PROV
 git grep -l "upbound/crossplane-provider-${PROVIDER_NAME_LOWER}" -- ${REPLACE_FILES} | xargs sed -i.bak "s|upbound/crossplane-provider-${PROVIDER_NAME_LOWER}|${ORGANIZATION_NAME}/crossplane-provider-${PROVIDER_NAME_LOWER}|g"
 # shellcheck disable=SC2086
 git grep -l 'Template' -- ${REPLACE_FILES} | xargs sed -i.bak "s/Template/${PROVIDER_NAME_NORMAL}/g"
+# shellcheck disable=SC2086
+git grep -l "upbound.io" -- "apis/v1*" | xargs sed -i.bak "s|upbound.io|${CRD_ROOT_GROUP}|g"
+# shellcheck disable=SC2086
+git grep -l "ujconfig\.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound\.io\")" -- "config/provider.go" | xargs sed -i.bak "s|ujconfig.WithRootGroup(\"${PROVIDER_NAME_LOWER}.upbound.io\")|ujconfig.WithRootGroup(\"${CRD_ROOT_GROUP}\")|g"
+
 # We need to be careful while replacing "template" keyword in go.mod as it could tamper
 # some imported packages under require section.
 sed -i.bak "s|upbound/upjet-provider-template|${ORGANIZATION_NAME}/crossplane-provider-${PROVIDER_NAME_LOWER}|g" go.mod
-sed -i.bak "s|PROJECT_REPO ?= github.com/upbound/|PROJECT_REPO ?= github.com/${ORGANIZATION_NAME}/|g" Makefile
+sed -i.bak -e "s|PROJECT_REPO ?= github.com/upbound/|PROJECT_REPO ?= github.com/${ORGANIZATION_NAME}/|g" -e "s|\(blob/main/internal/\)${PROVIDER_NAME_LOWER}s|\1templates|g" Makefile
+sed -i.bak "s/\[YEAR\]/$(date +%Y)/g" LICENSE
 
 # Clean up the .bak files created by sed
 git clean -fd

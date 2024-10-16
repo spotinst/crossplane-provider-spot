@@ -1,4 +1,4 @@
-apiVersion: oceanawslaunchspec.spot.upbound.io/v1alpha1
+apiVersion: oceanawslaunchspec.spot.crossplane.io/v1alpha1
 kind: OceanAwsLaunchSpec
 metadata:
   labels:
@@ -6,7 +6,7 @@ metadata:
   name: testvng
 spec:
   forProvider:
-    oceanId: o-12345
+    oceanId: o-123456
     name: testvng
     images:
       - imageId: ami-12345
@@ -51,7 +51,8 @@ spec:
       - maxInstanceCount: 4
         minInstanceCount: 0
     strategy:
-      - spotPercentage: 70
+      - spotPercentage: 80
+        utilizeReservedInstances: true
     associatePublicIpAddress: true
     restrictScaleDown: true
     schedulingShutdownHours:

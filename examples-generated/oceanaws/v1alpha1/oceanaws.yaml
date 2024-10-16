@@ -1,4 +1,4 @@
-apiVersion: oceanaws.spot.upbound.io/v1alpha1
+apiVersion: oceanaws.spot.crossplane.io/v1alpha1
 kind: OceanAws
 metadata:
   annotations:
@@ -48,6 +48,3 @@ spec:
     region: us-west-2
     subnetIds:
     - subnet-123456789
-
----
-

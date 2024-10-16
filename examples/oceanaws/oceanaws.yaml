@@ -1,4 +1,4 @@
-apiVersion: oceanaws.spot.upbound.io/v1alpha1
+apiVersion: oceanaws.spot.crossplane.io/v1alpha1
 kind: OceanAws
 metadata:
   name: hello-crossplane
@@ -19,7 +19,7 @@ spec:
             maxVcpu: 750
         autoscaleHeadroom:
           - cpuPerUnit: 1024
-            gpuPerUnit: 0
+            gpuPerUnit: 1
             memoryPerUnit: 512
             numOfUnits: 2
     utilizeCommitments: false
@@ -27,10 +27,10 @@ spec:
       - availabilityVsCost : balanced
     spreadNodesBy : count
     scheduledTask:
-        - shutdownHours:
-           - isEnabled : false
-             timeWindows:
-               - Sat:08:00-Sun:08:00
+      - shutdownHours:
+          - isEnabled : false
+            timeWindows:
+              - Sat:08:00-Sun:08:00
     subnetIds:
       - subnet-12345
       - subnet-54321

@@ -13,7 +13,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/upbound/upjet/pkg/terraform"
+	"github.com/crossplane/upjet/pkg/terraform"
 
 	"github.com/spotinst/crossplane-provider-spot/apis/v1beta1"
 )
@@ -21,7 +21,6 @@ import (
 const (
 	keyAccount = "account"
 	keyToken   = "token"
-
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
@@ -41,6 +40,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 				Version: providerVersion,
 			},
 		}
+
 		configRef := mg.GetProviderConfigReference()
 		if configRef == nil {
 			return ps, errors.New(errNoProviderConfig)
@@ -73,7 +73,6 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if v, ok := creds[keyToken]; ok {
 			ps.Configuration[keyToken] = v
 		}
-
 		return ps, nil
 	}
 }

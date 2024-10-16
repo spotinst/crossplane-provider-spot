@@ -1,4 +1,4 @@
-apiVersion: oceanawslaunchspec.spot.upbound.io/v1alpha1
+apiVersion: oceanawslaunchspec.spot.crossplane.io/v1alpha1
 kind: OceanAwsLaunchSpec
 metadata:
   annotations:
@@ -59,6 +59,9 @@ spec:
       value: value1
     name: example
     oceanId: o-123456
+    preferredOdTypes:
+    - c3.large
+    - m4.large
     preferredSpotTypes:
     - m4.large
     - m4.xlarge
@@ -84,7 +87,10 @@ spec:
     securityGroups:
     - sg-987654321
     strategy:
-    - spotPercentage: 70
+    - drainingTimeout: 300
+      spotPercentage: 70
+      utilizeCommitments: false
+      utilizeReservedInstances: true
     subnetIds:
     - subnet-1234
     tags:
@@ -95,6 +101,3 @@ spec:
       key: key1
       value: value1
     userData: echo Hello, world!
-
----
-

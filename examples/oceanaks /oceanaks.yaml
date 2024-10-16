@@ -1,4 +1,4 @@
-apiVersion: oceanaks.spot.upbound.io/v1alpha1
+apiVersion: oceanaks.spot.crossplane.io/v1alpha1
 kind: OceanAks
 metadata:
   name: crossplane-test
@@ -16,7 +16,7 @@ spec:
           - maxScaleDownPercentage: 30
         autoscaleHeadroom:
           - automatic:
-              - percentage: 10
+              - percentage: 20
         autoscaleIsEnabled: true
         resourceLimits:
           - maxMemoryGib: 1500

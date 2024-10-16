@@ -1,4 +1,4 @@
-apiVersion: oceanaks.spot.upbound.io/v1alpha1
+apiVersion: oceanaks.spot.crossplane.io/v1alpha1
 kind: OceanAks
 metadata:
   annotations:
@@ -18,6 +18,3 @@ spec:
     - "3"
     controllerClusterId: test-123124
     name: test
-
----
-
