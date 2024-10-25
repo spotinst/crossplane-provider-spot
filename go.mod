@@ -1,4 +1,4 @@
-module github.com/spotinst/crossplane-provider-spot
+module github.com/upbound/upjet-provider-template
 
 go 1.21
 

@@ -11,7 +11,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/spotinst/crossplane-provider-spot/config"
+	"github.com/upbound/upjet-provider-template/config"
 )
 
 func main() {
