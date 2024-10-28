@@ -1,0 +1,76 @@
+apiVersion: oceanawslaunchspec.spot.upbound.io/v1alpha1
+kind: OceanAwsLaunchSpec
+metadata:
+  labels:
+    testing.upbound.io/example-name: example
+  name: testvng
+spec:
+  forProvider:
+    oceanId: o-123456
+    name: testvng
+    images:
+      - imageId: ami-12345
+      - imageId: ami-54321
+    userData: echo Hello, world!
+    iamInstanceProfile: eks-12345-54321-7890-0987
+    securityGroups:
+      - sg-12345
+    labels:
+      - key: key1
+        value: value1
+    taints:
+      - effect: NoExecute
+        key: key1
+        value: NoSchedule
+    subnetIds:
+      - subnet-12345
+      - subnet-54321
+    autoscaleDown:
+      - maxScaleDownPercentage: 20
+    autoscaleHeadrooms:
+      - cpuPerUnit: 1024
+        gpuPerUnit: 0
+        memoryPerUnit: 512
+        numOfUnits: 2
+    autoscaleHeadroomsAutomatic:
+      - autoHeadroomPercentage: 5
+    blockDeviceMappings:
+      - deviceName: /dev/xvda
+        ebs:
+          - deleteOnTermination: true
+            encrypted: false
+            throughput: 125
+            volumeSize: 20
+            volumeType: gp3
+    tags:
+      - key: Env
+        value: prod
+    createOptions:
+      - initialNodes: 1
+    resourceLimits:
+      - maxInstanceCount: 4
+        minInstanceCount: 0
+    strategy:
+      - spotPercentage: 80
+        utilizeReservedInstances: true
+    associatePublicIpAddress: true
+    restrictScaleDown: true
+    schedulingShutdownHours:
+      - isEnabled: false
+        timeWindows:
+          - Sat:08:00-Sat:08:30
+          - Sun:08:00-Sun:08:30
+    schedulingTask:
+      - cronExpression: 0 1 * * *
+        isEnabled: true
+        taskHeadroom:
+          - cpuPerUnit: 1000
+            gpuPerUnit: 0
+            memoryPerUnit: 2048
+            numOfUnits: 5
+        taskType: manualHeadroomUpdate
+    instanceMetadataOptions:
+      - httpPutResponseHopLimit: 10
+        httpTokens: required
+  providerConfigRef:
+    name: default
