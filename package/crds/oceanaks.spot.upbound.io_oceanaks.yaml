@@ -1,0 +1,1853 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  name: oceanaks.oceanaks.spot.upbound.io
+spec:
+  group: oceanaks.spot.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - spot
+    kind: OceanAks
+    listKind: OceanAksList
+    plural: oceanaks
+    singular: oceanaks
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: OceanAks is the Schema for the OceanAkss API. Provides a Spotinst
+          Ocean resource using AKS.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: OceanAksSpec defines the desired state of OceanAks
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  aksClusterName:
+                    description: The name of the AKS Cluster.
+                    type: string
+                  aksInfrastructureResourceGroupName:
+                    description: The name of the cluster's infrastructure resource
+                      group.
+                    type: string
+                  aksRegion:
+                    description: The cluster's region.
+                    type: string
+                  aksResourceGroupName:
+                    description: The name of the cluster's resource group.
+                    type: string
+                  autoscaler:
+                    description: The Ocean Kubernetes Autoscaler object.
+                    items:
+                      properties:
+                        autoscaleDown:
+                          description: Auto Scaling scale down operations.
+                          items:
+                            properties:
+                              maxScaleDownPercentage:
+                                description: The maximum percentage allowed to scale
+                                  down in a single scaling action.
+                                type: number
+                            type: object
+                          type: array
+                        autoscaleHeadroom:
+                          description: Spare resource capacity management enabling
+                            fast assignment of pods without waiting for new resources
+                            to launch.
+                          items:
+                            properties:
+                              automatic:
+                                description: Automatic headroom configuration.
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: Enable automatic headroom. When
+                                        set to true, Ocean configures and optimizes
+                                        headroom automatically.
+                                      type: boolean
+                                    percentage:
+                                      description: Optionally set a number between
+                                        0-100 to control the percentage of total cluster
+                                        resources dedicated to headroom.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        autoscaleIsEnabled:
+                          description: Enable the Ocean Kubernetes Autoscaler.
+                          type: boolean
+                        resourceLimits:
+                          description: Optionally set upper and lower bounds on the
+                            resource usage of the cluster.
+                          items:
+                            properties:
+                              maxMemoryGib:
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
+                                type: number
+                              maxVcpu:
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  availabilityZones:
+                    description: An Array holding Availability Zones, this configures
+                      the availability zones the Ocean may launch instances in per
+                      VNG.
+                    items:
+                      type: string
+                    type: array
+                  controllerClusterId:
+                    description: Enter a unique Ocean cluster identifier. Cannot be
+                      updated. This needs to match with string that was used to install
+                      the controller in the cluster, typically clusterName + 8 digit
+                      string.
+                    type: string
+                  enableNodePublicIp:
+                    description: Enable node public IP.
+                    type: boolean
+                  fallbackToOndemand:
+                    description: If no spot VM markets are available, enable Ocean
+                      to launch regular (pay-as-you-go) nodes instead.
+                    type: boolean
+                  filters:
+                    description: Filters for the VM sizes that can be launched from
+                      the virtual node group.
+                    items:
+                      properties:
+                        acceleratedNetworking:
+                          description: In case acceleratedNetworking is set to Enabled,
+                            accelerated networking applies only to the VM that enables
+                            it.
+                          type: string
+                        architectures:
+                          description: The filtered vm sizes will support at least
+                            one of the architectures from this list. x86_64 includes
+                            both intel64 and amd64.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        diskPerformance:
+                          description: The filtered vm sizes will support at least
+                            one of the classes from this list.
+                          type: string
+                        excludeSeries:
+                          description: Vm sizes belonging to a series from the list
+                            will not be available for scaling
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        gpuTypes:
+                          description: The filtered gpu types will belong to one of
+                            the gpu types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        maxGpu:
+                          description: Maximum number of GPUs available.
+                          type: number
+                        maxMemoryGib:
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
+                          type: number
+                        maxVcpu:
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
+                          type: number
+                        minDisk:
+                          description: Minimum number of data disks available.
+                          type: number
+                        minGpu:
+                          description: Minimum number of GPUs available.
+                          type: number
+                        minMemoryGib:
+                          description: Minimum amount of Memory (GiB).
+                          type: number
+                        minNics:
+                          description: Minimum number of network interfaces.
+                          type: number
+                        minVcpu:
+                          description: Minimum number of vcpus available.
+                          type: number
+                        series:
+                          description: Vm sizes belonging to a series from the list
+                            will be available for scaling. We can specify include
+                            list and series can be specified with capital or small
+                            letters, with space, without space or with underscore
+                            '_' .  For example all of these "DSv2", "Ds v2", "ds_v2"
+                            refer to same DS_v2 series.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        vmTypes:
+                          description: The filtered vm types will belong to one of
+                            the vm types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  headrooms:
+                    description: Specify the custom headroom per VNG. Provide a list
+                      of headroom objects.
+                    items:
+                      properties:
+                        cpuPerUnit:
+                          description: Configure the number of CPUs to allocate the
+                            headroom. CPUs are denoted in millicores, where 1000 millicores
+                            = 1 vCPU.
+                          type: number
+                        gpuPerUnit:
+                          description: Amount of GPU to allocate for headroom unit.
+                          type: number
+                        memoryPerUnit:
+                          description: Configure the amount of memory (MiB) to allocate
+                            the headroom.
+                          type: number
+                        numOfUnits:
+                          description: The number of units to retain as headroom,
+                            where each unit has the defined headroom CPU and memory.
+                          type: number
+                      type: object
+                    type: array
+                  health:
+                    description: The Ocean AKS Health object.
+                    items:
+                      properties:
+                        gracePeriod:
+                          description: The amount of time to wait, in seconds, from
+                            the moment the instance has launched until monitoring
+                            of its health checks begins.
+                          type: number
+                      type: object
+                    type: array
+                  kubernetesVersion:
+                    description: The desired Kubernetes version of the launched nodes.
+                      In case the value is null, the Kubernetes version of the control
+                      plane is used.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: An array of labels to add to the virtual node group.
+                      Only custom user labels are allowed, and not Kubernetes well-known
+                      labels or  Azure AKS labels or Spot labels.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  linuxOsConfig:
+                    description: Custom Linux OS configuration.
+                    items:
+                      properties:
+                        sysctls:
+                          description: System Controls
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                description: Maximum number of memory map areas a
+                                  process may have. Can be configured only if OS type
+                                  is Linux.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  maxCount:
+                    description: Maximum node count limit.
+                    type: number
+                  maxPodsPerNode:
+                    description: The maximum number of pods per node in the node pools.
+                    type: number
+                  minCount:
+                    description: Minimum node count limit.
+                    type: number
+                  name:
+                    description: Add a name for the Ocean cluster.
+                    type: string
+                  osDiskSizeGb:
+                    description: The size of the OS disk in GB.
+                    type: number
+                  osDiskType:
+                    description: The type of the OS disk.
+                    type: string
+                  osSku:
+                    description: The OS SKU of the OS type. Must correlate with the
+                      os type.
+                    type: string
+                  osType:
+                    description: The OS type of the OS disk. Can't be modified once
+                      set.
+                    type: string
+                  podSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign pods in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                  scheduling:
+                    description: An object used to specify times when the cluster
+                      will turn off. Once the shutdown time will be over, the cluster
+                      will return to its previous state.
+                    items:
+                      properties:
+                        shutdownHours:
+                          description: An object used to specify times that the nodes
+                            in the cluster will be taken down.
+                          items:
+                            properties:
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              timeWindows:
+                                description: The times that the shutdown hours will
+                                  apply. Required if isEnabled is true.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        tasks:
+                          description: A list of scheduling tasks to preform on the
+                            cluster at a specific cron time.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: 'A valid cron expression. The cron is
+                                  running in UTC time zone and is in Unix cron format
+                                  Cron Expression Validator Script. Only one of frequency
+                                  or cronExpression should be used at a time. Required
+                                  for cluster.scheduling.tasks object. (Example: 0
+                                  1 * * *).'
+                                type: string
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              parameters:
+                                description: The parameters of the scheduling task.
+                                  Each task type will have properties relevant only
+                                  to it.
+                                items:
+                                  properties:
+                                    parametersClusterRoll:
+                                      description: The parameters of the cluster roll
+                                        scheduling task.
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: Indicates the threshold of
+                                              minimum healthy nodes in single batch.
+                                              If the amount of healthy nodes in single
+                                              batch is under the threshold, the roll
+                                              will fail. If exists, the parameter
+                                              value will be in range of 1-100. In
+                                              case of null as value, the default value
+                                              in the backend will be 50%. Value of
+                                              param should represent the number in
+                                              percentage (%) of the batch.
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Value as a percent to set
+                                              the size of a batch in a roll. Valid
+                                              values are 0-100. In case of null as
+                                              value, the default value in the backend
+                                              will be 20%.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars and optional.
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor PDB during the
+                                              nodes replacement.
+                                            type: boolean
+                                          respectRestrictScaleDown:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor Restrict Scale
+                                              Down label during the nodes replacement.
+                                            type: boolean
+                                          vngIds:
+                                            description: List of virtual node group
+                                              identifiers to be rolled. Each identifier
+                                              is a string. vngIds can be null, and
+                                              cannot be used together with nodeNames
+                                              and nodePoolNames.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              taskType:
+                                description: 'Valid values: clusterRoll The type of
+                                  the scheduling task.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  spotPercentage:
+                    description: Percentage of spot VMs to maintain.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    type: object
+                    x-kubernetes-map-type: granular
+                  taints:
+                    description: Add taints to a virtual node group. Only custom user
+                      taints are allowed, and not Kubernetes well-known taints or
+                      Azure AKS ScaleSetPrioirty (Spot VM) taint. For all Spot VMs,
+                      AKS injects a taint kubernetes.azure.com/scalesetpriority=spot:NoSchedule,
+                      to ensure that only workloads that can handle interruptions
+                      are scheduled on Spot nodes. To schedule a pod to run on Spot
+                      node, add a toleration but dont include the nodeAffinity (not
+                      supported for Spot Ocean), this will prevent the pod from being
+                      scheduled using Spot Ocean.
+                    items:
+                      properties:
+                        effect:
+                          description: Set taint effect.
+                          type: string
+                        key:
+                          description: 'Set label key spot labels and Azure labels.
+                            The following are not allowed: ["kubernetes.azure.com/agentpool","kubernetes.io/arch","kubernetes.io/os","node.kubernetes.io/instance-type",
+                            "topology.kubernetes.io/region", "topology.kubernetes.io/zone",
+                            "kubernetes.azure.com/cluster", "kubernetes.azure.com/mode",
+                            "kubernetes.azure.com/role", "kubernetes.azure.com/scalesetpriority",
+                            "kubernetes.io/hostname", "kubernetes.azure.com/storageprofile",
+                            "kubernetes.azure.com/storagetier", "kubernetes.azure.com/instance-sku",
+                            "kubernetes.azure.com/node-image-version", "kubernetes.azure.com/subnet",
+                            "kubernetes.azure.com/vnet", "kubernetes.azure.com/ppg",
+                            "kubernetes.azure.com/encrypted-set", "kubernetes.azure.com/accelerator",
+                            "kubernetes.azure.com/fips_enabled", "kubernetes.azure.com/os-sku"]'
+                          type: string
+                        value:
+                          description: Set label value.
+                          type: string
+                      type: object
+                    type: array
+                  updatePolicy:
+                    items:
+                      properties:
+                        conditionedRoll:
+                          description: Spot will perform a cluster Roll in accordance
+                            with a relevant modification of the cluster’s settings.
+                            When set to true , only specific changes in the cluster’s
+                            configuration will trigger a cluster roll (such as availability_zones,
+                            max_pods_per_node, enable_node_public_ip, os_disk_size_gb,
+                            os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids,
+                            pod_subnet_ids, labels, taints and tags).
+                          type: boolean
+                        rollConfig:
+                          description: While used, you can control whether the group
+                            should perform a deployment after an update to the configuration.
+                          items:
+                            properties:
+                              batchMinHealthyPercentage:
+                                description: Indicates the threshold of minimum healthy
+                                  nodes in single batch. If the amount of healthy
+                                  nodes in single batch is under the threshold, the
+                                  roll will fail. If exists, the parameter value will
+                                  be in range of 1-100. In case of null as value,
+                                  the default value in the backend will be 50%. Value
+                                  of param should represent the number in percentage
+                                  (%) of the batch.
+                                type: number
+                              batchSizePercentage:
+                                description: Value as a percent to set the size of
+                                  a batch in a roll. Valid values are 0-100. In case
+                                  of null as value, the default value in the backend
+                                  will be 20%.
+                                type: number
+                              comment:
+                                description: Add a comment description for the roll.
+                                  The comment is limited to 256 chars and optional.
+                                type: string
+                              nodeNames:
+                                description: List of node names to be rolled. Each
+                                  identifier is a string. nodeNames can be null, and
+                                  cannot be used together with nodePoolNames and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              nodePoolNames:
+                                description: List of node pools to be rolled. Each
+                                  node pool name is a string. nodePoolNames can be
+                                  null, and cannot be used together with nodeNames
+                                  and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the nodes replacement.
+                                type: boolean
+                              respectRestrictScaleDown:
+                                description: During the roll, if the parameter is
+                                  set to true we honor Restrict Scale Down label during
+                                  the nodes replacement.
+                                type: boolean
+                              vngIds:
+                                description: List of virtual node group identifiers
+                                  to be rolled. Each identifier is a string. vngIds
+                                  can be null, and cannot be used together with nodeNames
+                                  and nodePoolNames.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        shouldRoll:
+                          description: If set to true along with the cluster update,
+                            roll will be triggered.
+                          type: boolean
+                      type: object
+                    type: array
+                  vnetSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign nodes in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  aksClusterName:
+                    description: The name of the AKS Cluster.
+                    type: string
+                  aksInfrastructureResourceGroupName:
+                    description: The name of the cluster's infrastructure resource
+                      group.
+                    type: string
+                  aksRegion:
+                    description: The cluster's region.
+                    type: string
+                  aksResourceGroupName:
+                    description: The name of the cluster's resource group.
+                    type: string
+                  autoscaler:
+                    description: The Ocean Kubernetes Autoscaler object.
+                    items:
+                      properties:
+                        autoscaleDown:
+                          description: Auto Scaling scale down operations.
+                          items:
+                            properties:
+                              maxScaleDownPercentage:
+                                description: The maximum percentage allowed to scale
+                                  down in a single scaling action.
+                                type: number
+                            type: object
+                          type: array
+                        autoscaleHeadroom:
+                          description: Spare resource capacity management enabling
+                            fast assignment of pods without waiting for new resources
+                            to launch.
+                          items:
+                            properties:
+                              automatic:
+                                description: Automatic headroom configuration.
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: Enable automatic headroom. When
+                                        set to true, Ocean configures and optimizes
+                                        headroom automatically.
+                                      type: boolean
+                                    percentage:
+                                      description: Optionally set a number between
+                                        0-100 to control the percentage of total cluster
+                                        resources dedicated to headroom.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        autoscaleIsEnabled:
+                          description: Enable the Ocean Kubernetes Autoscaler.
+                          type: boolean
+                        resourceLimits:
+                          description: Optionally set upper and lower bounds on the
+                            resource usage of the cluster.
+                          items:
+                            properties:
+                              maxMemoryGib:
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
+                                type: number
+                              maxVcpu:
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  availabilityZones:
+                    description: An Array holding Availability Zones, this configures
+                      the availability zones the Ocean may launch instances in per
+                      VNG.
+                    items:
+                      type: string
+                    type: array
+                  controllerClusterId:
+                    description: Enter a unique Ocean cluster identifier. Cannot be
+                      updated. This needs to match with string that was used to install
+                      the controller in the cluster, typically clusterName + 8 digit
+                      string.
+                    type: string
+                  enableNodePublicIp:
+                    description: Enable node public IP.
+                    type: boolean
+                  fallbackToOndemand:
+                    description: If no spot VM markets are available, enable Ocean
+                      to launch regular (pay-as-you-go) nodes instead.
+                    type: boolean
+                  filters:
+                    description: Filters for the VM sizes that can be launched from
+                      the virtual node group.
+                    items:
+                      properties:
+                        acceleratedNetworking:
+                          description: In case acceleratedNetworking is set to Enabled,
+                            accelerated networking applies only to the VM that enables
+                            it.
+                          type: string
+                        architectures:
+                          description: The filtered vm sizes will support at least
+                            one of the architectures from this list. x86_64 includes
+                            both intel64 and amd64.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        diskPerformance:
+                          description: The filtered vm sizes will support at least
+                            one of the classes from this list.
+                          type: string
+                        excludeSeries:
+                          description: Vm sizes belonging to a series from the list
+                            will not be available for scaling
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        gpuTypes:
+                          description: The filtered gpu types will belong to one of
+                            the gpu types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        maxGpu:
+                          description: Maximum number of GPUs available.
+                          type: number
+                        maxMemoryGib:
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
+                          type: number
+                        maxVcpu:
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
+                          type: number
+                        minDisk:
+                          description: Minimum number of data disks available.
+                          type: number
+                        minGpu:
+                          description: Minimum number of GPUs available.
+                          type: number
+                        minMemoryGib:
+                          description: Minimum amount of Memory (GiB).
+                          type: number
+                        minNics:
+                          description: Minimum number of network interfaces.
+                          type: number
+                        minVcpu:
+                          description: Minimum number of vcpus available.
+                          type: number
+                        series:
+                          description: Vm sizes belonging to a series from the list
+                            will be available for scaling. We can specify include
+                            list and series can be specified with capital or small
+                            letters, with space, without space or with underscore
+                            '_' .  For example all of these "DSv2", "Ds v2", "ds_v2"
+                            refer to same DS_v2 series.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        vmTypes:
+                          description: The filtered vm types will belong to one of
+                            the vm types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  headrooms:
+                    description: Specify the custom headroom per VNG. Provide a list
+                      of headroom objects.
+                    items:
+                      properties:
+                        cpuPerUnit:
+                          description: Configure the number of CPUs to allocate the
+                            headroom. CPUs are denoted in millicores, where 1000 millicores
+                            = 1 vCPU.
+                          type: number
+                        gpuPerUnit:
+                          description: Amount of GPU to allocate for headroom unit.
+                          type: number
+                        memoryPerUnit:
+                          description: Configure the amount of memory (MiB) to allocate
+                            the headroom.
+                          type: number
+                        numOfUnits:
+                          description: The number of units to retain as headroom,
+                            where each unit has the defined headroom CPU and memory.
+                          type: number
+                      type: object
+                    type: array
+                  health:
+                    description: The Ocean AKS Health object.
+                    items:
+                      properties:
+                        gracePeriod:
+                          description: The amount of time to wait, in seconds, from
+                            the moment the instance has launched until monitoring
+                            of its health checks begins.
+                          type: number
+                      type: object
+                    type: array
+                  kubernetesVersion:
+                    description: The desired Kubernetes version of the launched nodes.
+                      In case the value is null, the Kubernetes version of the control
+                      plane is used.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: An array of labels to add to the virtual node group.
+                      Only custom user labels are allowed, and not Kubernetes well-known
+                      labels or  Azure AKS labels or Spot labels.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  linuxOsConfig:
+                    description: Custom Linux OS configuration.
+                    items:
+                      properties:
+                        sysctls:
+                          description: System Controls
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                description: Maximum number of memory map areas a
+                                  process may have. Can be configured only if OS type
+                                  is Linux.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  maxCount:
+                    description: Maximum node count limit.
+                    type: number
+                  maxPodsPerNode:
+                    description: The maximum number of pods per node in the node pools.
+                    type: number
+                  minCount:
+                    description: Minimum node count limit.
+                    type: number
+                  name:
+                    description: Add a name for the Ocean cluster.
+                    type: string
+                  osDiskSizeGb:
+                    description: The size of the OS disk in GB.
+                    type: number
+                  osDiskType:
+                    description: The type of the OS disk.
+                    type: string
+                  osSku:
+                    description: The OS SKU of the OS type. Must correlate with the
+                      os type.
+                    type: string
+                  osType:
+                    description: The OS type of the OS disk. Can't be modified once
+                      set.
+                    type: string
+                  podSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign pods in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                  scheduling:
+                    description: An object used to specify times when the cluster
+                      will turn off. Once the shutdown time will be over, the cluster
+                      will return to its previous state.
+                    items:
+                      properties:
+                        shutdownHours:
+                          description: An object used to specify times that the nodes
+                            in the cluster will be taken down.
+                          items:
+                            properties:
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              timeWindows:
+                                description: The times that the shutdown hours will
+                                  apply. Required if isEnabled is true.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        tasks:
+                          description: A list of scheduling tasks to preform on the
+                            cluster at a specific cron time.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: 'A valid cron expression. The cron is
+                                  running in UTC time zone and is in Unix cron format
+                                  Cron Expression Validator Script. Only one of frequency
+                                  or cronExpression should be used at a time. Required
+                                  for cluster.scheduling.tasks object. (Example: 0
+                                  1 * * *).'
+                                type: string
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              parameters:
+                                description: The parameters of the scheduling task.
+                                  Each task type will have properties relevant only
+                                  to it.
+                                items:
+                                  properties:
+                                    parametersClusterRoll:
+                                      description: The parameters of the cluster roll
+                                        scheduling task.
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: Indicates the threshold of
+                                              minimum healthy nodes in single batch.
+                                              If the amount of healthy nodes in single
+                                              batch is under the threshold, the roll
+                                              will fail. If exists, the parameter
+                                              value will be in range of 1-100. In
+                                              case of null as value, the default value
+                                              in the backend will be 50%. Value of
+                                              param should represent the number in
+                                              percentage (%) of the batch.
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Value as a percent to set
+                                              the size of a batch in a roll. Valid
+                                              values are 0-100. In case of null as
+                                              value, the default value in the backend
+                                              will be 20%.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars and optional.
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor PDB during the
+                                              nodes replacement.
+                                            type: boolean
+                                          respectRestrictScaleDown:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor Restrict Scale
+                                              Down label during the nodes replacement.
+                                            type: boolean
+                                          vngIds:
+                                            description: List of virtual node group
+                                              identifiers to be rolled. Each identifier
+                                              is a string. vngIds can be null, and
+                                              cannot be used together with nodeNames
+                                              and nodePoolNames.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              taskType:
+                                description: 'Valid values: clusterRoll The type of
+                                  the scheduling task.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  spotPercentage:
+                    description: Percentage of spot VMs to maintain.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    type: object
+                    x-kubernetes-map-type: granular
+                  taints:
+                    description: Add taints to a virtual node group. Only custom user
+                      taints are allowed, and not Kubernetes well-known taints or
+                      Azure AKS ScaleSetPrioirty (Spot VM) taint. For all Spot VMs,
+                      AKS injects a taint kubernetes.azure.com/scalesetpriority=spot:NoSchedule,
+                      to ensure that only workloads that can handle interruptions
+                      are scheduled on Spot nodes. To schedule a pod to run on Spot
+                      node, add a toleration but dont include the nodeAffinity (not
+                      supported for Spot Ocean), this will prevent the pod from being
+                      scheduled using Spot Ocean.
+                    items:
+                      properties:
+                        effect:
+                          description: Set taint effect.
+                          type: string
+                        key:
+                          description: 'Set label key spot labels and Azure labels.
+                            The following are not allowed: ["kubernetes.azure.com/agentpool","kubernetes.io/arch","kubernetes.io/os","node.kubernetes.io/instance-type",
+                            "topology.kubernetes.io/region", "topology.kubernetes.io/zone",
+                            "kubernetes.azure.com/cluster", "kubernetes.azure.com/mode",
+                            "kubernetes.azure.com/role", "kubernetes.azure.com/scalesetpriority",
+                            "kubernetes.io/hostname", "kubernetes.azure.com/storageprofile",
+                            "kubernetes.azure.com/storagetier", "kubernetes.azure.com/instance-sku",
+                            "kubernetes.azure.com/node-image-version", "kubernetes.azure.com/subnet",
+                            "kubernetes.azure.com/vnet", "kubernetes.azure.com/ppg",
+                            "kubernetes.azure.com/encrypted-set", "kubernetes.azure.com/accelerator",
+                            "kubernetes.azure.com/fips_enabled", "kubernetes.azure.com/os-sku"]'
+                          type: string
+                        value:
+                          description: Set label value.
+                          type: string
+                      type: object
+                    type: array
+                  updatePolicy:
+                    items:
+                      properties:
+                        conditionedRoll:
+                          description: Spot will perform a cluster Roll in accordance
+                            with a relevant modification of the cluster’s settings.
+                            When set to true , only specific changes in the cluster’s
+                            configuration will trigger a cluster roll (such as availability_zones,
+                            max_pods_per_node, enable_node_public_ip, os_disk_size_gb,
+                            os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids,
+                            pod_subnet_ids, labels, taints and tags).
+                          type: boolean
+                        rollConfig:
+                          description: While used, you can control whether the group
+                            should perform a deployment after an update to the configuration.
+                          items:
+                            properties:
+                              batchMinHealthyPercentage:
+                                description: Indicates the threshold of minimum healthy
+                                  nodes in single batch. If the amount of healthy
+                                  nodes in single batch is under the threshold, the
+                                  roll will fail. If exists, the parameter value will
+                                  be in range of 1-100. In case of null as value,
+                                  the default value in the backend will be 50%. Value
+                                  of param should represent the number in percentage
+                                  (%) of the batch.
+                                type: number
+                              batchSizePercentage:
+                                description: Value as a percent to set the size of
+                                  a batch in a roll. Valid values are 0-100. In case
+                                  of null as value, the default value in the backend
+                                  will be 20%.
+                                type: number
+                              comment:
+                                description: Add a comment description for the roll.
+                                  The comment is limited to 256 chars and optional.
+                                type: string
+                              nodeNames:
+                                description: List of node names to be rolled. Each
+                                  identifier is a string. nodeNames can be null, and
+                                  cannot be used together with nodePoolNames and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              nodePoolNames:
+                                description: List of node pools to be rolled. Each
+                                  node pool name is a string. nodePoolNames can be
+                                  null, and cannot be used together with nodeNames
+                                  and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the nodes replacement.
+                                type: boolean
+                              respectRestrictScaleDown:
+                                description: During the roll, if the parameter is
+                                  set to true we honor Restrict Scale Down label during
+                                  the nodes replacement.
+                                type: boolean
+                              vngIds:
+                                description: List of virtual node group identifiers
+                                  to be rolled. Each identifier is a string. vngIds
+                                  can be null, and cannot be used together with nodeNames
+                                  and nodePoolNames.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        shouldRoll:
+                          description: If set to true along with the cluster update,
+                            roll will be triggered.
+                          type: boolean
+                      type: object
+                    type: array
+                  vnetSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign nodes in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.aksClusterName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.aksClusterName)
+                || (has(self.initProvider) && has(self.initProvider.aksClusterName))'
+            - message: spec.forProvider.aksInfrastructureResourceGroupName is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.aksInfrastructureResourceGroupName)
+                || (has(self.initProvider) && has(self.initProvider.aksInfrastructureResourceGroupName))'
+            - message: spec.forProvider.aksRegion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.aksRegion)
+                || (has(self.initProvider) && has(self.initProvider.aksRegion))'
+            - message: spec.forProvider.aksResourceGroupName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.aksResourceGroupName)
+                || (has(self.initProvider) && has(self.initProvider.aksResourceGroupName))'
+            - message: spec.forProvider.availabilityZones is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityZones)
+                || (has(self.initProvider) && has(self.initProvider.availabilityZones))'
+            - message: spec.forProvider.controllerClusterId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.controllerClusterId)
+                || (has(self.initProvider) && has(self.initProvider.controllerClusterId))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: OceanAksStatus defines the observed state of OceanAks.
+            properties:
+              atProvider:
+                properties:
+                  aksClusterName:
+                    description: The name of the AKS Cluster.
+                    type: string
+                  aksInfrastructureResourceGroupName:
+                    description: The name of the cluster's infrastructure resource
+                      group.
+                    type: string
+                  aksRegion:
+                    description: The cluster's region.
+                    type: string
+                  aksResourceGroupName:
+                    description: The name of the cluster's resource group.
+                    type: string
+                  autoscaler:
+                    description: The Ocean Kubernetes Autoscaler object.
+                    items:
+                      properties:
+                        autoscaleDown:
+                          description: Auto Scaling scale down operations.
+                          items:
+                            properties:
+                              maxScaleDownPercentage:
+                                description: The maximum percentage allowed to scale
+                                  down in a single scaling action.
+                                type: number
+                            type: object
+                          type: array
+                        autoscaleHeadroom:
+                          description: Spare resource capacity management enabling
+                            fast assignment of pods without waiting for new resources
+                            to launch.
+                          items:
+                            properties:
+                              automatic:
+                                description: Automatic headroom configuration.
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: Enable automatic headroom. When
+                                        set to true, Ocean configures and optimizes
+                                        headroom automatically.
+                                      type: boolean
+                                    percentage:
+                                      description: Optionally set a number between
+                                        0-100 to control the percentage of total cluster
+                                        resources dedicated to headroom.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        autoscaleIsEnabled:
+                          description: Enable the Ocean Kubernetes Autoscaler.
+                          type: boolean
+                        resourceLimits:
+                          description: Optionally set upper and lower bounds on the
+                            resource usage of the cluster.
+                          items:
+                            properties:
+                              maxMemoryGib:
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
+                                type: number
+                              maxVcpu:
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  availabilityZones:
+                    description: An Array holding Availability Zones, this configures
+                      the availability zones the Ocean may launch instances in per
+                      VNG.
+                    items:
+                      type: string
+                    type: array
+                  controllerClusterId:
+                    description: Enter a unique Ocean cluster identifier. Cannot be
+                      updated. This needs to match with string that was used to install
+                      the controller in the cluster, typically clusterName + 8 digit
+                      string.
+                    type: string
+                  enableNodePublicIp:
+                    description: Enable node public IP.
+                    type: boolean
+                  fallbackToOndemand:
+                    description: If no spot VM markets are available, enable Ocean
+                      to launch regular (pay-as-you-go) nodes instead.
+                    type: boolean
+                  filters:
+                    description: Filters for the VM sizes that can be launched from
+                      the virtual node group.
+                    items:
+                      properties:
+                        acceleratedNetworking:
+                          description: In case acceleratedNetworking is set to Enabled,
+                            accelerated networking applies only to the VM that enables
+                            it.
+                          type: string
+                        architectures:
+                          description: The filtered vm sizes will support at least
+                            one of the architectures from this list. x86_64 includes
+                            both intel64 and amd64.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        diskPerformance:
+                          description: The filtered vm sizes will support at least
+                            one of the classes from this list.
+                          type: string
+                        excludeSeries:
+                          description: Vm sizes belonging to a series from the list
+                            will not be available for scaling
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        gpuTypes:
+                          description: The filtered gpu types will belong to one of
+                            the gpu types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        maxGpu:
+                          description: Maximum number of GPUs available.
+                          type: number
+                        maxMemoryGib:
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
+                          type: number
+                        maxVcpu:
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
+                          type: number
+                        minDisk:
+                          description: Minimum number of data disks available.
+                          type: number
+                        minGpu:
+                          description: Minimum number of GPUs available.
+                          type: number
+                        minMemoryGib:
+                          description: Minimum amount of Memory (GiB).
+                          type: number
+                        minNics:
+                          description: Minimum number of network interfaces.
+                          type: number
+                        minVcpu:
+                          description: Minimum number of vcpus available.
+                          type: number
+                        series:
+                          description: Vm sizes belonging to a series from the list
+                            will be available for scaling. We can specify include
+                            list and series can be specified with capital or small
+                            letters, with space, without space or with underscore
+                            '_' .  For example all of these "DSv2", "Ds v2", "ds_v2"
+                            refer to same DS_v2 series.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        vmTypes:
+                          description: The filtered vm types will belong to one of
+                            the vm types from this list.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                      type: object
+                    type: array
+                  headrooms:
+                    description: Specify the custom headroom per VNG. Provide a list
+                      of headroom objects.
+                    items:
+                      properties:
+                        cpuPerUnit:
+                          description: Configure the number of CPUs to allocate the
+                            headroom. CPUs are denoted in millicores, where 1000 millicores
+                            = 1 vCPU.
+                          type: number
+                        gpuPerUnit:
+                          description: Amount of GPU to allocate for headroom unit.
+                          type: number
+                        memoryPerUnit:
+                          description: Configure the amount of memory (MiB) to allocate
+                            the headroom.
+                          type: number
+                        numOfUnits:
+                          description: The number of units to retain as headroom,
+                            where each unit has the defined headroom CPU and memory.
+                          type: number
+                      type: object
+                    type: array
+                  health:
+                    description: The Ocean AKS Health object.
+                    items:
+                      properties:
+                        gracePeriod:
+                          description: The amount of time to wait, in seconds, from
+                            the moment the instance has launched until monitoring
+                            of its health checks begins.
+                          type: number
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  kubernetesVersion:
+                    description: The desired Kubernetes version of the launched nodes.
+                      In case the value is null, the Kubernetes version of the control
+                      plane is used.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: An array of labels to add to the virtual node group.
+                      Only custom user labels are allowed, and not Kubernetes well-known
+                      labels or  Azure AKS labels or Spot labels.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  linuxOsConfig:
+                    description: Custom Linux OS configuration.
+                    items:
+                      properties:
+                        sysctls:
+                          description: System Controls
+                          items:
+                            properties:
+                              vmMaxMapCount:
+                                description: Maximum number of memory map areas a
+                                  process may have. Can be configured only if OS type
+                                  is Linux.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  maxCount:
+                    description: Maximum node count limit.
+                    type: number
+                  maxPodsPerNode:
+                    description: The maximum number of pods per node in the node pools.
+                    type: number
+                  minCount:
+                    description: Minimum node count limit.
+                    type: number
+                  name:
+                    description: Add a name for the Ocean cluster.
+                    type: string
+                  osDiskSizeGb:
+                    description: The size of the OS disk in GB.
+                    type: number
+                  osDiskType:
+                    description: The type of the OS disk.
+                    type: string
+                  osSku:
+                    description: The OS SKU of the OS type. Must correlate with the
+                      os type.
+                    type: string
+                  osType:
+                    description: The OS type of the OS disk. Can't be modified once
+                      set.
+                    type: string
+                  podSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign pods in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                  scheduling:
+                    description: An object used to specify times when the cluster
+                      will turn off. Once the shutdown time will be over, the cluster
+                      will return to its previous state.
+                    items:
+                      properties:
+                        shutdownHours:
+                          description: An object used to specify times that the nodes
+                            in the cluster will be taken down.
+                          items:
+                            properties:
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              timeWindows:
+                                description: The times that the shutdown hours will
+                                  apply. Required if isEnabled is true.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        tasks:
+                          description: A list of scheduling tasks to preform on the
+                            cluster at a specific cron time.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: 'A valid cron expression. The cron is
+                                  running in UTC time zone and is in Unix cron format
+                                  Cron Expression Validator Script. Only one of frequency
+                                  or cronExpression should be used at a time. Required
+                                  for cluster.scheduling.tasks object. (Example: 0
+                                  1 * * *).'
+                                type: string
+                              isEnabled:
+                                description: Enable automatic headroom. When set to
+                                  true, Ocean configures and optimizes headroom automatically.
+                                type: boolean
+                              parameters:
+                                description: The parameters of the scheduling task.
+                                  Each task type will have properties relevant only
+                                  to it.
+                                items:
+                                  properties:
+                                    parametersClusterRoll:
+                                      description: The parameters of the cluster roll
+                                        scheduling task.
+                                      items:
+                                        properties:
+                                          batchMinHealthyPercentage:
+                                            description: Indicates the threshold of
+                                              minimum healthy nodes in single batch.
+                                              If the amount of healthy nodes in single
+                                              batch is under the threshold, the roll
+                                              will fail. If exists, the parameter
+                                              value will be in range of 1-100. In
+                                              case of null as value, the default value
+                                              in the backend will be 50%. Value of
+                                              param should represent the number in
+                                              percentage (%) of the batch.
+                                            type: number
+                                          batchSizePercentage:
+                                            description: Value as a percent to set
+                                              the size of a batch in a roll. Valid
+                                              values are 0-100. In case of null as
+                                              value, the default value in the backend
+                                              will be 20%.
+                                            type: number
+                                          comment:
+                                            description: Add a comment description
+                                              for the roll. The comment is limited
+                                              to 256 chars and optional.
+                                            type: string
+                                          respectPdb:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor PDB during the
+                                              nodes replacement.
+                                            type: boolean
+                                          respectRestrictScaleDown:
+                                            description: During the roll, if the parameter
+                                              is set to true we honor Restrict Scale
+                                              Down label during the nodes replacement.
+                                            type: boolean
+                                          vngIds:
+                                            description: List of virtual node group
+                                              identifiers to be rolled. Each identifier
+                                              is a string. vngIds can be null, and
+                                              cannot be used together with nodeNames
+                                              and nodePoolNames.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              taskType:
+                                description: 'Valid values: clusterRoll The type of
+                                  the scheduling task.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  spotPercentage:
+                    description: Percentage of spot VMs to maintain.
+                    type: number
+                  tags:
+                    additionalProperties:
+                      type: string
+                    type: object
+                    x-kubernetes-map-type: granular
+                  taints:
+                    description: Add taints to a virtual node group. Only custom user
+                      taints are allowed, and not Kubernetes well-known taints or
+                      Azure AKS ScaleSetPrioirty (Spot VM) taint. For all Spot VMs,
+                      AKS injects a taint kubernetes.azure.com/scalesetpriority=spot:NoSchedule,
+                      to ensure that only workloads that can handle interruptions
+                      are scheduled on Spot nodes. To schedule a pod to run on Spot
+                      node, add a toleration but dont include the nodeAffinity (not
+                      supported for Spot Ocean), this will prevent the pod from being
+                      scheduled using Spot Ocean.
+                    items:
+                      properties:
+                        effect:
+                          description: Set taint effect.
+                          type: string
+                        key:
+                          description: 'Set label key spot labels and Azure labels.
+                            The following are not allowed: ["kubernetes.azure.com/agentpool","kubernetes.io/arch","kubernetes.io/os","node.kubernetes.io/instance-type",
+                            "topology.kubernetes.io/region", "topology.kubernetes.io/zone",
+                            "kubernetes.azure.com/cluster", "kubernetes.azure.com/mode",
+                            "kubernetes.azure.com/role", "kubernetes.azure.com/scalesetpriority",
+                            "kubernetes.io/hostname", "kubernetes.azure.com/storageprofile",
+                            "kubernetes.azure.com/storagetier", "kubernetes.azure.com/instance-sku",
+                            "kubernetes.azure.com/node-image-version", "kubernetes.azure.com/subnet",
+                            "kubernetes.azure.com/vnet", "kubernetes.azure.com/ppg",
+                            "kubernetes.azure.com/encrypted-set", "kubernetes.azure.com/accelerator",
+                            "kubernetes.azure.com/fips_enabled", "kubernetes.azure.com/os-sku"]'
+                          type: string
+                        value:
+                          description: Set label value.
+                          type: string
+                      type: object
+                    type: array
+                  updatePolicy:
+                    items:
+                      properties:
+                        conditionedRoll:
+                          description: Spot will perform a cluster Roll in accordance
+                            with a relevant modification of the cluster’s settings.
+                            When set to true , only specific changes in the cluster’s
+                            configuration will trigger a cluster roll (such as availability_zones,
+                            max_pods_per_node, enable_node_public_ip, os_disk_size_gb,
+                            os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids,
+                            pod_subnet_ids, labels, taints and tags).
+                          type: boolean
+                        rollConfig:
+                          description: While used, you can control whether the group
+                            should perform a deployment after an update to the configuration.
+                          items:
+                            properties:
+                              batchMinHealthyPercentage:
+                                description: Indicates the threshold of minimum healthy
+                                  nodes in single batch. If the amount of healthy
+                                  nodes in single batch is under the threshold, the
+                                  roll will fail. If exists, the parameter value will
+                                  be in range of 1-100. In case of null as value,
+                                  the default value in the backend will be 50%. Value
+                                  of param should represent the number in percentage
+                                  (%) of the batch.
+                                type: number
+                              batchSizePercentage:
+                                description: Value as a percent to set the size of
+                                  a batch in a roll. Valid values are 0-100. In case
+                                  of null as value, the default value in the backend
+                                  will be 20%.
+                                type: number
+                              comment:
+                                description: Add a comment description for the roll.
+                                  The comment is limited to 256 chars and optional.
+                                type: string
+                              nodeNames:
+                                description: List of node names to be rolled. Each
+                                  identifier is a string. nodeNames can be null, and
+                                  cannot be used together with nodePoolNames and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              nodePoolNames:
+                                description: List of node pools to be rolled. Each
+                                  node pool name is a string. nodePoolNames can be
+                                  null, and cannot be used together with nodeNames
+                                  and vngIds.
+                                items:
+                                  type: string
+                                type: array
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the nodes replacement.
+                                type: boolean
+                              respectRestrictScaleDown:
+                                description: During the roll, if the parameter is
+                                  set to true we honor Restrict Scale Down label during
+                                  the nodes replacement.
+                                type: boolean
+                              vngIds:
+                                description: List of virtual node group identifiers
+                                  to be rolled. Each identifier is a string. vngIds
+                                  can be null, and cannot be used together with nodeNames
+                                  and nodePoolNames.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        shouldRoll:
+                          description: If set to true along with the cluster update,
+                            roll will be triggered.
+                          type: boolean
+                      type: object
+                    type: array
+                  vnetSubnetIds:
+                    description: The IDs of subnets in an existing VNet into which
+                      to assign nodes in the cluster (requires azure network-plugin).
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

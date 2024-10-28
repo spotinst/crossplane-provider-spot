@@ -1,0 +1,71 @@
+
+apiVersion: oceanaks.spot.upbound.io/v1alpha1
+kind: OceanAks
+metadata:
+  name: crossplane-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: "ocean-cluster-name"
+    controllerClusterId: "controllerClusterId"
+    aksClusterName: "aksClusterName"
+    aksInfrastructureResourceGroupName: "aksInfrastructureResourceGroupName"
+    aksRegion: "eastus"
+    aksResourceGroupName: "aksResourceGroupName"
+    autoscaler:
+      - autoscaleDown:
+          - maxScaleDownPercentage: 30
+        autoscaleHeadroom:
+          - automatic:
+              - percentage: 20
+        autoscaleIsEnabled: true
+        resourceLimits:
+          - maxMemoryGib: 1500
+            maxVcpu: 750
+    scheduling:
+      - shutdownHours:
+          - isEnabled: true
+            timeWindows:
+              - Sat:08:00-Sun:08:00
+    health :
+      - gracePeriod: 700
+    availabilityZones:
+      - "1"
+      - "2"
+    maxPodsPerNode: 110
+    enableNodePublicIp: false
+    osDiskSizeGb: 128
+    osDiskType: Managed
+    osType: Linux
+    minCount: 1
+    maxCount: 100
+    spotPercentage: 100
+    fallbackToOndemand: true
+    headrooms:
+      - cpuPerUnit: 1024
+        gpuPerUnit: 0
+        memoryPerUnit: 512
+        numOfUnits: 2
+    labels:
+      key: env
+      value: test
+    taints:
+      - effect: NoSchedule
+        key: taintKey
+        value: taintValue
+    tags:
+      tagKey: env
+      tagValue: staging
+    filters:
+      - architectures:
+          - X86_64
+        maxMemoryGib: 18
+        maxVcpu: 16
+        minMemoryGib: 10
+        minVcpu: 2
+        series:
+          - D v3
+          - Dds_v4
+          - Dsv2
+  providerConfigRef:
+    name: default

@@ -7,10 +7,12 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaks"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaksvng"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanaws"
+	"github.com/spotinst/crossplane-provider-spot/config/oceanawslaunchspec"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
-
-	"github.com/spotinst/crossplane-provider-spot/config/null"
 )
 
 const (
@@ -36,7 +38,10 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		oceanaws.Configure,
+		oceanawslaunchspec.Configure,
+		oceanaks.Configure,
+		oceanaksvng.Configure,
 	} {
 		configure(pc)
 	}
