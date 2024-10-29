@@ -1,4 +1,5 @@
-apiVersion: oceanaws.spot.crossplane.io/v1alpha1
+
+apiVersion: oceanaws.spot.upbound.io/v1alpha1
 kind: OceanAws
 metadata:
   name: hello-crossplane
@@ -19,7 +20,7 @@ spec:
             maxVcpu: 750
         autoscaleHeadroom:
           - cpuPerUnit: 1024
-            gpuPerUnit: 1
+            gpuPerUnit: 0
             memoryPerUnit: 512
             numOfUnits: 2
     utilizeCommitments: false

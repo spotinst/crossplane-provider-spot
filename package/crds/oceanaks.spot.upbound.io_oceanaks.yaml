@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: oceanaks.oceanaks.spot.crossplane.io
+  name: oceanaks.oceanaks.spot.upbound.io
 spec:
-  group: oceanaks.spot.crossplane.io
+  group: oceanaks.spot.upbound.io
   names:
     categories:
     - crossplane

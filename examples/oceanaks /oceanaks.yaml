@@ -1,4 +1,5 @@
-apiVersion: oceanaks.spot.crossplane.io/v1alpha1
+
+apiVersion: oceanaks.spot.upbound.io/v1alpha1
 kind: OceanAks
 metadata:
   name: crossplane-test

@@ -1,4 +1,5 @@
-apiVersion: oceanawslaunchspec.spot.crossplane.io/v1alpha1
+
+apiVersion: oceanawslaunchspec.spot.upbound.io/v1alpha1
 kind: OceanAwsLaunchSpec
 metadata:
   labels:

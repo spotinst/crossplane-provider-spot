@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: oceanawslaunchspecs.oceanawslaunchspec.spot.crossplane.io
+  name: oceanawslaunchspecs.oceanawslaunchspec.spot.upbound.io
 spec:
-  group: oceanawslaunchspec.spot.crossplane.io
+  group: oceanawslaunchspec.spot.upbound.io
   names:
     categories:
     - crossplane
@@ -603,6 +603,10 @@ spec:
                                 description: Sets the percentage of the instances
                                   to deploy in each batch.
                                 type: number
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the instance replacement.
+                                type: boolean
                             type: object
                           type: array
                         shouldRoll:
@@ -1158,6 +1162,10 @@ spec:
                                 description: Sets the percentage of the instances
                                   to deploy in each batch.
                                 type: number
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the instance replacement.
+                                type: boolean
                             type: object
                           type: array
                         shouldRoll:
@@ -1880,6 +1888,10 @@ spec:
                                 description: Sets the percentage of the instances
                                   to deploy in each batch.
                                 type: number
+                              respectPdb:
+                                description: During the roll, if the parameter is
+                                  set to true we honor PDB during the instance replacement.
+                                type: boolean
                             type: object
                           type: array
                         shouldRoll:

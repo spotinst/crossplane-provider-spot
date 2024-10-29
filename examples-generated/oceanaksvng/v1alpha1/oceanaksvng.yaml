@@ -1,4 +1,4 @@
-apiVersion: oceanaksvng.spot.crossplane.io/v1alpha1
+apiVersion: oceanaksvng.spot.upbound.io/v1alpha1
 kind: OceanAksVng
 metadata:
   annotations:

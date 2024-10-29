@@ -1013,12 +1013,18 @@ type RollConfigInitParameters struct {
 
 	// Sets the percentage of the instances to deploy in each batch.
 	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
 type RollConfigObservation struct {
 
 	// Sets the percentage of the instances to deploy in each batch.
 	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
 type RollConfigParameters struct {
@@ -1026,6 +1032,10 @@ type RollConfigParameters struct {
 	// Sets the percentage of the instances to deploy in each batch.
 	// +kubebuilder:validation:Optional
 	BatchSizePercentage *float64 `json:"batchSizePercentage" tf:"batch_size_percentage,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
 type SchedulingShutdownHoursInitParameters struct {

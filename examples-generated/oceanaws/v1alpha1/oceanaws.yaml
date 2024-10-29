@@ -1,4 +1,4 @@
-apiVersion: oceanaws.spot.crossplane.io/v1alpha1
+apiVersion: oceanaws.spot.upbound.io/v1alpha1
 kind: OceanAws
 metadata:
   annotations:
