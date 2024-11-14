@@ -43,6 +43,7 @@ func GetProvider() *ujconfig.Provider {
 		oceanawslaunchspec.Configure,
 		oceanaks.Configure,
 		oceanaksvng.Configure,
+		oceanrightsizingrule.Configure,
 	} {
 		configure(pc)
 	}
