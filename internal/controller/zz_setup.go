@@ -13,6 +13,7 @@ import (
 	oceanaksvng "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanaksvng/oceanaksvng"
 	oceanaws "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanaws/oceanaws"
 	oceanawslaunchspec "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanawslaunchspec/oceanawslaunchspec"
+	oceanrightsizingrule "github.com/spotinst/crossplane-provider-spot/internal/controller/oceanrightsizingrule/oceanrightsizingrule"
 	providerconfig "github.com/spotinst/crossplane-provider-spot/internal/controller/providerconfig"
 )
 
@@ -24,6 +25,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		oceanaksvng.Setup,
 		oceanaws.Setup,
 		oceanawslaunchspec.Setup,
+		oceanrightsizingrule.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
