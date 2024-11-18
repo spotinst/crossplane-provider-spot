@@ -1,0 +1,80 @@
+apiVersion: oceanrightsizingrule.spot.upbound.io/v1alpha1
+kind: OceanRightsizingRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceanrightsizingrule/v1alpha1/oceanrightsizingrule
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    excludePreliminaryRecommendations: true
+    oceanId: o-123456
+    ruleName: test-rule
+    recommendationApplicationBoundaries:
+      - cpuMax: 190
+        cpuMin: 120
+        memoryMax: 190
+        memoryMin: 160
+    recommendationApplicationHpa:
+      - allowHpaRecommendations: false
+    recommendationApplicationIntervals:
+      - repetitionBasis: WEEKLY
+        weeklyRepetitionBasis:
+          - intervalDays:
+              - MONDAY
+              - WEDNESDAY
+            intervalHoursEndTime: "14:00"
+            intervalHoursStartTime: "12:00"
+      - monthlyRepetitionBasis:
+          - intervalMonths:
+              - 2
+              - 6
+              - 9
+            weekOfTheMonth:
+              - FIRST
+              - LAST
+            weeklyRepetitionBasis:
+              - intervalDays:
+                  - MONDAY
+                intervalHoursEndTime: "04:00"
+                intervalHoursStartTime: "03:00"
+        repetitionBasis: MONTHLY
+    recommendationApplicationMinThreshold:
+      - cpuPercentage: 0.412
+        memoryPercentage: 0.36
+    recommendationApplicationOverheadValues:
+      - cpuPercentage: 0.7
+        memoryPercentage: 0.5
+    restartReplicas: ALL_MANIFEST
+    attachWorkloads:
+      - namespaces:
+          - namespaceName: "kube-system"
+            workloads:
+              - regexName: "csi-*"
+                workloadType: "DaemonSet"
+          - namespaceName: "kube-system"
+            workloads:
+              - workloadName: "metrics-server"
+                workloadType: "Deployment"
+          - namespaceName: "kube-system"
+            workloads:
+              - workloadName: "konnectivity-agent"
+                workloadType: "Deployment"
+    detachWorkloads:
+      - namespaces:
+          - namespaceName: "kube-system"
+            workloads:
+              - regexName: "csi-*"
+                workloadType: "DaemonSet"
+          - namespaceName: "kube-system"
+            workloads:
+              - workloadName: "metrics-server"
+                workloadType: "Deployment"
+          - namespaceName: "kube-system"
+            workloads:
+              - workloadName: "konnectivity-agent"
+                workloadType: "Deployment"
+  providerConfigRef:
+    name: default
+    
