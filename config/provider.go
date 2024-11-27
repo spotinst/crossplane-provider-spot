@@ -7,13 +7,14 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/spotinst/crossplane-provider-spot/config/oceangke"
+	"github.com/spotinst/crossplane-provider-spot/config/oceangkelaunchspec"
 
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaks"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaksvng"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaws"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanawslaunchspec"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanrightsizingrule"
-	"github.com/spotinst/crossplane-provider-spot/config/oceangcp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
@@ -46,7 +47,8 @@ func GetProvider() *ujconfig.Provider {
 		oceanaks.Configure,
 		oceanaksvng.Configure,
 		oceanrightsizingrule.Configure,
-		oceangcp.Configure,
+		oceangke.Configure,
+		oceangkelaunchspec.Configure,
 	} {
 		configure(pc)
 	}
