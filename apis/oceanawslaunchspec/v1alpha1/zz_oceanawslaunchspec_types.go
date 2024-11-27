@@ -721,6 +721,9 @@ type OceanAwsLaunchSpecInitParameters struct {
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
 
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
+
 	ResourceLimits []ResourceLimitsInitParameters `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 
 	// Boolean. When set to true, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
@@ -818,6 +821,9 @@ type OceanAwsLaunchSpecObservation struct {
 
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
+
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	ResourceLimits []ResourceLimitsObservation `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 
@@ -933,6 +939,10 @@ type OceanAwsLaunchSpecParameters struct {
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	// +kubebuilder:validation:Optional
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
+
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	// +kubebuilder:validation:Optional
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	ResourceLimits []ResourceLimitsParameters `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`

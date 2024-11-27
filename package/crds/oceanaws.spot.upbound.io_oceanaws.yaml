@@ -531,6 +531,10 @@ spec:
                   region:
                     description: The region the cluster will run in.
                     type: string
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
                       Node Group tags or Ocean tags. If tags are set on the VNG, the
@@ -1288,6 +1292,10 @@ spec:
                   region:
                     description: The region the cluster will run in.
                     type: string
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
                       Node Group tags or Ocean tags. If tags are set on the VNG, the
@@ -2221,6 +2229,10 @@ spec:
                   region:
                     description: The region the cluster will run in.
                     type: string
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
                       Node Group tags or Ocean tags. If tags are set on the VNG, the

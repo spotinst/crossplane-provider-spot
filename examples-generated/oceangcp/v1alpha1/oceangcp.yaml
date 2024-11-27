@@ -1,0 +1,43 @@
+apiVersion: oceangcp.spot.upbound.io/v1alpha1
+kind: OceanGcp
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceangcp/v1alpha1/oceangcp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    backendServices:
+    - locationType: regional
+      namedPorts:
+      - name: http
+        ports:
+        - 80
+        - 8080
+      scheme: INTERNAL
+      serviceName: example-backend-service
+    clusterName: example-cluster-name
+    controllerClusterId: example-controller-123124
+    desiredCapacity: 0
+    filters:
+    - excludeFamilies:
+      - n2
+      includeFamilies:
+      - c2
+      - c3
+      maxMemoryGib: 16
+      maxVcpu: 16
+      minMemoryGib: 8
+      minVcpu: 2
+    location: us-central1-a
+    maxSize: 2
+    minSize: 0
+    rootVolumeType: pd-ssd
+    shieldedInstanceConfig:
+    - enableIntegrityMonitoring: true
+      enableSecureBoot: true
+    useAsTemplateOnly: false
+    whitelist:
+    - n1-standard-1
+    - n1-standard-2

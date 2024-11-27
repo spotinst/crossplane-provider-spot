@@ -440,6 +440,10 @@ spec:
                     items:
                       type: string
                     type: array
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceLimits:
                     items:
                       properties:
@@ -999,6 +1003,10 @@ spec:
                     items:
                       type: string
                     type: array
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceLimits:
                     items:
                       properties:
@@ -1725,6 +1733,10 @@ spec:
                     items:
                       type: string
                     type: array
+                  reservedEnis:
+                    description: Specifies the count of ENIs to reserve per instance
+                      type for scaling purposes.
+                    type: number
                   resourceLimits:
                     items:
                       properties:

@@ -2307,6 +2307,11 @@ func (in *OceanAwsInitParameters) DeepCopyInto(out *OceanAwsInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ResourceTagSpecification != nil {
 		in, out := &in.ResourceTagSpecification, &out.ResourceTagSpecification
 		*out = make([]ResourceTagSpecificationInitParameters, len(*in))
@@ -2614,6 +2619,11 @@ func (in *OceanAwsObservation) DeepCopyInto(out *OceanAwsObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ResourceTagSpecification != nil {
 		in, out := &in.ResourceTagSpecification, &out.ResourceTagSpecification
 		*out = make([]ResourceTagSpecificationObservation, len(*in))
@@ -2882,6 +2892,11 @@ func (in *OceanAwsParameters) DeepCopyInto(out *OceanAwsParameters) {
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
+		**out = **in
+	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
 		**out = **in
 	}
 	if in.ResourceTagSpecification != nil {
