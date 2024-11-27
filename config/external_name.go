@@ -15,7 +15,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"spotinst_ocean_aks_np":                    config.IdentifierFromProvider,
 	"spotinst_ocean_aks_np_virtual_node_group": config.IdentifierFromProvider,
 	"spotinst_ocean_right_sizing_rule":         config.IdentifierFromProvider,
-	"spotinst_ocean_gke_import":         		config.IdentifierFromProvider,
+	"spotinst_ocean_gke_import":                config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
