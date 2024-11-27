@@ -13,6 +13,7 @@ import (
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaws"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanawslaunchspec"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanrightsizingrule"
+	"github.com/spotinst/crossplane-provider-spot/config/oceangcp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
@@ -45,6 +46,7 @@ func GetProvider() *ujconfig.Provider {
 		oceanaks.Configure,
 		oceanaksvng.Configure,
 		oceanrightsizingrule.Configure,
+		oceangcp.Configure,
 	} {
 		configure(pc)
 	}
