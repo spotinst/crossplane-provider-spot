@@ -1,0 +1,23 @@
+apiVersion: oceangkelaunchspec.spot.upbound.io/v1alpha1
+kind: OceanGkeLaunchSpec
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceangkelaunchspec/v1alpha1/oceangkelaunchspec
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: test-vng
+    oceanId: o-123456
+    resourceLimits:
+    - maxInstanceCount: 1
+      minInstanceCount: 2
+    restrictScaleDown: true
+    rootVolumeSize: 10
+    metadata:
+      - key: gci-update-strategy
+        value: update_disabled
+    sourceImage: "image"
+    strategy:
+    - preemptiblePercentage: 30

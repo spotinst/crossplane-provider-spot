@@ -1,0 +1,26 @@
+apiVersion: oceangke.spot.upbound.io/v1alpha1
+kind: OceanGke
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceangke/v1alpha1/oceangke
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clusterName: hello-crossplane
+    controllerClusterId: clusterControllerId
+    location: us-east1-b
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 2
+    rootVolumeType: pd-ssd
+    shieldedInstanceConfig:
+      - enableIntegrityMonitoring: true
+        enableSecureBoot: true
+    useAsTemplateOnly: false
+    whitelist:
+      - n1-standard-1
+      - n1-standard-2
+  providerConfigRef:
+    name: default

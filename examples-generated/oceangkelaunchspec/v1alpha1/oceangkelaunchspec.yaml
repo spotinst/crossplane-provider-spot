@@ -1,0 +1,70 @@
+apiVersion: oceangkelaunchspec.spot.upbound.io/v1alpha1
+kind: OceanGkeLaunchSpec
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oceangkelaunchspec/v1alpha1/oceangkelaunchspec
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoscaleHeadrooms:
+    - cpuPerUnit: 1000
+      gpuPerUnit: 0
+      memoryPerUnit: 2048
+      numOfUnits: 5
+    autoscaleHeadroomsAutomatic:
+    - autoHeadroomPercentage: 5
+    createOptions:
+    - initialNodes: 1
+    instanceTypes:
+    - n1-standard-1, n1-standard-2
+    labels:
+    - key: labelKey
+      value: labelVal
+    metadata:
+    - key: gci-update-strategy
+      value: update_disabled
+    name: specialty.nodes.spotk8s.com
+    networkInterfaces:
+    - accessConfigs:
+      - name: external-nat-vng
+        type: ONE_TO_ONE_NAT
+      aliasIpRanges:
+      - ipCidrRange: /25
+        subnetworkRangeName: gke-test-native-vpc-pods-123456-vng
+      network: test-vng-network
+      projectId: test-vng-network-project
+    nodePoolName: default-pool
+    oceanId: o-123456
+    resourceLimits:
+    - maxInstanceCount: 3
+      minInstanceCount: 0
+    restrictScaleDown: true
+    rootVolumeSize: 10
+    rootVolumeType: pd-standard
+    schedulingTask:
+    - cronExpression: 0 1 * * *
+      isEnabled: true
+      taskHeadroom:
+      - cpuPerUnit: 1000
+        gpuPerUnit: 0
+        memoryPerUnit: 2048
+        numOfUnits: 5
+      taskType: manualHeadroomUpdate
+    serviceAccount: default
+    shieldedInstanceConfig:
+    - enableIntegrityMonitoring: true
+      enableSecureBoot: false
+    sourceImage: image
+    storage:
+    - localSsdCount: 5
+    strategy:
+    - preemptiblePercentage: 30
+    tags:
+    - tag1
+    - tag2
+    taints:
+    - effect: taintEffect
+      key: taintKey
+      value: taintVal
