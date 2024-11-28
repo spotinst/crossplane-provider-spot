@@ -65,6 +65,7 @@ spec:
     preferredSpotTypes:
     - m4.large
     - m4.xlarge
+    reservedEnis: 1
     resourceLimits:
     - maxInstanceCount: 4
       minInstanceCount: 0
