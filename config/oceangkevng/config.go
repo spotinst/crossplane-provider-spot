@@ -1,4 +1,4 @@
-package oceangkelaunchspec
+package oceangkevng
 
 /*
 Copyright 2021 Upbound Inc.
@@ -14,7 +14,7 @@ func Configure(p *ujconfig.Provider) {
 
 		// we need to override the default group that upjet generated for
 		// this resource, which would be "spotinst"
-		r.ShortGroup = "oceangkelaunchspec"
-		r.Kind = "OceanGkeLaunchSpec"
+		r.ShortGroup = "oceangkevng"
+		r.Kind = "OceanGkeVng"
 	})
 }
