@@ -8,9 +8,9 @@ Spot API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/spotinst/crossplane-provider-spot):
+to the [latest release](https://marketplace.upbound.io/providers/spot-by-netapp/crossplane-provider-spot/):
 ```
-up ctp provider install spotinst/crossplane-provider-spot:v0.1.0
+up ctp provider install xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.6.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: crossplane-provider-spot
 spec:
-  package: spotinst/crossplane-provider-spot:v0.1.0
+  package: xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.6.0
 EOF
 ```
 

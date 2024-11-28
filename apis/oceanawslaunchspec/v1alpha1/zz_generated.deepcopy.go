@@ -1708,6 +1708,11 @@ func (in *OceanAwsLaunchSpecInitParameters) DeepCopyInto(out *OceanAwsLaunchSpec
 			}
 		}
 	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ResourceLimits != nil {
 		in, out := &in.ResourceLimits, &out.ResourceLimits
 		*out = make([]ResourceLimitsInitParameters, len(*in))
@@ -1988,6 +1993,11 @@ func (in *OceanAwsLaunchSpecObservation) DeepCopyInto(out *OceanAwsLaunchSpecObs
 			}
 		}
 	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ResourceLimits != nil {
 		in, out := &in.ResourceLimits, &out.ResourceLimits
 		*out = make([]ResourceLimitsObservation, len(*in))
@@ -2230,6 +2240,11 @@ func (in *OceanAwsLaunchSpecParameters) DeepCopyInto(out *OceanAwsLaunchSpecPara
 				**out = **in
 			}
 		}
+	}
+	if in.ReservedEnis != nil {
+		in, out := &in.ReservedEnis, &out.ReservedEnis
+		*out = new(float64)
+		**out = **in
 	}
 	if in.ResourceLimits != nil {
 		in, out := &in.ResourceLimits, &out.ResourceLimits

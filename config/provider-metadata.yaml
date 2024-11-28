@@ -2245,6 +2245,7 @@ resources:
             parameters_cluster_roll: '- (Optional) Set clusterRoll object'
             patch: '- (Optional, Default:false) When set to ''true'', the auto-update process will update the VNGs’ images with the latest security patches. either "patch" or "minorVersion" must be true.'
             region: '- (Required) The region the cluster will run in.'
+            reserved_enis: '- (Optional, Default: 0) Specifies the count of ENIs to reserve per instance type for scaling purposes.'
             resource: '- (Required) String. Resource type to increase volume size dynamically by. (Valid values: CPU)'
             resource_limits: '- (Optional) Optionally set upper and lower bounds on the resource usage of the cluster.'
             resource_tag_specification: '- (Optional) Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.'
@@ -2417,6 +2418,7 @@ resources:
                     "m4.large",
                     "m4.xlarge"
                   ],
+                  "reserved_enis": 1,
                   "resource_limits": [
                     {
                       "max_instance_count": 4,
@@ -2549,6 +2551,7 @@ resources:
             ocean_id: '- (Required) The ID of the Ocean cluster.'
             preferred_od_types: '- (Optional) A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
             preferred_spot_types: '- (Optional) A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
+            reserved_enis: '- (Optional, Default: 0) Specifies the count of ENIs to reserve per instance type for scaling purposes.'
             resource: '- (Required) String. Resource type to increase volume size dynamically by. (Valid values: CPU)'
             resource_limits: '- (Optional)'
             respect_pdb: '- (Optional, Default: false) During the roll, if the parameter is set to true we honor PDB during the instance replacement.'
@@ -3022,6 +3025,21 @@ resources:
                   "cluster_name": "example-cluster-name",
                   "controller_cluster_id": "example-controller-123124",
                   "desired_capacity": 0,
+                  "filters": [
+                    {
+                      "exclude_families": [
+                        "n2"
+                      ],
+                      "include_families": [
+                        "c2",
+                        "c3"
+                      ],
+                      "max_memory_gib": 16,
+                      "max_vcpu": 16,
+                      "min_memory_gib": 8,
+                      "min_vcpu": 2
+                    }
+                  ],
                   "location": "us-central1-a",
                   "max_size": 2,
                   "min_size": 0,
@@ -3064,9 +3082,13 @@ resources:
             enable_integrity_monitoring: '- (Optional) Boolean. Enable the integrity monitoring parameter on the GCP instances.'
             enable_secure_boot: '- (Optional) Boolean. Enable the secure boot parameter on the GCP instances.'
             evaluation_periods: '- (Optional, Default: null) The number of evaluation periods that should accumulate before a scale down action takes place.'
+            exclude_families: '- (Optional) Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.'
+            filters: '- (Optional) List of filters. The Instance types that match with all filters compose the Ocean''s whitelist parameter. Cannot be configured together with whitelist/blacklist.'
             gpu_per_unit: '- (Optional) How much GPU allocate for headroom unit.'
             headroom: '- (Optional) Spare resource capacity management enabling fast assignment of Pods without waiting for new resources to launch.'
             id: '- The Spotinst Ocean ID.'
+            include_families: '- (Optional) Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.'
+            is_aggressive_scale_down_enabled: '- (Optional, Default: false) When set to ''true'', the Aggressive Scale Down feature is enabled.'
             is_auto_config: '- (Optional, Default: true) Automatically configure and optimize headroom resources.'
             is_enabled: |-
                 - (Optional)  Flag to enable / disable the shutdown hours.
@@ -3074,12 +3096,14 @@ resources:
             launch_spec_ids: '- (Optional) List of Virtual Node Group identifiers to be rolled.'
             location: '- (Required) The zone the master cluster is located in.'
             location_type: '- (Optional) Sets which location the backend services will be active. Valid values: regional, global.'
-            max_memory_gib: '- (Optional) The maximum memory in GiB units that can be allocated to the cluster.'
+            max_memory_gib: '- (Optional) Maximum amount of Memory (GiB).'
             max_scale_down_percentage: '- (Optional) Would represent the maximum % to scale-down. Number between 1-100.'
             max_size: '- (Optional, Default: 1000) The upper limit of instances the cluster can scale up to.'
-            max_vcpu: '- (Optional) The maximum cpu in vCpu units that can be allocated to the cluster.'
+            max_vcpu: '- (Optional) Maximum number of vcpus available.'
             memory_per_unit: '- (Optional) Optionally configure the amount of memory (MiB) to allocate the headroom.'
+            min_memory_gib: '- (Optional) Minimum amount of Memory (GiB).'
             min_size: '- (Optional) The lower limit of instances the cluster can scale down to.'
+            min_vcpu: '- (Optional) Minimum number of vcpus available.'
             named_port: '- (Optional) Describes a named port and a list of ports.'
             num_of_units: '- (Optional) The number of units to retain as headroom, where each unit has the defined headroom CPU and memory.'
             port_name: '- (Required) The name of the port.'

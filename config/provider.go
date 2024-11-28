@@ -8,6 +8,9 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
+	"github.com/spotinst/crossplane-provider-spot/config/oceangke"
+	"github.com/spotinst/crossplane-provider-spot/config/oceangkevng"
+
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaks"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaksvng"
 	"github.com/spotinst/crossplane-provider-spot/config/oceanaws"
@@ -45,6 +48,8 @@ func GetProvider() *ujconfig.Provider {
 		oceanaks.Configure,
 		oceanaksvng.Configure,
 		oceanrightsizingrule.Configure,
+		oceangke.Configure,
+		oceangkevng.Configure,
 	} {
 		configure(pc)
 	}

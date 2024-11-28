@@ -1017,6 +1017,9 @@ type OceanAwsInitParameters struct {
 	// The region the cluster will run in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
+
 	// Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.
 	ResourceTagSpecification []ResourceTagSpecificationInitParameters `json:"resourceTagSpecification,omitempty" tf:"resource_tag_specification,omitempty"`
 
@@ -1144,6 +1147,9 @@ type OceanAwsObservation struct {
 
 	// The region the cluster will run in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.
 	ResourceTagSpecification []ResourceTagSpecificationObservation `json:"resourceTagSpecification,omitempty" tf:"resource_tag_specification,omitempty"`
@@ -1296,6 +1302,10 @@ type OceanAwsParameters struct {
 	// The region the cluster will run in.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
+	// +kubebuilder:validation:Optional
+	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.
 	// +kubebuilder:validation:Optional

@@ -14,6 +14,8 @@ import (
 	v1alpha1oceanaksvng "github.com/spotinst/crossplane-provider-spot/apis/oceanaksvng/v1alpha1"
 	v1alpha1oceanaws "github.com/spotinst/crossplane-provider-spot/apis/oceanaws/v1alpha1"
 	v1alpha1oceanawslaunchspec "github.com/spotinst/crossplane-provider-spot/apis/oceanawslaunchspec/v1alpha1"
+	v1alpha1oceangke "github.com/spotinst/crossplane-provider-spot/apis/oceangke/v1alpha1"
+	v1alpha1oceangkevng "github.com/spotinst/crossplane-provider-spot/apis/oceangkevng/v1alpha1"
 	v1alpha1oceanrightsizingrule "github.com/spotinst/crossplane-provider-spot/apis/oceanrightsizingrule/v1alpha1"
 	v1alpha1apis "github.com/spotinst/crossplane-provider-spot/apis/v1alpha1"
 	v1beta1 "github.com/spotinst/crossplane-provider-spot/apis/v1beta1"
@@ -26,6 +28,8 @@ func init() {
 		v1alpha1oceanaksvng.SchemeBuilder.AddToScheme,
 		v1alpha1oceanaws.SchemeBuilder.AddToScheme,
 		v1alpha1oceanawslaunchspec.SchemeBuilder.AddToScheme,
+		v1alpha1oceangke.SchemeBuilder.AddToScheme,
+		v1alpha1oceangkevng.SchemeBuilder.AddToScheme,
 		v1alpha1oceanrightsizingrule.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
