@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: crossplane-provider-spot
 spec:
-  package: spotinst/crossplane-provider-spot:v0.6.0
+  package: xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.6.0
 EOF
 ```
 
