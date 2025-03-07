@@ -73,6 +73,17 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  autoUpdate:
+                    description: The Ocean Kubernetes AutoUpdate object. If set to
+                      'true', Ocean will ensure that your clusters have an up-to-date
+                      configuration according to the respective GKE cluster.
+                    items:
+                      properties:
+                        isEnabled:
+                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          type: boolean
+                      type: object
+                    type: array
                   autoscaler:
                     description: The Ocean Kubernetes Autoscaler object.
                     items:
@@ -140,9 +151,7 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: |-
-                            Flag to enable / disable the shutdown hours.
-                            Example: true
+                          description: Enable the Ocean Kubernetes AutoUpdate.
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -270,9 +279,7 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               timeWindows:
                                 description: |-
@@ -293,9 +300,7 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.
@@ -451,6 +456,17 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  autoUpdate:
+                    description: The Ocean Kubernetes AutoUpdate object. If set to
+                      'true', Ocean will ensure that your clusters have an up-to-date
+                      configuration according to the respective GKE cluster.
+                    items:
+                      properties:
+                        isEnabled:
+                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          type: boolean
+                      type: object
+                    type: array
                   autoscaler:
                     description: The Ocean Kubernetes Autoscaler object.
                     items:
@@ -518,9 +534,7 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: |-
-                            Flag to enable / disable the shutdown hours.
-                            Example: true
+                          description: Enable the Ocean Kubernetes AutoUpdate.
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -648,9 +662,7 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               timeWindows:
                                 description: |-
@@ -671,9 +683,7 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.
@@ -997,6 +1007,17 @@ spec:
             properties:
               atProvider:
                 properties:
+                  autoUpdate:
+                    description: The Ocean Kubernetes AutoUpdate object. If set to
+                      'true', Ocean will ensure that your clusters have an up-to-date
+                      configuration according to the respective GKE cluster.
+                    items:
+                      properties:
+                        isEnabled:
+                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          type: boolean
+                      type: object
+                    type: array
                   autoscaler:
                     description: The Ocean Kubernetes Autoscaler object.
                     items:
@@ -1064,9 +1085,7 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: |-
-                            Flag to enable / disable the shutdown hours.
-                            Example: true
+                          description: Enable the Ocean Kubernetes AutoUpdate.
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -1200,9 +1219,7 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               timeWindows:
                                 description: |-
@@ -1223,9 +1240,7 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: |-
-                                  Flag to enable / disable the shutdown hours.
-                                  Example: true
+                                description: Enable the Ocean Kubernetes AutoUpdate.
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.

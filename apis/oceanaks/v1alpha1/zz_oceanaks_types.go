@@ -129,6 +129,44 @@ type AutoscalerParameters struct {
 	ResourceLimits []ResourceLimitsParameters `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 }
 
+type AzureBlobInitParameters struct {
+
+	// The identifier of The Azure Blob data integration to export the logs to.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type AzureBlobObservation struct {
+
+	// The identifier of The Azure Blob data integration to export the logs to.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type AzureBlobParameters struct {
+
+	// The identifier of The Azure Blob data integration to export the logs to.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type ExportInitParameters struct {
+
+	// Exports your cluster's logs to the storage account and container configured on the storage account data integration given. Each file contains logs of 3 minutes where each log is separated by a new line and saved as a JSON. The file formats are container/accountId“oceanId“oceanName_startTime.log
+	AzureBlob []AzureBlobInitParameters `json:"azureBlob,omitempty" tf:"azure_blob,omitempty"`
+}
+
+type ExportObservation struct {
+
+	// Exports your cluster's logs to the storage account and container configured on the storage account data integration given. Each file contains logs of 3 minutes where each log is separated by a new line and saved as a JSON. The file formats are container/accountId“oceanId“oceanName_startTime.log
+	AzureBlob []AzureBlobObservation `json:"azureBlob,omitempty" tf:"azure_blob,omitempty"`
+}
+
+type ExportParameters struct {
+
+	// Exports your cluster's logs to the storage account and container configured on the storage account data integration given. Each file contains logs of 3 minutes where each log is separated by a new line and saved as a JSON. The file formats are container/accountId“oceanId“oceanName_startTime.log
+	// +kubebuilder:validation:Optional
+	AzureBlob []AzureBlobParameters `json:"azureBlob,omitempty" tf:"azure_blob,omitempty"`
+}
+
 type FiltersInitParameters struct {
 
 	// In case acceleratedNetworking is set to Enabled, accelerated networking applies only to the VM that enables it.
@@ -390,6 +428,25 @@ type LinuxOsConfigParameters struct {
 	Sysctls []SysctlsParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
 }
 
+type LoggingInitParameters struct {
+
+	// The Ocean AKS Logging Export object.
+	Export []ExportInitParameters `json:"export,omitempty" tf:"export,omitempty"`
+}
+
+type LoggingObservation struct {
+
+	// The Ocean AKS Logging Export object.
+	Export []ExportObservation `json:"export,omitempty" tf:"export,omitempty"`
+}
+
+type LoggingParameters struct {
+
+	// The Ocean AKS Logging Export object.
+	// +kubebuilder:validation:Optional
+	Export []ExportParameters `json:"export,omitempty" tf:"export,omitempty"`
+}
+
 type OceanAksInitParameters struct {
 
 	// The name of the AKS Cluster.
@@ -438,6 +495,9 @@ type OceanAksInitParameters struct {
 	// Custom Linux OS configuration.
 	LinuxOsConfig []LinuxOsConfigInitParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
+	// The Ocean AKS Logging Object.
+	Logging []LoggingInitParameters `json:"logging,omitempty" tf:"logging,omitempty"`
+
 	// Maximum node count limit.
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
 
@@ -481,6 +541,9 @@ type OceanAksInitParameters struct {
 
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
+
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	VngTemplateScheduling []VngTemplateSchedulingInitParameters `json:"vngTemplateScheduling,omitempty" tf:"vng_template_scheduling,omitempty"`
 }
 
 type OceanAksObservation struct {
@@ -521,6 +584,7 @@ type OceanAksObservation struct {
 	// The Ocean AKS Health object.
 	Health []HealthObservation `json:"health,omitempty" tf:"health,omitempty"`
 
+	// The identifier of The Azure Blob data integration to export the logs to.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The desired Kubernetes version of the launched nodes. In case the value is null, the Kubernetes version of the control plane is used.
@@ -532,6 +596,9 @@ type OceanAksObservation struct {
 
 	// Custom Linux OS configuration.
 	LinuxOsConfig []LinuxOsConfigObservation `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
+
+	// The Ocean AKS Logging Object.
+	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
 
 	// Maximum node count limit.
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
@@ -576,6 +643,9 @@ type OceanAksObservation struct {
 
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
+
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	VngTemplateScheduling []VngTemplateSchedulingObservation `json:"vngTemplateScheduling,omitempty" tf:"vng_template_scheduling,omitempty"`
 }
 
 type OceanAksParameters struct {
@@ -641,6 +711,10 @@ type OceanAksParameters struct {
 	// +kubebuilder:validation:Optional
 	LinuxOsConfig []LinuxOsConfigParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
+	// The Ocean AKS Logging Object.
+	// +kubebuilder:validation:Optional
+	Logging []LoggingParameters `json:"logging,omitempty" tf:"logging,omitempty"`
+
 	// Maximum node count limit.
 	// +kubebuilder:validation:Optional
 	MaxCount *float64 `json:"maxCount,omitempty" tf:"max_count,omitempty"`
@@ -699,6 +773,10 @@ type OceanAksParameters struct {
 	// The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).
 	// +kubebuilder:validation:Optional
 	VnetSubnetIds []*string `json:"vnetSubnetIds,omitempty" tf:"vnet_subnet_ids,omitempty"`
+
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	// +kubebuilder:validation:Optional
+	VngTemplateScheduling []VngTemplateSchedulingParameters `json:"vngTemplateScheduling,omitempty" tf:"vng_template_scheduling,omitempty"`
 }
 
 type ParametersClusterRollInitParameters struct {
@@ -774,12 +852,18 @@ type ParametersInitParameters struct {
 
 	// The parameters of the cluster roll scheduling task.
 	ParametersClusterRoll []ParametersClusterRollInitParameters `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
+
+	// The parameters of the upgrade config scheduling task.
+	ParametersUpgradeConfig []ParametersUpgradeConfigInitParameters `json:"parametersUpgradeConfig,omitempty" tf:"parameters_upgrade_config,omitempty"`
 }
 
 type ParametersObservation struct {
 
 	// The parameters of the cluster roll scheduling task.
 	ParametersClusterRoll []ParametersClusterRollObservation `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
+
+	// The parameters of the upgrade config scheduling task.
+	ParametersUpgradeConfig []ParametersUpgradeConfigObservation `json:"parametersUpgradeConfig,omitempty" tf:"parameters_upgrade_config,omitempty"`
 }
 
 type ParametersParameters struct {
@@ -787,6 +871,46 @@ type ParametersParameters struct {
 	// The parameters of the cluster roll scheduling task.
 	// +kubebuilder:validation:Optional
 	ParametersClusterRoll []ParametersClusterRollParameters `json:"parametersClusterRoll,omitempty" tf:"parameters_cluster_roll,omitempty"`
+
+	// The parameters of the upgrade config scheduling task.
+	// +kubebuilder:validation:Optional
+	ParametersUpgradeConfig []ParametersUpgradeConfigParameters `json:"parametersUpgradeConfig,omitempty" tf:"parameters_upgrade_config,omitempty"`
+}
+
+type ParametersUpgradeConfigInitParameters struct {
+
+	// - When set to True, a cluster roll will be initiated if a new version is available to upgrade in the dedicated virtual node groups.
+	ApplyRoll *bool `json:"applyRoll,omitempty" tf:"apply_roll,omitempty"`
+
+	// - The parameters of the cluster roll that will be initiated.
+	RollParameters []RollParametersInitParameters `json:"rollParameters,omitempty" tf:"roll_parameters,omitempty"`
+
+	ScopeVersion *string `json:"scopeVersion,omitempty" tf:"scope_version,omitempty"`
+}
+
+type ParametersUpgradeConfigObservation struct {
+
+	// - When set to True, a cluster roll will be initiated if a new version is available to upgrade in the dedicated virtual node groups.
+	ApplyRoll *bool `json:"applyRoll,omitempty" tf:"apply_roll,omitempty"`
+
+	// - The parameters of the cluster roll that will be initiated.
+	RollParameters []RollParametersObservation `json:"rollParameters,omitempty" tf:"roll_parameters,omitempty"`
+
+	ScopeVersion *string `json:"scopeVersion,omitempty" tf:"scope_version,omitempty"`
+}
+
+type ParametersUpgradeConfigParameters struct {
+
+	// - When set to True, a cluster roll will be initiated if a new version is available to upgrade in the dedicated virtual node groups.
+	// +kubebuilder:validation:Optional
+	ApplyRoll *bool `json:"applyRoll,omitempty" tf:"apply_roll,omitempty"`
+
+	// - The parameters of the cluster roll that will be initiated.
+	// +kubebuilder:validation:Optional
+	RollParameters []RollParametersParameters `json:"rollParameters,omitempty" tf:"roll_parameters,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ScopeVersion *string `json:"scopeVersion,omitempty" tf:"scope_version,omitempty"`
 }
 
 type ResourceLimitsInitParameters struct {
@@ -907,10 +1031,72 @@ type RollConfigParameters struct {
 	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
 }
 
+type RollParametersInitParameters struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+}
+
+type RollParametersObservation struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+}
+
+type RollParametersParameters struct {
+
+	// Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.
+	// +kubebuilder:validation:Optional
+	BatchMinHealthyPercentage *float64 `json:"batchMinHealthyPercentage,omitempty" tf:"batch_min_healthy_percentage,omitempty"`
+
+	// Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.
+	// +kubebuilder:validation:Optional
+	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
+
+	// Add a comment description for the roll. The comment is limited to 256 chars and optional.
+	// +kubebuilder:validation:Optional
+	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor PDB during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
+
+	// During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.
+	// +kubebuilder:validation:Optional
+	RespectRestrictScaleDown *bool `json:"respectRestrictScaleDown,omitempty" tf:"respect_restrict_scale_down,omitempty"`
+}
+
 type SchedulingInitParameters struct {
 
-	// An object used to specify times that the nodes in the cluster will be taken down.
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	ShutdownHours []ShutdownHoursInitParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+
+	// An object used to specify times that the cluster should be exempted from Ocean's scaling-down activities to ensure uninterrupted operations during critical periods.
+	SuspensionHours []SuspensionHoursInitParameters `json:"suspensionHours,omitempty" tf:"suspension_hours,omitempty"`
 
 	// A list of scheduling tasks to preform on the cluster at a specific cron time.
 	Tasks []TasksInitParameters `json:"tasks,omitempty" tf:"tasks,omitempty"`
@@ -918,8 +1104,11 @@ type SchedulingInitParameters struct {
 
 type SchedulingObservation struct {
 
-	// An object used to specify times that the nodes in the cluster will be taken down.
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	ShutdownHours []ShutdownHoursObservation `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+
+	// An object used to specify times that the cluster should be exempted from Ocean's scaling-down activities to ensure uninterrupted operations during critical periods.
+	SuspensionHours []SuspensionHoursObservation `json:"suspensionHours,omitempty" tf:"suspension_hours,omitempty"`
 
 	// A list of scheduling tasks to preform on the cluster at a specific cron time.
 	Tasks []TasksObservation `json:"tasks,omitempty" tf:"tasks,omitempty"`
@@ -927,9 +1116,13 @@ type SchedulingObservation struct {
 
 type SchedulingParameters struct {
 
-	// An object used to specify times that the nodes in the cluster will be taken down.
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	// +kubebuilder:validation:Optional
 	ShutdownHours []ShutdownHoursParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+
+	// An object used to specify times that the cluster should be exempted from Ocean's scaling-down activities to ensure uninterrupted operations during critical periods.
+	// +kubebuilder:validation:Optional
+	SuspensionHours []SuspensionHoursParameters `json:"suspensionHours,omitempty" tf:"suspension_hours,omitempty"`
 
 	// A list of scheduling tasks to preform on the cluster at a specific cron time.
 	// +kubebuilder:validation:Optional
@@ -941,7 +1134,7 @@ type ShutdownHoursInitParameters struct {
 	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
@@ -950,7 +1143,7 @@ type ShutdownHoursObservation struct {
 	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
@@ -960,7 +1153,36 @@ type ShutdownHoursParameters struct {
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	// +kubebuilder:validation:Optional
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type SuspensionHoursInitParameters struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type SuspensionHoursObservation struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type SuspensionHoursParameters struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
 	// +kubebuilder:validation:Optional
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
@@ -1034,7 +1256,7 @@ type TasksInitParameters struct {
 	// The parameters of the scheduling task. Each task type will have properties relevant only to it.
 	Parameters []ParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
-	// Valid values: clusterRoll The type of the scheduling task.
+	// The type of the scheduling task. Valid values: "clusterRoll,autoUpgradeVersion".
 	TaskType *string `json:"taskType,omitempty" tf:"task_type,omitempty"`
 }
 
@@ -1049,7 +1271,7 @@ type TasksObservation struct {
 	// The parameters of the scheduling task. Each task type will have properties relevant only to it.
 	Parameters []ParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
-	// Valid values: clusterRoll The type of the scheduling task.
+	// The type of the scheduling task. Valid values: "clusterRoll,autoUpgradeVersion".
 	TaskType *string `json:"taskType,omitempty" tf:"task_type,omitempty"`
 }
 
@@ -1067,7 +1289,7 @@ type TasksParameters struct {
 	// +kubebuilder:validation:Optional
 	Parameters []ParametersParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
-	// Valid values: clusterRoll The type of the scheduling task.
+	// The type of the scheduling task. Valid values: "clusterRoll,autoUpgradeVersion".
 	// +kubebuilder:validation:Optional
 	TaskType *string `json:"taskType" tf:"task_type,omitempty"`
 }
@@ -1109,6 +1331,54 @@ type UpdatePolicyParameters struct {
 	// If set to true along with the cluster update, roll will be triggered.
 	// +kubebuilder:validation:Optional
 	ShouldRoll *bool `json:"shouldRoll" tf:"should_roll,omitempty"`
+}
+
+type VngTemplateSchedulingInitParameters struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	VngTemplateShutdownHours []VngTemplateShutdownHoursInitParameters `json:"vngTemplateShutdownHours,omitempty" tf:"vng_template_shutdown_hours,omitempty"`
+}
+
+type VngTemplateSchedulingObservation struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	VngTemplateShutdownHours []VngTemplateShutdownHoursObservation `json:"vngTemplateShutdownHours,omitempty" tf:"vng_template_shutdown_hours,omitempty"`
+}
+
+type VngTemplateSchedulingParameters struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	// +kubebuilder:validation:Optional
+	VngTemplateShutdownHours []VngTemplateShutdownHoursParameters `json:"vngTemplateShutdownHours,omitempty" tf:"vng_template_shutdown_hours,omitempty"`
+}
+
+type VngTemplateShutdownHoursInitParameters struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type VngTemplateShutdownHoursObservation struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type VngTemplateShutdownHoursParameters struct {
+
+	// Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if is_enabled is true.
+	// +kubebuilder:validation:Optional
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 // OceanAksSpec defines the desired state of OceanAks

@@ -8,6 +8,8 @@ metadata:
   name: example
 spec:
   forProvider:
+    autoUpdate:
+    - isEnabled: true
     backendServices:
     - locationType: regional
       namedPorts:
