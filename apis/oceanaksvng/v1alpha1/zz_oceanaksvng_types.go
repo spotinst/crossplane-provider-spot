@@ -312,6 +312,9 @@ type OceanAksVngInitParameters struct {
 	// The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
 
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	Scheduling []SchedulingInitParameters `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
+
 	// Percentage of spot VMs to maintain.
 	SpotPercentage *float64 `json:"spotPercentage,omitempty" tf:"spot_percentage,omitempty"`
 
@@ -385,6 +388,9 @@ type OceanAksVngObservation struct {
 
 	// The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
+
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	Scheduling []SchedulingObservation `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
 
 	// Percentage of spot VMs to maintain.
 	SpotPercentage *float64 `json:"spotPercentage,omitempty" tf:"spot_percentage,omitempty"`
@@ -475,6 +481,10 @@ type OceanAksVngParameters struct {
 	// The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
 	// +kubebuilder:validation:Optional
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
+
+	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
+	// +kubebuilder:validation:Optional
+	Scheduling []SchedulingParameters `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
 
 	// Percentage of spot VMs to maintain.
 	// +kubebuilder:validation:Optional
@@ -583,6 +593,54 @@ type RollConfigParameters struct {
 	// List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.
 	// +kubebuilder:validation:Optional
 	VngIds []*string `json:"vngIds,omitempty" tf:"vng_ids,omitempty"`
+}
+
+type SchedulingInitParameters struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	ShutdownHours []ShutdownHoursInitParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+}
+
+type SchedulingObservation struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	ShutdownHours []ShutdownHoursObservation `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+}
+
+type SchedulingParameters struct {
+
+	// An object used to specify times that the nodes in the virtual node group will be stopped.
+	// +kubebuilder:validation:Optional
+	ShutdownHours []ShutdownHoursParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
+}
+
+type ShutdownHoursInitParameters struct {
+
+	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type ShutdownHoursObservation struct {
+
+	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
+}
+
+type ShutdownHoursParameters struct {
+
+	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// The times that the shutdown hours will apply. Required if isEnabled is true.
+	// +kubebuilder:validation:Optional
+	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type SysctlsInitParameters struct {

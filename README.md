@@ -10,7 +10,7 @@ Spot API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/spot-by-netapp/crossplane-provider-spot/):
 ```
-up ctp provider install xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.6.0
+up ctp provider install xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.7.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: crossplane-provider-spot
 spec:
-  package: xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.6.0
+  package: xpkg.upbound.io/spot-by-netapp/crossplane-provider-spot:v0.7.0
 EOF
 ```
 

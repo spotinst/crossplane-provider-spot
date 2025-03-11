@@ -13,6 +13,25 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AutoUpdateInitParameters struct {
+
+	// Enable the Ocean Kubernetes AutoUpdate.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+}
+
+type AutoUpdateObservation struct {
+
+	// Enable the Ocean Kubernetes AutoUpdate.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+}
+
+type AutoUpdateParameters struct {
+
+	// Enable the Ocean Kubernetes AutoUpdate.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+}
+
 type AutoscalerInitParameters struct {
 
 	// Optionally set the auto headroom percentage, set a number between 0-200 to control the headroom % from the cluster. Relevant when isAutoConfig=true.
@@ -33,8 +52,7 @@ type AutoscalerInitParameters struct {
 	// Automatically configure and optimize headroom resources.
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Optionally set upper and lower bounds on the resource usage of the cluster.
@@ -61,8 +79,7 @@ type AutoscalerObservation struct {
 	// Automatically configure and optimize headroom resources.
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Optionally set upper and lower bounds on the resource usage of the cluster.
@@ -95,8 +112,7 @@ type AutoscalerParameters struct {
 	// +kubebuilder:validation:Optional
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
@@ -395,6 +411,9 @@ type NamedPortsParameters struct {
 
 type OceanGkeInitParameters struct {
 
+	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
+	AutoUpdate []AutoUpdateInitParameters `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
+
 	// The Ocean Kubernetes Autoscaler object.
 	Autoscaler []AutoscalerInitParameters `json:"autoscaler,omitempty" tf:"autoscaler,omitempty"`
 
@@ -447,6 +466,9 @@ type OceanGkeInitParameters struct {
 }
 
 type OceanGkeObservation struct {
+
+	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
+	AutoUpdate []AutoUpdateObservation `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
 
 	// The Ocean Kubernetes Autoscaler object.
 	Autoscaler []AutoscalerObservation `json:"autoscaler,omitempty" tf:"autoscaler,omitempty"`
@@ -506,6 +528,10 @@ type OceanGkeObservation struct {
 }
 
 type OceanGkeParameters struct {
+
+	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
+	// +kubebuilder:validation:Optional
+	AutoUpdate []AutoUpdateParameters `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
 
 	// The Ocean Kubernetes Autoscaler object.
 	// +kubebuilder:validation:Optional
@@ -716,8 +742,7 @@ type ShieldedInstanceConfigParameters struct {
 
 type ShutdownHoursInitParameters struct {
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
@@ -727,8 +752,7 @@ type ShutdownHoursInitParameters struct {
 
 type ShutdownHoursObservation struct {
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
@@ -738,8 +762,7 @@ type ShutdownHoursObservation struct {
 
 type ShutdownHoursParameters struct {
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
@@ -823,8 +846,7 @@ type TasksInitParameters struct {
 	// Example: 0 1 * * *
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The scheduling parameters for the cluster.
@@ -840,8 +862,7 @@ type TasksObservation struct {
 	// Example: 0 1 * * *
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The scheduling parameters for the cluster.
@@ -858,8 +879,7 @@ type TasksParameters struct {
 	// +kubebuilder:validation:Optional
 	CronExpression *string `json:"cronExpression" tf:"cron_expression,omitempty"`
 
-	// Flag to enable / disable the shutdown hours.
-	// Example: true
+	// Enable the Ocean Kubernetes AutoUpdate.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
 
