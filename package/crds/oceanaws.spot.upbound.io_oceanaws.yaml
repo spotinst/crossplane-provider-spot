@@ -468,6 +468,14 @@ spec:
                           type: string
                       type: object
                     type: array
+                  instanceStorePolicy:
+                    items:
+                      properties:
+                        instanceStorePolicyType:
+                          description: Can be set to CLASSIC or TARGET_GROUP
+                          type: string
+                      type: object
+                    type: array
                   keyName:
                     description: The key pair to attach the instances.
                     type: string
@@ -1226,6 +1234,14 @@ spec:
                         httpTokens:
                           description: 'Determines if a signed token is required or
                             not. Valid values: optional or required.'
+                          type: string
+                      type: object
+                    type: array
+                  instanceStorePolicy:
+                    items:
+                      properties:
+                        instanceStorePolicyType:
+                          description: Can be set to CLASSIC or TARGET_GROUP
                           type: string
                       type: object
                     type: array
@@ -2163,6 +2179,14 @@ spec:
                         httpTokens:
                           description: 'Determines if a signed token is required or
                             not. Valid values: optional or required.'
+                          type: string
+                      type: object
+                    type: array
+                  instanceStorePolicy:
+                    items:
+                      properties:
+                        instanceStorePolicyType:
+                          description: Can be set to CLASSIC or TARGET_GROUP
                           type: string
                       type: object
                     type: array

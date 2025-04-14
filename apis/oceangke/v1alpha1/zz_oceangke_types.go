@@ -783,6 +783,8 @@ type StrategyInitParameters struct {
 	// Define the provisioning model of the launched instances. Valid values: SPOT, PREEMPTIBLE.
 	ProvisioningModel *string `json:"provisioningModel,omitempty" tf:"provisioning_model,omitempty"`
 
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
+
 	// Enable committed use discounts utilization.
 	ShouldUtilizeCommitments *bool `json:"shouldUtilizeCommitments,omitempty" tf:"should_utilize_commitments,omitempty"`
 }
@@ -797,6 +799,8 @@ type StrategyObservation struct {
 
 	// Define the provisioning model of the launched instances. Valid values: SPOT, PREEMPTIBLE.
 	ProvisioningModel *string `json:"provisioningModel,omitempty" tf:"provisioning_model,omitempty"`
+
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 
 	// Enable committed use discounts utilization.
 	ShouldUtilizeCommitments *bool `json:"shouldUtilizeCommitments,omitempty" tf:"should_utilize_commitments,omitempty"`
@@ -815,6 +819,9 @@ type StrategyParameters struct {
 	// Define the provisioning model of the launched instances. Valid values: SPOT, PREEMPTIBLE.
 	// +kubebuilder:validation:Optional
 	ProvisioningModel *string `json:"provisioningModel,omitempty" tf:"provisioning_model,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 
 	// Enable committed use discounts utilization.
 	// +kubebuilder:validation:Optional

@@ -462,7 +462,7 @@ resources:
             private_ips: '- (Optional) List of Private IPs to associate to the group instances.(e.g. "172.1.1.0"). Please note: This setting will only apply if persistence.persist_private_ip is set to true.'
             product: |-
                 - (Required) Operation system type. Valid values: "Linux/UNIX", "SUSE Linux", "Windows".
-                For EC2 Classic instances: "SUSE Linux (Amazon VPC)", "Windows (Amazon VPC)".
+                For EC2 Classic instances:  "Linux/UNIX (Amazon VPC)", "SUSE Linux (Amazon VPC)", "Windows (Amazon VPC)".
             record_set_type: '- (Optional, Default: a) The type of the record set. Valid values: "a", "cname".'
             record_sets: '- (Required) Collection of records containing authoritative DNS information for the specified domain name.'
             region: |-
@@ -1139,12 +1139,6 @@ resources:
                     }
                   ],
                   "service_account": "example@myProject.iam.gservicecct.com",
-                  "shielded_instance_config": [
-                    {
-                      "enable_integrity_monitoring": false,
-                      "enable_secure_boot": true
-                    }
-                  ],
                   "should_utilize_commitments": true,
                   "startup_script": "",
                   "subnets": [
@@ -1180,8 +1174,6 @@ resources:
             disk_type: '- (Optional, Default" pd-standard) Specifies the disk type to use to create the instance. Valid values: pd-ssd, local-ssd.'
             disks: '- (Optional) Array of disks associated with this instance. Persistent disks must be created before you can assign them.'
             draining_timeout: '- (Optional) Time (seconds) the instance is allowed to run after it is detached from the group. This is to allow the instance time to drain all the current TCP connections before terminating it.'
-            enable_integrity_monitoring: '- (Optional) Default: false'
-            enable_secure_boot: '- (Optional) Default: false'
             evaluation_periods: '- (Optional) Number of consecutive periods in which the threshold must be met in order to trigger a scaling action.'
             fallback_to_ondemand: '- (Optional) Activate fallback-to-on-demand. When provisioning an instance, if no Preemptible market is available, fallback-to-on-demand will provision an On-Demand instance to maintain the group capacity.'
             gpu: '- (Optional) Defines the GPU configuration.'
@@ -1230,7 +1222,6 @@ resources:
             scheme: '- (Optional) Use when location_type is "regional". Set the traffic for the backend service to either between the instances in the vpc or to traffic from the internet. Valid values: INTERNAL, EXTERNAL.'
             service_account: '- (Optional) The email of the service account in which the group instances will be launched.'
             service_name: '- (Required) The name of the backend service.'
-            shielded_instance_config: '- (Optional) You can use secure boot when you launch VMs using Elastigroup. This helps you comply with your security policies. In the instance configuration, use ‘secureBootEnabled’ set to True to enforce UEFI with secure boot. Elastigroup provisions VMs with secure boot, as long as the images supports UEFI.'
             should_utilize_commitments: '- (Optional) Enable committed use discounts utilization.'
             shutdown_script: '- (Optional) The Base64-encoded shutdown script that executes prior to instance termination, for more information please see: Shutdown Script'
             source: '- (Optional) Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks.'
