@@ -37,7 +37,7 @@ type metadataItem struct {
 func (m *metadataConverter) Convert(params map[string]any, r *ujconfig.Resource, mode ujconfig.Mode) (map[string]any, error) {
 	if mode == ujconfig.FromTerraform {
 		metadata := params["metadata"].([]metadataItem)
-		fmt.Println("~~~~~", reflect.TypeOf(metadata).Name())
+		fmt.Println("~~~~~~", reflect.TypeOf(metadata).Name())
 		newMetadata := make([]metadataItem, len(metadata))
 
 		for _, mi := range metadata {
