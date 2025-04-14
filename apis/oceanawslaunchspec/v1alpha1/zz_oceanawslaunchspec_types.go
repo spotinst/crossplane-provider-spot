@@ -731,18 +731,16 @@ type OceanAwsLaunchSpecInitParameters struct {
 	// The ID of the Ocean cluster.
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredOdTypes []*string `json:"preferredOdTypes,omitempty" tf:"preferred_od_types,omitempty"`
 
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	ResourceLimits []ResourceLimitsInitParameters `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 
-	// Boolean. When set to true, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
+	// Boolean. When set to True, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
 	RestrictScaleDown *bool `json:"restrictScaleDown,omitempty" tf:"restrict_scale_down,omitempty"`
 
 	// Set root volume size (in GB).
@@ -834,18 +832,16 @@ type OceanAwsLaunchSpecObservation struct {
 	// The ID of the Ocean cluster.
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredOdTypes []*string `json:"preferredOdTypes,omitempty" tf:"preferred_od_types,omitempty"`
 
 	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	ResourceLimits []ResourceLimitsObservation `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 
-	// Boolean. When set to true, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
+	// Boolean. When set to True, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
 	RestrictScaleDown *bool `json:"restrictScaleDown,omitempty" tf:"restrict_scale_down,omitempty"`
 
 	// Set root volume size (in GB).
@@ -953,7 +949,6 @@ type OceanAwsLaunchSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.
 	// +kubebuilder:validation:Optional
 	PreferredOdTypes []*string `json:"preferredOdTypes,omitempty" tf:"preferred_od_types,omitempty"`
 
@@ -961,14 +956,13 @@ type OceanAwsLaunchSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	PreferredSpotTypes []*string `json:"preferredSpotTypes,omitempty" tf:"preferred_spot_types,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	// +kubebuilder:validation:Optional
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	ResourceLimits []ResourceLimitsParameters `json:"resourceLimits,omitempty" tf:"resource_limits,omitempty"`
 
-	// Boolean. When set to true, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
+	// Boolean. When set to True, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.
 	// +kubebuilder:validation:Optional
 	RestrictScaleDown *bool `json:"restrictScaleDown,omitempty" tf:"restrict_scale_down,omitempty"`
 
@@ -1045,7 +1039,6 @@ type RollConfigInitParameters struct {
 	// Sets the percentage of the instances to deploy in each batch.
 	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1054,7 +1047,6 @@ type RollConfigObservation struct {
 	// Sets the percentage of the instances to deploy in each batch.
 	BatchSizePercentage *float64 `json:"batchSizePercentage,omitempty" tf:"batch_size_percentage,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1064,14 +1056,13 @@ type RollConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	BatchSizePercentage *float64 `json:"batchSizePercentage" tf:"batch_size_percentage,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
 	// +kubebuilder:validation:Optional
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
 type SchedulingShutdownHoursInitParameters struct {
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The times that the shutdown hours will apply.
@@ -1080,7 +1071,7 @@ type SchedulingShutdownHoursInitParameters struct {
 
 type SchedulingShutdownHoursObservation struct {
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The times that the shutdown hours will apply.
@@ -1089,7 +1080,7 @@ type SchedulingShutdownHoursObservation struct {
 
 type SchedulingShutdownHoursParameters struct {
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
@@ -1103,7 +1094,7 @@ type SchedulingTaskInitParameters struct {
 	// A valid cron expression. For example : " * * * * * ". The cron job runs in UTC time and is in Unix cron format.
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The config of this scheduled task. Depends on the value of taskType.
@@ -1118,7 +1109,7 @@ type SchedulingTaskObservation struct {
 	// A valid cron expression. For example : " * * * * * ". The cron job runs in UTC time and is in Unix cron format.
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The config of this scheduled task. Depends on the value of taskType.
@@ -1134,7 +1125,7 @@ type SchedulingTaskParameters struct {
 	// +kubebuilder:validation:Optional
 	CronExpression *string `json:"cronExpression" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
 
@@ -1148,38 +1139,29 @@ type SchedulingTaskParameters struct {
 }
 
 type StrategyInitParameters struct {
-
-	// The configurable amount of time that Ocean will wait for the draining process to complete before terminating an instance. If you have not defined a draining timeout, the default of 300 seconds will be used.
 	DrainingTimeout *float64 `json:"drainingTimeout,omitempty" tf:"draining_timeout,omitempty"`
 
 	// The desired percentage of the Spot instances out of all running instances for this VNG. Only available when the field is not set in the cluster directly (cluster.strategy.spotPercentage).
 	SpotPercentage *float64 `json:"spotPercentage,omitempty" tf:"spot_percentage,omitempty"`
 
-	// When set as ‘true’, if savings plans commitments have available capacity, Ocean will utilize them alongside RIs (if exist) to maximize cost efficiency. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	UtilizeCommitments *bool `json:"utilizeCommitments,omitempty" tf:"utilize_commitments,omitempty"`
 
-	// When set as ‘true’, if reserved instances exist, Ocean will utilize them before launching spot instances. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	UtilizeReservedInstances *bool `json:"utilizeReservedInstances,omitempty" tf:"utilize_reserved_instances,omitempty"`
 }
 
 type StrategyObservation struct {
-
-	// The configurable amount of time that Ocean will wait for the draining process to complete before terminating an instance. If you have not defined a draining timeout, the default of 300 seconds will be used.
 	DrainingTimeout *float64 `json:"drainingTimeout,omitempty" tf:"draining_timeout,omitempty"`
 
 	// The desired percentage of the Spot instances out of all running instances for this VNG. Only available when the field is not set in the cluster directly (cluster.strategy.spotPercentage).
 	SpotPercentage *float64 `json:"spotPercentage,omitempty" tf:"spot_percentage,omitempty"`
 
-	// When set as ‘true’, if savings plans commitments have available capacity, Ocean will utilize them alongside RIs (if exist) to maximize cost efficiency. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	UtilizeCommitments *bool `json:"utilizeCommitments,omitempty" tf:"utilize_commitments,omitempty"`
 
-	// When set as ‘true’, if reserved instances exist, Ocean will utilize them before launching spot instances. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	UtilizeReservedInstances *bool `json:"utilizeReservedInstances,omitempty" tf:"utilize_reserved_instances,omitempty"`
 }
 
 type StrategyParameters struct {
 
-	// The configurable amount of time that Ocean will wait for the draining process to complete before terminating an instance. If you have not defined a draining timeout, the default of 300 seconds will be used.
 	// +kubebuilder:validation:Optional
 	DrainingTimeout *float64 `json:"drainingTimeout,omitempty" tf:"draining_timeout,omitempty"`
 
@@ -1187,11 +1169,9 @@ type StrategyParameters struct {
 	// +kubebuilder:validation:Optional
 	SpotPercentage *float64 `json:"spotPercentage,omitempty" tf:"spot_percentage,omitempty"`
 
-	// When set as ‘true’, if savings plans commitments have available capacity, Ocean will utilize them alongside RIs (if exist) to maximize cost efficiency. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	// +kubebuilder:validation:Optional
 	UtilizeCommitments *bool `json:"utilizeCommitments,omitempty" tf:"utilize_commitments,omitempty"`
 
-	// When set as ‘true’, if reserved instances exist, Ocean will utilize them before launching spot instances. If the value is set as 'null', it will automatically be inherited from the cluster level.
 	// +kubebuilder:validation:Optional
 	UtilizeReservedInstances *bool `json:"utilizeReservedInstances,omitempty" tf:"utilize_reserved_instances,omitempty"`
 }

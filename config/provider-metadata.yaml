@@ -1,23 +1,102 @@
 name: spotinst/spotinst
 resources:
-    spotinst_account:
-        subCategory: Accounts
-        description: Create a Spotinst account resource.
-        name: spotinst_account
-        title: account
-        examples:
-            - name: my_acct
-              manifest: |-
-                {
-                  "name": "my_acct"
-                }
+    ocean_aks (Deprecated):
+        subCategory: Ocean
+        description: Provides a Spotinst Ocean Virtual Node Group resource using AKS.
+        name: ocean_aks (Deprecated)
+        title: ocean_aks (Deprecated)
         argumentDocs:
-            id: '- The account ID.'
-            name: '- (Required) Provide a name for your account. The account name must contain at least one character that is a-z or A-Z.'
+            auto_headroom_percentage: '- (Optional) Number between 0-200 to control the headroom % of the specific Virtual Node Group. Effective when cluster.autoScaler.headroom.automatic.is_enabled = true is set on the Ocean cluster.'
+            autoscale: '- (Optional).'
+            autoscale_headroom: '- (Optional)'
+            cpu_per_unit: '- (Optional) Configure the number of CPUs to allocate for the headroom. CPUs are denoted in millicores, where 1000 millicores = 1 vCPU.'
+            effect: '- (Optional) The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute", "PreferNoExecute".'
+            gpu_per_unit: '- (Optional) How many GPU cores should be allocated for headroom unit.'
+            key: '- (Required) The label key.'
+            label: '- (Optional) Additional labels for the virtual node group. Only custom user labels are allowed. Kubernetes built-in labels and Spot internal labels are not allowed.'
+            launch_specification: '- (Optional).'
+            max_instance_count: '- (Optional) Option to set a maximum number of instances per virtual node group. If set, value must be greater than or equal to 0.'
+            max_pods: '- (Optional) The maximum number of pods per node in an AKS cluster.'
+            memory_per_unit: '- (Optional) Configure the amount of memory (MiB) to allocate the headroom.'
+            name: '- (Required) Set name for the virtual node group.'
+            num_of_units: '- (Required) The number of headroom units to maintain, where each unit has the defined CPU, memory and GPU.'
+            ocean_id: '- (Required) The Ocean cluster ID.'
+            os_disk: '- (Optional) Specify OS disk specification other than default.'
+            resource_limits: '- (Optional).'
+            size_gb: '- (Required) The size of the OS disk in GB, Required if dataDisks is specified.'
+            tag: '- (Optional) Additional key-value pairs to be used to tag the VMs in the virtual node group.'
+            taint: '- (Optional) Additional taints for the virtual node group. Only custom user labels are allowed. Kubernetes built-in labels and Spot internal labels are not allowed.'
+            type: '- (Optional) The type of the OS disk. Valid values: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS".'
+            utilize_ephemeral_storage: '- (Optional) Flag to enable/disable the Ephemeral OS Disk utilization.'
+            value: '- (Optional) The label value.'
+            zones: '- (Optional) An Array holding Availability Zones, this configures the availability zones the Ocean may launch instances in per VNG.'
+        importStatements: []
+    ocean_aks(Deprecated):
+        subCategory: Ocean
+        description: Provides a Spotinst Ocean resource using AKS.
+        name: ocean_aks(Deprecated)
+        title: ocean_aks(Deprecated)
+        argumentDocs:
+            acd_identifier: '- (Required) The AKS identifier. A valid identifier should be formatted as acd-nnnnnnnn and previously used identifiers cannot be reused.'
+            additional_ip_config: '- (Optional) Additional configuration of network interface. The name fields between all the additional_ip_config must be unique.'
+            aks_name: '- (Required) The AKS cluster name.'
+            aks_resource_group_name: '- (Required) Name of the Azure Resource Group where the AKS cluster is located.'
+            api_version: '- (Optional) API version of the extension.'
+            assign_public_ip: '- (Optional) Assign public IP.'
+            automatic: '- (Optional) Automatic headroom configuration.'
+            autoscale_down: '- (Optional) Auto Scaling scale down operations.'
+            autoscale_headroom: '- (Optional) Spare Resource Capacity Management feature enables fast assignment of Pods without having to wait for new resources to be launched.'
+            autoscale_is_enabled: '- (Optional) Enable the Ocean Kubernetes Autoscaler.'
+            autoscaler: '- (Optional) The Ocean Kubernetes Autoscaler object.'
+            backend_pool_names: '- (Optional) Names of the Backend Pools to register the Cluster VMs to. Each Backend Pool is a separate load balancer.'
+            controller_cluster_id: '- (Required) A unique identifier used for connecting the Ocean SaaS platform and the Kubernetes cluster. Typically, the cluster name is used as its identifier.'
+            custom_data: '- (Optional) Must contain a valid Base64 encoded string.'
+            extension: '- (Optional) List of Azure extension objects.'
+            fallback_to_ondemand: '- (Optional) If no spot instance markets are available, enable Ocean to launch on-demand instances instead.'
+            grace_period: '- (Optional, Default: 600) The amount of time to wait, in seconds, from the moment the instance has launched before monitoring its health checks.'
+            health: '- (Optional) The Ocean AKS Health object.'
+            image: '- (Optional) Image of VM. An image is a template for creating new VMs. Choose from Azure image catalogue (marketplace).'
+            is_enabled: '- (Optional) Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.'
+            is_primary: '- (Optional) Defines whether the network interface is primary or not.'
+            key: '- (Optional) Tag key.'
+            load_balancer: '- (Optional) Configure Load Balancer.'
+            load_balancer_sku: '- (Optional) Supported values: Standard, Basic.'
+            managed_service_identity: '- (Optional) List of Managed Service Identity objects.'
+            marketplace: '- (Optional) Select an image from Azure''s Marketplace image catalogue.'
+            max_memory_gib: '- (Optional) The maximum memory in GiB units that can be allocated to the cluster.'
+            max_pods: '- (Optional) The maximum number of pods per node in an AKS cluster.'
+            max_scale_down_percentage: '- (Optional) Would represent the maximum % to scale-down.'
+            max_vcpu: '- (Optional) The maximum cpu in vCpu units that can be allocated to the cluster.'
+            minor_version_auto_upgrade: '- (Optional) Toggles whether auto upgrades are allowed.'
+            name: '- (Required) The Ocean cluster name.'
+            network: '- (Optional) Define the Virtual Network and Subnet.'
+            network_interface: '- (Optional) A list of virtual network interfaces. The publicIpSku must be identical between all the network interfaces. One network interface must be set as the primary.'
+            offer: '- (Optional) Image name.'
+            os_disk: '- (Optional) OS disk specifications.'
+            percentage: '- (Optional) Optionally set a number between 0-100 to control the percentage of total cluster resources dedicated to headroom. Relevant when isEnabled is toggled on.'
+            private_ip_version: '- (Optional, Default: IPv4) Supported values: IPv4, IPv6.'
+            publisher: '- (Optional) Image publisher.'
+            resource_group_name: '- (Optional) Name of the Azure Resource Group into which VMs will be launched. Cannot be updated.'
+            resource_limits: '- (Optional) Optionally set upper and lower bounds on the resource usage of the cluster.'
+            size_gb: '- (Optional) The size of the OS disk in GB.'
+            sku: '- (Optional) Image Stock Keeping Unit (which is the specific version of the image).'
+            spot_percentage: '- (Optional) Percentage of Spot VMs to maintain.'
+            ssh_public_key: '- (Required) SSH public key for admin access to Linux VMs.'
+            strategy: '- (Optional) The Ocean AKS strategy object.'
+            subnet_name: '- (Optional) Subnet name.'
+            tag: '- (Optional) Unique key-value pairs that will be used to tag VMs that are launched in the cluster.'
+            type: '- (Optional) Extension type.'
+            user_name: '- (Optional) Username for admin access to VMs.'
+            value: '- (Optional) Tag value.'
+            version: '- (Optional, Default: latest) Image version.'
+            virtual_network_name: '- (Optional) Virtual network.'
+            vm_sizes: '- (Optional) The types of virtual machines that may or may not be a part of the Ocean cluster.'
+            whitelist: '- (Optional) VM types allowed in the Ocean cluster.'
+            zones: '- (Optional) An Array holding default Availability Zones, this configures the availability zones the Ocean may launch instances in.'
         importStatements: []
     spotinst_account_aws:
         subCategory: Accounts
-        description: Create a Spotinst account resource.
+        description: Provides a Spotinst account resource.
         name: spotinst_account_aws
         title: account_aws
         examples:
@@ -45,70 +124,6 @@ resources:
         argumentDocs:
             account_id: '- (Required) The ID of the account associated with your token.'
             iamrole: '- (Required) Provide the IAM Role ARN connected to another AWS account 922761411349 and with the latest Spot Policy - https://docs.spot.io/administration/api/spot-policy-in-aws'
-        importStatements: []
-    spotinst_credentials_azure:
-        subCategory: Accounts
-        description: Provides a Spotinst credential Azure resource.
-        name: spotinst_credentials_azure
-        title: credentials_azure
-        examples:
-            - name: credential
-              manifest: |-
-                {
-                  "account_id": "act-123456",
-                  "client_id": "redacted",
-                  "client_secret": "redacted",
-                  "subscription_id": "redacted",
-                  "tenant_id": "redacted"
-                }
-        argumentDocs:
-            account_id: '- (Required) The ID of the account associated with your token.'
-            client_id: '- (Required) Set the application ID.'
-            client_secret: '- (Required) Set the key secret.'
-            subscription_id: '- (Required) Set the subscription ID.'
-            tenant_id: '- (Required) Set the directory ID.'
-        importStatements: []
-    spotinst_credentials_gcp:
-        subCategory: Accounts
-        description: Provides a Spotinst credential GCP resource.
-        name: spotinst_credentials_gcp
-        title: credentials_gcp
-        examples:
-            - name: cred_gcp
-              manifest: |-
-                {
-                  "account_id": "act-123456",
-                  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                  "client_email": "demo-role-act-123456@demo-labs.iam.gserviceaccount.com",
-                  "client_id": "1234567890",
-                  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/demo-role-act-123456%40demo-labs.iam.gserviceaccount.com",
-                  "lifecycle": [
-                    {
-                      "ignore_changes": [
-                        "${private_key}",
-                        "${account_id}"
-                      ]
-                    }
-                  ],
-                  "private_key": "-----BEGIN PRIVATE KEY-----abcd1234-----END PRIVATE KEY-----",
-                  "private_key_id": "1234567890",
-                  "project_id": "demo-labs",
-                  "token_uri": "https://oauth2.googleapis.com/token",
-                  "type": "service_account"
-                }
-        argumentDocs:
-            account_id: '- (Required) The ID of the account associated with your token.'
-            auth_provider_x509_cert_url: '- (Required, Default: https://www.googleapis.com/oauth2/v1/certs).'
-            auth_uri: '- (Required, Default: https://accounts.google.com/o/oauth2/auth) Authentication uri.'
-            client_email: '- (Required) Email associated with service account.'
-            client_id: '- (Required) Client ID of service account.'
-            client_x509_cert_url: '- (Required) Should be in following format - "https://www.googleapis.com/robot/v1/metadata/x509/".'
-            private_key: '- (Required) Private key of JSON key created during prerequisites stage.'
-            private_key_id: '- (Required) Private key ID of JSON key created during prerequisites stage.'
-            project_id: '- (Required) Name of project in GCP.'
-            token_uri: '- (Required, Default: https://oauth2.googleapis.com/token) Token uri.'
-            type: '- (Required) Valid values - service_account.'
         importStatements: []
     spotinst_data_integration:
         subCategory: Data Integration
@@ -316,7 +331,6 @@ resources:
             associate_ipv6_address: '- (Optional) Indicates whether to assign IPV6 addresses to your instance. Requires a subnet with IPV6 CIDR block ranges.'
             associate_public_ip_address: '- (Optional) Indicates whether to assign a public IP address to an instance you launch in a VPC. The public IP address can only be assigned to a network interface for eth0, and can only be assigned to a new network interface, not an existing one.'
             auto_apply_tags: '- (Optional) Enables updates to tags without rolling the group when set to true.'
-            auto_healing: '- (Optional, Default: true) Auto-healing replacement won''t be triggered if this parameter value is "false". In a case of a stateful group - no recycling will start if this parameter value is "false".'
             automatic_roll: '- (Required) Should roll perform automatically'
             autoscale_attributes: '- (Optional) A key/value mapping of tags to assign to the resource.'
             autoscale_constraints: '- (Optional) A key/value mapping of tags to assign to the resource.'
@@ -331,7 +345,6 @@ resources:
                 - (Optional) List of Strings of availability zones. When this parameter is set, subnet_ids should be left unused.
                 Note: availability_zones naming syntax follows the convention availability-zone:subnet:placement-group-name. For example, to set an AZ in us-east-1 with subnet subnet-123456 and placement group ClusterI03, you would set:
                 availability_zones = ["us-east-1a:subnet-123456:ClusterI03"]
-            base_size: '- (Optional) Initial size for volume.'
             batch: '- (Optional) Batch configuration object:'
             batch_min_healthy_percentage: '- (Optional, Default 50) Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the deployment will fail. Range 1 - 100.'
             batch_size_percentage: '- (Optional; Required when the task_type is "roll".) The percentage size of each batch in the scheduled deployment roll.'
@@ -357,8 +370,6 @@ resources:
             draining_timeout: '- (Optional) The time in seconds, the instance is allowed to run while detached from the ELB. This is to allow the instance time to be drained from incoming TCP connections before terminating it, during a scale down operation.'
             ebs_block_device.delete_on_termination: '- (Optional) Whether the volume should be destroyed on instance termination.'
             ebs_block_device.device_name: '- (Required) The name of the device to mount.'
-            ebs_block_device.dynamic_iops: '- (Optional) Set dynamic IOPS properties. When using this object, you cannot use the iops object. You must use one or the other.'
-            ebs_block_device.dynamic_volume_size: '- (Optional) Set dynamic volume size properties. When using this object, you cannot use volume_size. You must use one or the other.'
             ebs_block_device.encrypted: '- (Optional) Enables EBS encryption on the volume.'
             ebs_block_device.iops: '- (Optional) The amount of provisioned IOPS. This must be set with a volume_type of "io1".'
             ebs_block_device.kms_key_id: '- (Optional) ID for a user managed CMK under which the EBS Volume is encrypted'
@@ -474,10 +485,8 @@ resources:
             required_memory_minimum: '- (Required) Required minimum instance memory (>=1)'
             required_vcpu_maximum: '- (Required) Required maximum instance vCPU (<=64)'
             required_vcpu_minimum: '- (Required) Required minimum instance vCPU (>=1)'
-            resource: '- (Optional) Type of resource, valid values: "CPU", "MEMORY".'
             resource_requirements: '- (Optional) Required instance attributes. Instance types will be selected based on these requirements.'
             resource_tag_specification: '- (Optional) User will specify which resources should be tagged with group tags.'
-            restrict_single_az: '- (Optional) Elastigroup will automatically scale your instances in the most available and cost efficient availability zone. Every evaluation will be done when there are no active instances in the group.'
             revert_to_spot: '- (Optional) Hold settings for strategy correction – replacing On-Demand for Spot instances. Supported Values: "never", "always", "timeWindow"'
             roll_config: '- (Required) While used, you can control whether the group should perform a deployment after an update to the configuration.'
             runner: '- (Optional) Settings for Gitlab runner.'
@@ -503,7 +512,6 @@ resources:
             should_tag_snapshots: '- (Optional) Tag specification for Snapshot resources.'
             should_tag_volumes: '- (Optional) Tag specification for Volume resources.'
             shutdown_script: '- (Optional) The Base64-encoded shutdown script that executes prior to instance termination, for more information please see: Shutdown Script'
-            size_per_resource_unit: '- (Optional) Additional size per resource unit (in GB).'
             source: '- (Optional) The source of the metric. Valid values: "cloudWatch", "spectrum".'
             spot_percentage: '- (Optional; Required if not using ondemand_count) The percentage of Spot instances that would spin up from the desired_capacity number.'
             spotinst_acct_id: '- (Optional) The Spotinst account ID that is linked to the AWS account that holds the Route 53 Hosted Zone ID. The default is the user Spotinst account provided as a URL parameter.'
@@ -667,49 +675,10 @@ resources:
             - name: test_azure_group
               manifest: |-
                 {
-                  "availability_vs_cost": 100,
-                  "boot_diagnostics": [
-                    {
-                      "is_enabled": true,
-                      "storage_url": "https://.blob.core.windows.net",
-                      "type": "unmanaged"
-                    }
-                  ],
-                  "capacity_reservation": [
-                    {
-                      "capacity_reservation_groups": [
-                        {
-                          "crg_name": "crg name",
-                          "crg_resource_group_name": "resourceGroupName",
-                          "crg_should_prioritize": true
-                        }
-                      ],
-                      "should_utilize": true,
-                      "utilization_strategy": "utilizeOverOD"
-                    }
-                  ],
                   "custom_data": "IyEvYmluL2Jhc2gKZWNobyAidGVzdCI=",
-                  "data_disk": [
-                    {
-                      "lun": 2,
-                      "size_gb": 8,
-                      "type": "Premium_LRS"
-                    }
-                  ],
-                  "description": "Azure Elastigroup Resource through TF",
                   "desired_capacity": 1,
                   "draining_timeout": 300,
                   "fallback_to_on_demand": true,
-                  "health": [
-                    {
-                      "auto_healing": false,
-                      "grace_period": 420,
-                      "health_check_types": [
-                        "applicationGateway"
-                      ],
-                      "unhealthy_duration": 240
-                    }
-                  ],
                   "image": [
                     {
                       "marketplace": [
@@ -720,17 +689,6 @@ resources:
                           "version": "latest"
                         }
                       ]
-                    }
-                  ],
-                  "load_balancer": [
-                    {
-                      "backend_pool_names": [
-                        "Automation-Lb-BackendPool"
-                      ],
-                      "name": "Automation-Lb",
-                      "resource_group_name": "AutomationResourceGroup",
-                      "sku": "Standard",
-                      "type": "loadBalancer"
                     }
                   ],
                   "login": [
@@ -765,21 +723,7 @@ resources:
                             }
                           ],
                           "assign_public_ip": false,
-                          "enable_ip_forwarding": true,
                           "is_primary": true,
-                          "public_ip_sku": "Standard",
-                          "public_ips": [
-                            {
-                              "name": "PublicIpName",
-                              "resource_group_name": "ResourceGroup"
-                            }
-                          ],
-                          "security_group": [
-                            {
-                              "name": "NetworkSecurityGroupName",
-                              "resource_group_name": "ResourceGroup"
-                            }
-                          ],
                           "subnet_name": "default"
                         }
                       ],
@@ -787,81 +731,18 @@ resources:
                       "virtual_network_name": "VirtualNetworkName"
                     }
                   ],
-                  "optimization_windows": [
-                    "Mon:19:46-Tue:20:46"
+                  "od_sizes": [
+                    "standard_a1_v1",
+                    "standard_a1_v2"
                   ],
                   "os": "Linux",
-                  "os_disk": [
-                    {
-                      "size_gb": 32,
-                      "type": "Premium_LRS"
-                    }
-                  ],
-                  "preferred_zones": [
-                    "1",
-                    "3"
-                  ],
-                  "proximity_placement_groups": [
-                    {
-                      "name": "TestProximityPlacementGroup",
-                      "resource_group_name": "ResourceGroup"
-                    }
-                  ],
                   "region": "eastus",
                   "resource_group_name": "spotinst-azure",
-                  "revert_to_spot": [
-                    {
-                      "perform_at": "timeWindow"
-                    }
-                  ],
-                  "scheduling_task": [
-                    {
-                      "cron_expression": "52 10 * * *",
-                      "is_enabled": true,
-                      "scale_max_capacity": 8,
-                      "scale_min_capacity": 0,
-                      "scale_target_capacity": 2,
-                      "type": "scale"
-                    },
-                    {
-                      "adjustment": 1,
-                      "cron_expression": "52 11 * * *",
-                      "is_enabled": true,
-                      "type": "scaleUp"
-                    }
-                  ],
-                  "secret": [
-                    {
-                      "source_vault": [
-                        {
-                          "name": "TestVault",
-                          "resource_group_name": "ResourceGroup"
-                        }
-                      ],
-                      "vault_certificates": [
-                        {
-                          "certificate_store": "string",
-                          "certificate_url": "string"
-                        }
-                      ]
-                    }
-                  ],
-                  "security": [
-                    {
-                      "confidential_os_disk_encryption": false,
-                      "secure_boot_enabled": false,
-                      "security_type": "Standard",
-                      "vtpm_enabled": false
-                    }
-                  ],
-                  "shutdown_script": "IlRlc3RpbmcgRUci",
-                  "signal": [
-                    {
-                      "timeout": 60,
-                      "type": "vmReadyToShutdown"
-                    }
-                  ],
                   "spot_percentage": 65,
+                  "spot_sizes": [
+                    "standard_a1_v1",
+                    "standard_a1_v2"
+                  ],
                   "tags": [
                     {
                       "key": "key1",
@@ -871,159 +752,46 @@ resources:
                       "key": "key2",
                       "value": "value2"
                     }
-                  ],
-                  "vm_name_prefix": "prefixName",
-                  "vm_sizes": [
-                    {
-                      "od_sizes": [
-                        "standard_a1_v1",
-                        "standard_a1_v2"
-                      ],
-                      "preferred_spot_sizes": [
-                        "standard_a1_v2"
-                      ],
-                      "spot_sizes": [
-                        "standard_a1_v1",
-                        "standard_a1_v2"
-                      ]
-                    }
-                  ],
-                  "zones": [
-                    "1",
-                    "2",
-                    "3"
                   ]
                 }
         argumentDocs:
-            '"LoadBalancer"': then possible values are “Standard", "Basic”.
-            “Standard_Large”, “Standard_Medium”, “Standard_Small”, “Standard_v2", “WAF_Large”, “WAF_Medium", “WAF_v2": .
-            action: '- (Required) Scaling action to take when the policy is triggered.'
             additional_ip_configs: '- (Optional) Array of additional IP configuration objects.'
-            adjustment: '- This will increase the target capacity by the defined amount when the scheduling task is triggered. Required if type is "scaleUp" or "scaleDown".'
-            adjustment_percentage: '- This will increase the target capacity by the defined percentage value when the scheduling task is triggered. This will set the target capacity by the defined percentage of the current target when the scheduling task triggers. Required if type is "percentageScaleUp", "percentageScaleDown".'
-            api_version: '- (Required) The API version of the extension. Required if extension specified.'
             application_security_group: '- (Optional) - List of Application Security Groups that will be associated to the primary ip configuration of the network interface.'
             assign_public_up: '- (Optional, Default: false) Assign a public IP to each VM in the Elastigroup.'
-            auto_healing: '- Enable auto-healing of unhealthy VMs.'
-            availability_vs_cost: '- Set the desired preference for the Spot market VM selection. (100- Availability, 0- cost)'
-            backend_pool_names: '- (Optional) Name of the Backend Pool to register the Elastigroup VMs to. Each Backend Pool is a separate load balancer. Required if Type is APPLICATION_GATEWAY.'
-            batchSize_percentage: '- Indicates the timeout (in seconds) to wait until the VM becomes healthy, based on the healthCheckType. Required if type is "deployment"'
-            boot_diagnostics: '- (Optional) Will enable boot diagnostics in Azure when a new VM is launched'
-            capacity_reservation: '- (Optional) On-demand Capacity Reservation group enables you to reserve Compute capacity in an Azure region or an Availability Zone for any duration of time.'
-            capacity_reservation_groups: '- List of the desired CRGs to use under the associated Azure subscription. When null we will utilize any available reservation that matches the Virtual Node Group.'
-            certificate_store: '- (Required) The certificate store directory the VM. The directory is created in the LocalMachine account. This field is required only when using windows OS type. This field must be ‘null’ when the OS type is Linux'
-            certificate_url: '- (Required) The URL of the certificate under the key vault.'
-            confidential_os_disk_encryption: '- Confidential disk encryption binds the disk encryption keys to the VM''s TPM, ensuring VM-only access. The security type must be "ConfidentialVM" to enable defining this preference as “true”.'
-            cooldown: '- (Required) Time (seconds) to wait after a scaling action before resuming monitoring.'
-            crg_name: '- (Required) The name of the CRG.'
-            crg_resource_group_name: '- (Required) Azure resource group name.'
-            crg_should_prioritize: '- (Optional) The desired CRG to utilize ahead of other CRGs in the subscription.'
-            cron_expression: '- (Required) A valid cron expression. The cron is running in UTC time zone and is in Unix cron format of Cron Expression Validator Script.'
-            custom: '- (Optional) Custom image to launch Elastigroup with. Cannot be used with marketplace or gallery.'
             custom_data: '- (Optional) Custom init script file or text in Base64 encoded format.'
-            data_disk: '- (Optional) List of data disks to be attached to the vms in the group.'
-            description: '- (Optional) Describe your Azure Elastigroup.'
             desired_capacity: '- (Required) The desired number of instances the group should have at any time.'
-            dimensions: '- (Optional) A list of dimensions describing qualities of the metric. Required if scaling.up.namespace is different from ''Microsoft.Compute'''
             draining_timeout: '- (Optional, Default 120) Time (seconds) to allow the instance to be drained from incoming TCP connections and detached from MLB before terminating it during a scale-down operation.'
-            enable_automatic_upgrade: '- (Optional) Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.'
-            enable_ip_forwarding: '- (Optional) Enable IP Forwarding.'
-            evaluation_periods: '- (Required) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
-            extensions: '- (Optional) An object for an Azure extensions.'
-            fallback_to_on_demand: '- (Optional, Default: true) When set to true Elastigroup will launch On Demand instances if no spot market is available.'
-            gallery_image: '- (Optional) Gallery image to launch Elastigroup with. Cannot be used with marketplace or custom.'
-            gallery_name: '- (Optional) Name of the gallery. Required if gallery image is specified.'
-            grace_period: '- The amount of time (in seconds) after a new VM has launched before terminating the old VM.'
-            health: '- (Optional) Set health check and auto-healing of unhealthy VMs.'
-            health_check_types: '- Health check types to use in order to validate VM health. Valid values: "vmState", "applicationGateway".'
+            fallback_to_on_demand: '-'
             image: '- (Required) Image of a VM. An image is a template for creating new VMs. Choose from Azure image catalogue (marketplace) or use a custom image.'
-            image_name: '- (Optional) Name of the custom image. Required if custom image is specified.'
-            is_enabled: '- (Required) Allows you to enable and disable the configuration of boot diagnostics at launch'
-            is_primary: '- (Required) Defines whether the network interface is primary or not.'
+            image_name: '- (Optional) Name of the custom image. Required if resource_group_name is specified.'
+            is_primary: '-'
             key: '- (Required) Tag Key for Vms in Elastigroup.'
-            load_balancer: '- (Optional) Add a load balancer. For Azure Gateway, each Backend Pool is a separate load balancer.'
             login: '- (Required) Describes the login configuration.'
-            lun: '- (Required) The LUN of the data disk.'
             managed_service_identity: '- (Optional) List of Managed Service Identity objects.'
-            marketplace: '- (Optional) Select an image from Azure''s Marketplace image catalogue. Cannot be used with custom or gallery'
             max_size: '- (Required) The maximum number of instances the group should have at any time.'
-            maximum: '- (Optional)  Upper limit of instances that you can scale down to. Also you must indicate “minimum” and “target” amounts. Required if selected as action type: "updateCapacity"'
-            metric_name: '- (Required) Metric to monitor by Azure metric display name.'
             min_size: '- (Required) The minimum number of instances the group should have at any time.'
-            minimum: '- (Optional)  Lower limit of instances that you can scale down to. Also you must indicate “target” and “maximum” amounts. Required if selected as action type: "updateCapacity"'
-            minor_version_auto_upgrade: '- (Required) Enable minor version upgrades of the extension. Required if extension specified.'
             name: '- (Required) The group name.'
-            namespace: '- (Required) The namespace for the alarm''s associated metric. Select one of the next namespaces presented in Azure configurator - Namespace'
             network: '- (Required) Defines the Virtual Network and Subnet for your Elastigroup.'
             network_interfaces: '-'
             od_sizes: '- (Required) Available On-Demand sizes'
-            offer: '- (Optional) Name of the image to use. Required if marketplace image is specified.'
+            offer: '- (Optional) Name of the image to use. Required if publisher is specified.'
             on_demand_count: '- (Optional) Number of On-Demand VMs to maintain. Required if spot_percentage is not specified.'
-            operator: '- (Required) The operator used to evaluate the threshold against the current metric value. Valid values: "gt", "gte", "lt", "lte".'
-            optimization_windows: '- Required if revertToSpot.performAt = timeWindow.'
             os: '- (Required) Type of the operating system. Valid values: "Linux", "Windows".'
-            os_disk: '- (Optional) Specify OS disk specification other than default.'
             password: '- (Optional) Password for admin access to Windows VMs. Required for Windows OS types.'
-            perform_at: '- (Required, Default: always) Settings for maintenance strategy - possible values: "timeWindow", "never", "always".'
-            period: '- (Required) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
-            policy_name: '- (Required) The name of the policy.'
-            preferred_spot_sizes: -- (Optional) Prioritize Spot VM sizes when launching Spot VMs for the group. Must be a sublist of spot_sizes.
-            preferred_zones: '- (Optional) The AZs to prioritize when launching VMs. If no markets are available in the Preferred AZs, VMs are launched in the non-preferred AZs. Must be a sublist of zones.'
-            private_ip_addresses: '- (Optional) A list with unique items that every item is a valid IP.'
             private_ip_version: '- (Optional) Available from Azure Api-Version 2017-03-30 onwards, it represents whether the specific ip configuration is IPv4 or IPv6. Valid values: IPv4, IPv6.'
-            protected_settings: '- (Optional) Object for protected settings. This must not exist simultaneously with protected_settings_from_key_vault'
-            protected_settings_from_key_vault: '- (Optional) The extensions protected settings that are passed by reference, and consumed from key vault.'
-            proximity_placement_groups: '- (Optional) Defines the proximity placement group in which the VM will be launched.'
-            public_ip_sku: '- (Optional) Required if assignPublicIp=true values=[Standard/Basic].'
-            public_ips: '- (Optional) Defined a pool of Public Ips (from Azure), that will be associated to the network interface. We will associate one public ip per instance until the pool is exhausted, in which case, we will create a new one.'
-            public_settings: '- (Optional) Object for public settings.'
-            publisher: '- (Optional) Image publisher. Required if marketplace image is specified.'
+            publisher: '- (Optional) Image publisher. Required if resource_group_name is not specified.'
             region: '- (Required) The region your Azure group will be created in.'
             resource_group_name: '- (Required) Name of the Resource Group for Elastigroup.'
-            revert_to_spot: '- (Optional) Hold settings for strategy correction - replacing On-Demand for Spot VMs.'
-            scale_max_capacity: '- This will set the defined maximum group capacity when the scheduling task is triggered. Required if type is "scale".'
-            scale_min_capacity: '- This will set the defined maximum group capacity when the scheduling task is triggered. Required if type is "scale".'
-            scale_target_capacity: '- This will set the defined target group capacity when the scheduling task is triggered. Required if type is "scale".'
-            scheduling_task: '- (Optional) A list of scheduling tasks. Note: The type of each task defines the behavior of the cron execution.'
-            secret: '- (Optional) Set of certificates that should be installed the VM'
-            secret_url: '- (Required) The URL referencing a secret in a Key Vault.'
-            secure_boot_enabled: '- Specifies whether secure boot should be enabled on the virtual machine.'
-            security: '- (Optional) Specifies the Security related profile settings for the virtual machine.'
-            security_group: '- (Optional) Network Security Group.'
-            security_type: '- Security type refers to the different security features of a virtual machine. Security features like Trusted launch virtual machines help to improve the security of Azure generation 2 virtual machines. Valid values: "Standard", "TrustedLaunch", "ConfidentialVM"'
-            should_utilize: '- (Required) Determines whether capacity reservations should be utilized.'
-            shutdown_script: '- (Optional) Shutdown script for the group. Value should be passed as a string encoded at Base64 only.'
-            signal: '- (Optional) The signals defined for this group.'
-            size_gb: '- (Optional) The size of the data disk in GB.'
-            sku: '- (Optional)'
-            source: '- (Optional) The source of the metric.'
-            source_vault: '- (Required) The key vault reference, contains the required certificates.'
-            sourcevault: '- (Required) The relative URL of the Key Vault containing the secret.'
-            spot_account_id: '- (Optional) The Spot account ID that connected to the Azure subscription to which the gallery belongs. Relevant only in case of cross-subscription shared galleries. Read more (https://docs.spot.io/elastigroup/features-azure/shared-image-galleries) about cross-subscription shared galleries in Elastigroup.'
+            sku: '- (Optional) Image''s Stock Keeping Unit, which is the specific version of the image. Required if publisher is specified.'
             spot_percentage: '- (Optional) Percentage of Spot-VMs to maintain. Required if on_demand_count is not specified.'
             spot_sizes: '- (Required) Available Low-Priority sizes.'
             ssh_public_key: '- (Optional) SSH for admin access to Linux VMs. Required for Linux OS types.'
-            statistic: '- (Required) Statistic by which to evaluate the selected metric. Valid Values: "average", "sampleCount", "sum", "minimum", "maximum"'
-            storage_url: '- (Optional) The storage URI that is used if a type is unmanaged. The storage URI must follow the blob storage URI format ("https://.blob.core.windows.net/"). StorageUri is required if the type is unmanaged. StorageUri must be ‘null’ in case the boot diagnostics type is managed.'
             subnet_name: '- (Required) ID of subnet.'
             tags: '- (Optional) Key-Value pairs for VMs in the Elastigroup.'
-            target: '- (Optional)  Desired number of instances. Also you must indicate “minimum” and “maximum” amounts. Required if selected as action type: "updateCapacity"'
-            threshold: '- (Required) The value at which the scaling action is triggered.'
-            timeout: '- (Default:30) The timeout in seconds to hold the vm until a signal is sent. If no signal is sent the vm will be replaced (vmReady) or we will terminate the vm (vmReadyToShutdown) after the timeout. (Maximum is 1800 seconds, Minimum is 60 seconds)'
-            type: '- (Required, Enum "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "StandardSSD_ZRS", "Premium_ZRS") The type of the OS disk.'
-            unhealthy_duration: '- Amount of time (in seconds) for the VM to remain unhealthy before a replacement is triggered.'
-            unit: '- (Optional) Unit to measure to evaluate the selected metric: Valid Values: "percent, "seconds", "milliseconds", "bytes", "countPerSecond", "bytesPerSecond", "seconds"'
-            user_data: '- (Optional) Define a set of scripts or other metadata that''s inserted to an Azure virtual machine at provision time. Cannot be defined along with custom_data.'
             user_name: '- (Required) Set admin access for accessing your VMs.'
-            utilization_strategy: '- (Required) Valid Values: "utilizeOverSpot", "utilizeOverOD". The priority requested for using CRG. This value will determine if CRG is used ahead of spot VMs or On-demand VMs.'
             value: '- (Required) Tag Value for Vms in Elastigroup.'
-            vault_certificates: '- (Required) The required certificate references'
-            version: '- Image''s version. if version not provided we use latest. Required if marketplace image is specified.'
+            version: '-'
             virtual_network_name: '- (Required) Name of Vnet.'
-            vm_name_prefix: '- (Optional) Set a VM name prefix to be used for all launched VMs and the VM resources.'
-            vm_sizes: '- (Required) Sizes of On-Demand and Low-Priority VMs.'
-            vtpm_enabled: '- Specifies whether vTPM should be enabled on the virtual machine.'
-            zones: '- (Optional) List of Azure Availability Zones in the defined region; If not defined, Virtual machines will be launched regionally.'
         importStatements: []
     spotinst_elastigroup_gcp:
         subCategory: Elastigroup
@@ -1094,7 +862,6 @@ resources:
                     }
                   ],
                   "max_size": 1,
-                  "min_cpu_platform": "Intel Sandy Bridge",
                   "min_size": 0,
                   "name": "example-gcp",
                   "network_interface": [
@@ -1102,19 +869,8 @@ resources:
                       "network": "spot-network"
                     }
                   ],
-                  "optimization_windows": [
-                    "Mon:01:00-Mon:03:00"
-                  ],
                   "preemptible_percentage": 50,
-                  "preferred_availability_zones": [
-                    "us-central1-a"
-                  ],
                   "provisioning_model": "SPOT",
-                  "revert_to_preemptible": [
-                    {
-                      "perform_at": "timeWindow"
-                    }
-                  ],
                   "scaling_up_policy": [
                     {
                       "action_type": "adjustment",
@@ -1139,7 +895,6 @@ resources:
                     }
                   ],
                   "service_account": "example@myProject.iam.gservicecct.com",
-                  "should_utilize_commitments": true,
                   "startup_script": "",
                   "subnets": [
                     {
@@ -1198,7 +953,6 @@ resources:
             metadata: '- (Optional) Array of objects with key-value pairs.'
             metric_name: '- (Optional) Metric to monitor. Valid values: "Percentage CPU", "Network In", "Network Out", "Disk Read Bytes", "Disk Write Bytes", "Disk Write Operations/Sec", "Disk Read Operations/Sec".'
             min_capacity: '- (Optional) The minimum number of instances the group should have.'
-            min_cpu_platform: '- (Optional) Select a minimum CPU platform for the compute instance.'
             min_size: '- (Required) The minimum number of instances the group should have at any time.'
             mode: '- (Optional, Default: READ_WRITE) The mode in which to attach this disk, either READ_WRITE or READ_ONLY.'
             name: '- (Required) The group name.'
@@ -1207,22 +961,17 @@ resources:
             network_interface: '- (Required, minimum 1) Array of objects representing the network configuration for the elastigroup.'
             on_demand_count: '- (Optional) Number of regular VMs to launch in the group. The rest will be Preemptible VMs. When this parameter is specified, the preemptible_percentage parameter is being ignored.'
             operator: '- (Optional) The operator used to evaluate the threshold against the current metric value. Valid values: "gt" (greater than), "get" (greater-than or equal), "lt" (less than), "lte" (less than or equal).'
-            optimization_windows: '- (Optional) Set time window to perform the revert to preemptible. Time windows must be at least 120 minutes. Format: DayInWeek:HH-DayInWeek:HH. Required when strategy.revertToPreemptible.performAt is ''timeWindow''.'
-            perform_at: '- (Required) Valid values: "always", "never", "timeWindow". Required on strategy.revertToPreemptible object.'
             period: '- (Optional) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
             policy_name: '- (Optional) Name of scaling policy.'
             ports: '- (Required) A list of ports.'
             preemptible_percentage: '- (Optional) Percentage of Preemptible VMs to spin up from the "desired_capacity".'
-            preferred_availability_zones: '- (Optional) prioritize availability zones when launching instances for the group. Must be a sublist of availability_zones.'
             provisioning_model: '- (Optional) Valid values: "SPOT", "PREEMPTIBLE". Define the provisioning model of the launched instances. Default value is "PREEMPTIBLE".'
             region: '- (Required) The region for the group of subnets.'
-            revert_to_preemptible: '- (Optional) Setting for revert to preemptible option.'
             scaling_down_policy: '- (Optional) Contains scaling policies for scaling the Elastigroup down.'
             scaling_up_policy: '- (Optional) Contains scaling policies for scaling the Elastigroup up.'
             scheme: '- (Optional) Use when location_type is "regional". Set the traffic for the backend service to either between the instances in the vpc or to traffic from the internet. Valid values: INTERNAL, EXTERNAL.'
             service_account: '- (Optional) The email of the service account in which the group instances will be launched.'
             service_name: '- (Required) The name of the backend service.'
-            should_utilize_commitments: '- (Optional) Enable committed use discounts utilization.'
             shutdown_script: '- (Optional) The Base64-encoded shutdown script that executes prior to instance termination, for more information please see: Shutdown Script'
             source: '- (Optional) Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks.'
             source_image: '- (Optional) A source image used to create the disk. You can provide a private (custom) image, and Compute Engine will use the corresponding image from your project.'
@@ -1838,28 +1587,6 @@ resources:
                     "key": "env",
                     "value": "test"
                   },
-                  "linux_os_config": [
-                    {
-                      "sysctls": [
-                        {
-                          "vm_max_map_count": 79550
-                        }
-                      ]
-                    }
-                  ],
-                  "logging": [
-                    {
-                      "export": [
-                        {
-                          "azure_blob": [
-                            {
-                              "id": "di-abcd123"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
                   "max_count": 100,
                   "max_pods_per_node": 30,
                   "min_count": 1,
@@ -1870,6 +1597,18 @@ resources:
                   "os_type": "Windows",
                   "pod_subnet_ids": [
                     "/subscriptions/123456-1234-1234-1234-123456789/resourceGroups/ExampleResourceGroup/providers/Microsoft.Network/virtualNetworks/ExampleVirtualNetwork/subnets/default"
+                  ],
+                  "scheduling": [
+                    {
+                      "shutdown_hours": [
+                        {
+                          "is_enabled": true,
+                          "time_windows": [
+                            "Sat:08:00-Sun:08:00"
+                          ]
+                        }
+                      ]
+                    }
                   ],
                   "spot_percentage": 50,
                   "tags": {
@@ -1885,19 +1624,6 @@ resources:
                   ],
                   "vnet_subnet_ids": [
                     "/subscriptions/123456-1234-1234-1234-123456789/resourceGroups/ExampleResourceGroup/providers/Microsoft.Network/virtualNetworks/ExampleVirtualNetwork/subnets/default"
-                  ],
-                  "vng_template_scheduling": [
-                    {
-                      "vng_template_shutdown_hours": [
-                        {
-                          "is_enabled": true,
-                          "time_windows": [
-                            "Fri:15:30-Sat:13:30",
-                            "Sun:15:30-Mon:13:30"
-                          ]
-                        }
-                      ]
-                    }
                   ]
                 }
         argumentDocs:
@@ -1907,7 +1633,6 @@ resources:
             aks_infrastructure_resource_group_name: '- (Required) The name of the cluster''s infrastructure resource group.'
             aks_region: '- (Required) The cluster''s region.'
             aks_resource_group_name: '- (Required) The name of the cluster''s resource group.'
-            apply_roll: '- (Optional) - When set to True, a cluster roll will be initiated if a new version is available to upgrade in the dedicated virtual node groups.'
             architectures: '- (Optional, Enum "x86_64", "intel64", "amd64", "arm64") The filtered vm sizes will support at least one of the architectures from this list. x86_64 includes both intel64 and amd64.'
             automatic: '- (Optional) Automatic headroom configuration.'
             autoscale_down: '- (Optional) Auto Scaling scale down operations.'
@@ -1915,19 +1640,16 @@ resources:
             autoscale_is_enabled: '- (Optional) Enable the Ocean Kubernetes Autoscaler.'
             autoscaler: '- (Optional) The Ocean Kubernetes Autoscaler object.'
             availability_zones: '- (Required) An Array holding Availability Zones, this configures the availability zones the Ocean may launch instances in per VNG.'
-            azure_blob: '-  Exports your cluster''s logs to the storage account and container configured on the storage account data integration given. Each file contains logs of 3 minutes where each log is separated by a new line and saved as a JSON. The file formats are container/accountId``oceanId``oceanName_startTime.log'
             batch_min_healthy_percentage: '- (Optional, Default: 50) Indicates the threshold of minimum healthy nodes in single batch. If the amount of healthy nodes in single batch is under the threshold, the roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.'
             batch_size_percentage: '- (Optional) Value as a percent to set the size of a batch in a roll. Valid values are 0-100. In case of null as value, the default value in the backend will be 20%.'
             comment: '- (Optional) Add a comment description for the roll. The comment is limited to 256 chars and optional.'
             conditioned_roll: '- (Optional, Default: false) Spot will perform a cluster Roll in accordance with a relevant modification of the cluster’s settings. When set to true , only specific changes in the cluster’s configuration will trigger a cluster roll (such as availability_zones, max_pods_per_node, enable_node_public_ip, os_disk_size_gb, os_disk_type, os_sku, kubernetes_version, vnet_subnet_ids, pod_subnet_ids, labels, taints and tags).'
             controller_cluster_id: '- (Required) Enter a unique Ocean cluster identifier. Cannot be updated. This needs to match with string that was used to install the controller in the cluster, typically clusterName + 8 digit string.'
             cpu_per_unit: '- (Optional) Configure the number of CPUs to allocate the headroom. CPUs are denoted in millicores, where 1000 millicores = 1 vCPU.'
-            cron_expression: '- (Required) A valid cron expression. The cron is running in UTC time zone and is in Unix cron format Cron Expression Validator Script. Only one of frequency or cronExpression should be used at a time. Required for cluster.scheduling.tasks object. (Example: 0 1 * * *).'
             disk_performance: '- (Optional, Enum "Standard", "Premium") The filtered vm sizes will support at least one of the classes from this list.'
             effect: '- (Optional, Enum: "NoSchedule", "PreferNoSchedule", "NoExecute", "PreferNoExecute") Set taint effect.'
             enable_node_public_ip: '- (Optional) Enable node public IP.'
             exclude_series: '- (Optional) Vm sizes belonging to a series from the list will not be available for scaling'
-            export: '- The Ocean AKS Logging Export object.'
             fallback_to_ondemand: '- (Optional) If no spot VM markets are available, enable Ocean to launch regular (pay-as-you-go) nodes instead.'
             filters: '- (Optional) Filters for the VM sizes that can be launched from the virtual node group.'
             gpu_per_unit: '- (Optional) Amount of GPU to allocate for headroom unit.'
@@ -1935,13 +1657,10 @@ resources:
             grace_period: '- (Optional, Default: 600) The amount of time to wait, in seconds, from the moment the instance has launched until monitoring of its health checks begins.'
             headrooms: '- (Optional) Specify the custom headroom per VNG. Provide a list of headroom objects.'
             health: '- (Optional) The Ocean AKS Health object.'
-            id: '- (Required) The identifier of The Azure Blob data integration to export the logs to.'
-            is_enabled: '- (Optional, Default - false) Enable automatic headroom. When set to true, Ocean configures and optimizes headroom automatically.'
+            is_enabled: '- (Optional, Default - false) Enable automatic headroom. When set to True, Ocean configures and optimizes headroom automatically.'
             key: '- (Required) Set label key spot labels and Azure labels. The following are not allowed: ["kubernetes.azure.com/agentpool","kubernetes.io/arch","kubernetes.io/os","node.kubernetes.io/instance-type", "topology.kubernetes.io/region", "topology.kubernetes.io/zone", "kubernetes.azure.com/cluster", "kubernetes.azure.com/mode", "kubernetes.azure.com/role", "kubernetes.azure.com/scalesetpriority", "kubernetes.io/hostname", "kubernetes.azure.com/storageprofile", "kubernetes.azure.com/storagetier", "kubernetes.azure.com/instance-sku", "kubernetes.azure.com/node-image-version", "kubernetes.azure.com/subnet", "kubernetes.azure.com/vnet", "kubernetes.azure.com/ppg", "kubernetes.azure.com/encrypted-set", "kubernetes.azure.com/accelerator", "kubernetes.azure.com/fips_enabled", "kubernetes.azure.com/os-sku"]'
             kubernetes_version: '- (Optional) The desired Kubernetes version of the launched nodes. In case the value is null, the Kubernetes version of the control plane is used.'
             labels: '- (Optional) An array of labels to add to the virtual node group. Only custom user labels are allowed, and not Kubernetes well-known labels or  Azure AKS labels or Spot labels.'
-            linux_os_config: '- (Optional) Custom Linux OS configuration.'
-            logging: '- (Optional) The Ocean AKS Logging Object.'
             max_count: '- (Optional, Default: 1000) Maximum node count limit.'
             max_gpu: '- (Optional) Maximum number of GPUs available.'
             max_memory_gib: '- (Optional) The maximum memory in GiB units that can be allocated to the cluster.'
@@ -1963,35 +1682,25 @@ resources:
             os_disk_type: '- (Optional, Enum:"Managed" ,"Ephemeral") The type of the OS disk.'
             os_sku: '- (Optional, Enum: "Ubuntu", "Windows2019", "Windows2022", "AzureLinux", "CBLMariner") The OS SKU of the OS type. Must correlate with the os type.'
             os_type: '- (Optional, Enum:"Linux","Windows") The OS type of the OS disk. Can''t be modified once set.'
-            parameters: '- (Optional) The parameters of the scheduling task. Each task type will have properties relevant only to it.'
-            parameters_cluster_roll: '- (Optional) The parameters of the cluster roll scheduling task.'
-            parameters_upgrade_config: '- (Optional) The parameters of the upgrade config scheduling task.'
             percentage: '- (Optional) Optionally set a number between 0-100 to control the percentage of total cluster resources dedicated to headroom.'
             pod_subnet_ids: '- (Optional) The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).'
             resource_limits: '- (Optional) Optionally set upper and lower bounds on the resource usage of the cluster.'
             respect_pdb: '- (Optional, Default: true) During the roll, if the parameter is set to true we honor PDB during the nodes replacement.'
             respect_restrict_scale_down: '- (Optional, Default: false) During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.'
             roll_config: '- (Optional) While used, you can control whether the group should perform a deployment after an update to the configuration.'
-            roll_parameters: '- (Optional) - The parameters of the cluster roll that will be initiated.'
             scheduling: '- (Optional) An object used to specify times when the cluster will turn off. Once the shutdown time will be over, the cluster will return to its previous state.'
             series: '- (Optional) Vm sizes belonging to a series from the list will be available for scaling. We can specify include list and series can be specified with capital or small letters, with space, without space or with underscore ''_'' .  For example all of these "DSv2", "Ds v2", "ds_v2" refer to same DS_v2 series.'
             should_roll: '- (Required) If set to true along with the cluster update, roll will be triggered.'
-            shutdown_hours: '- (Optional) An object used to specify times that the nodes in the virtual node group will be stopped.'
+            shutdown_hours: '- (Optional) Shutdown HoursAn object used to specify times that the nodes in the cluster will be taken down.'
             spot_percentage: '- (Optional) Percentage of spot VMs to maintain.'
-            suspension_hours: '- (Optional) An object used to specify times that the cluster should be exempted from Ocean''s scaling-down activities to ensure uninterrupted operations during critical periods.'
-            sysctls: '- (Optional) System Controls'
             tag: '- (Optional) A maximum of 10 unique key-value pairs for VM tags in the virtual node group.'
             taints: '- (Optional) Add taints to a virtual node group. Only custom user taints are allowed, and not Kubernetes well-known taints or Azure AKS ScaleSetPrioirty (Spot VM) taint. For all Spot VMs, AKS injects a taint kubernetes.azure.com/scalesetpriority=spot:NoSchedule, to ensure that only workloads that can handle interruptions are scheduled on Spot nodes. To schedule a pod to run on Spot node, add a toleration but dont include the nodeAffinity (not supported for Spot Ocean), this will prevent the pod from being scheduled using Spot Ocean.'
-            task_type: '- (Required) The type of the scheduling task. Valid values: "clusterRoll,autoUpgradeVersion".'
-            tasks: '- (Optional) A list of scheduling tasks to preform on the cluster at a specific cron time.'
-            time_windows: '- (Optional) The times that the shutdown hours will apply. Required if is_enabled is true.'
+            time_windows: '- (Optional) The times that the shutdown hours will apply.'
             update_policy: '- (Optional)'
             value: '- (Required) Set label value.'
-            vm_max_map_count: '- (Optional) Maximum number of memory map areas a process may have. Can be configured only if OS type is Linux.'
             vm_types: '- (Optional, Enum "generalPurpose", "memoryOptimized", "computeOptimized", "highPerformanceCompute", "storageOptimized", "GPU") The filtered vm types will belong to one of the vm types from this list.'
             vnet_subnet_ids: '- (Optional) The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).'
             vng_ids: '- (Optional) List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.'
-            vng_template_scheduling: '- (Optional) An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.'
         importStatements: []
     spotinst_ocean_aks_np_virtual_node_group:
         subCategory: Ocean
@@ -2059,15 +1768,6 @@ resources:
                     "key": "env",
                     "value": "test"
                   },
-                  "linux_os_config": [
-                    {
-                      "sysctls": [
-                        {
-                          "vm_max_map_count": 79550
-                        }
-                      ]
-                    }
-                  ],
                   "max_count": 100,
                   "max_pods_per_node": 30,
                   "min_count": 1,
@@ -2079,19 +1779,6 @@ resources:
                   "os_type": "Linux",
                   "pod_subnet_ids": [
                     "/subscriptions/123456-1234-1234-1234-123456789/resourceGroups/ExampleResourceGroup/providers/Microsoft.Network/virtualNetworks/ExampleVirtualNetwork/subnets/default"
-                  ],
-                  "scheduling": [
-                    {
-                      "shutdown_hours": [
-                        {
-                          "is_enabled": true,
-                          "time_windows": [
-                            "Fri:15:30-Sat:20:30",
-                            "Sun:08:30-Mon:08:30"
-                          ]
-                        }
-                      ]
-                    }
                   ],
                   "spot_percentage": 50,
                   "tags": {
@@ -2127,11 +1814,9 @@ resources:
             gpu_per_unit: '- (Optional) Amount of GPU to allocate for headroom unit.'
             gpu_types: '- (Optional, Enum "nvidia-tesla-v100", "amd-radeon-instinct-mi25", "nvidia-a10", "nvidia-tesla-a100", "nvidia-tesla-k80", "nvidia-tesla-m60", "nvidia-tesla-p100", "nvidia-tesla-p40", "nvidia-tesla-t4", "nvidia-tesla-h100") The filtered gpu types will belong to one of the gpu types from this list.'
             headrooms: '- (Optional) Specify the custom headroom per VNG. Provide a list of headroom objects.'
-            is_enabled: '- (Optional) Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.'
             key: '- (Required) Set label key. The following are not allowed: ["kubernetes.azure.com/agentpool", "kubernetes.io/arch", "kubernetes.io/os", "node.kubernetes.io/instance-type", "topology.kubernetes.io/region", "topology.kubernetes.io/zone", "kubernetes.azure.com/cluster", "kubernetes.azure.com/mode", "kubernetes.azure.com/role", "kubernetes.azure.com/scalesetpriority", "kubernetes.io/hostname", "kubernetes.azure.com/storageprofile", "kubernetes.azure.com/storagetier", "kubernetes.azure.com/instance-sku", "kubernetes.azure.com/node-image-version", "kubernetes.azure.com/subnet", "kubernetes.azure.com/vnet", "kubernetes.azure.com/ppg", "kubernetes.azure.com/encrypted-set", "kubernetes.azure.com/accelerator", "kubernetes.azure.com/fips_enabled", "kubernetes.azure.com/os-sku"]'
             kubernetes_version: '- (Optional) The desired Kubernetes version of the launched nodes. In case the value is null, the Kubernetes version of the control plane is used.'
             labels: '- (Optional) An array of labels to add to the virtual node group.Only custom user labels are allowed, and not Kubernetes built-in labels or Spot internal labels.'
-            linux_os_config: '- (Optional) Custom Linux OS configuration.'
             max_count: '- (Optional, Default: 1000) Maximum node count limit.'
             max_gpu: '- (Optional) Maximum number of GPUs available.'
             max_memory_gib: '- (Optional) Maximum amount of Memory (GiB).'
@@ -2157,18 +1842,13 @@ resources:
             respect_pdb: '- (Optional, Default: true) During the roll, if the parameter is set to true we honor PDB during the nodes replacement.'
             respect_restrict_scale_down: '- (Optional, Default: false) During the roll, if the parameter is set to true we honor Restrict Scale Down label during the nodes replacement.'
             roll_config: '- (Optional) While used, you can control whether the group should perform a deployment after an update to the configuration.'
-            scheduling: '- (Optional) An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.'
             series: '- (Optional) Vm sizes belonging to a series from the list will be available for scaling.'
             should_roll: '- (Required) If set to true along with the vng update, roll will be triggered.'
-            shutdown_hours: '- (Optional) An object used to specify times that the nodes in the virtual node group will be stopped.'
             spot_percentage: '- (Optional) Percentage of spot VMs to maintain.'
-            sysctls: '- (Optional) System Controls'
             tag: '- (Optional) A maximum of 10 unique key-value pairs for VM tags in the virtual node group.'
             taints: '- (Optional) Add taints to a virtual node group.'
-            time_windows: '- (Optional) The times that the shutdown hours will apply. Required if isEnabled is true.'
             update_policy: '- (Optional)'
             value: '- (Required) Set label value.'
-            vm_max_map_count: '- (Optional) Maximum number of memory map areas a process may have. Can be configured only if OS type is Linux.'
             vm_types: '- (Optional, Enum "generalPurpose", "memoryOptimized", "computeOptimized", "highPerformanceCompute", "storageOptimized", "GPU") The filtered vm types will belong to one of the vm types from this list.'
             vnet_subnet_ids: '- (Optional) The IDs of subnets in an existing VNet into which to assign nodes in the cluster (requires azure network-plugin).'
             vng_ids: '- (Optional) List of virtual node group identifiers to be rolled. Each identifier is a string. vngIds can be null, and cannot be used together with nodeNames and nodePoolNames.'
@@ -2327,11 +2007,10 @@ resources:
             parameters_cluster_roll: '- (Optional) Set clusterRoll object'
             patch: '- (Optional, Default:false) When set to ''true'', the auto-update process will update the VNGs’ images with the latest security patches. either "patch" or "minorVersion" must be true.'
             region: '- (Required) The region the cluster will run in.'
-            reserved_enis: '- (Optional, Default: 0) Specifies the count of ENIs to reserve per instance type for scaling purposes.'
             resource: '- (Required) String. Resource type to increase volume size dynamically by. (Valid values: CPU)'
             resource_limits: '- (Optional) Optionally set upper and lower bounds on the resource usage of the cluster.'
             resource_tag_specification: '- (Optional) Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.'
-            respect_pdb: '- (Optional, Default: false) During the roll, if the parameter is set to true we honor PDB during the instance replacement.'
+            respect_pdb: '- (Optional, Default: false) During the roll, if the parameter is set to True we honor PDB during the instance replacement.'
             roll_config: '- (Required) While used, you can control whether the group should perform a deployment after an update to the configuration.'
             root_device_types: '- (Optional) The filtered instance types will have a root device types from this list.'
             root_volume_size: '- (Optional) The size (in Gb) to allocate for the root volume. Minimum 20.'
@@ -2492,15 +2171,10 @@ resources:
                   ],
                   "name": "example",
                   "ocean_id": "o-123456",
-                  "preferred_od_types": [
-                    "c3.large",
-                    "m4.large"
-                  ],
                   "preferred_spot_types": [
                     "m4.large",
                     "m4.xlarge"
                   ],
-                  "reserved_enis": 1,
                   "resource_limits": [
                     {
                       "max_instance_count": 4,
@@ -2538,10 +2212,7 @@ resources:
                   ],
                   "strategy": [
                     {
-                      "draining_timeout": 300,
-                      "spot_percentage": 70,
-                      "utilize_commitments": false,
-                      "utilize_reserved_instances": true
+                      "spot_percentage": 70
                     }
                   ],
                   "subnet_ids": [
@@ -2580,7 +2251,6 @@ resources:
             delete_options: '- (Optional)'
             device_name: '- (Optional) String. Set device name. (Example: /dev/xvda).'
             disk_types: '- (Optional) The filtered instance types will have one of the disk type from this list. Valid values: NVMe, EBS, SSD, HDD.'
-            draining_timeout: '- (Optional, >=300) The configurable amount of time that Ocean will wait for the draining process to complete before terminating an instance. If you have not defined a draining timeout, the default of 300 seconds will be used.'
             dynamic_volume_size: '- (Optional) Object. Set dynamic volume size properties. When using this object, you cannot use volumeSize. You must use one or the other.'
             ebs: '- (Optional) Object. Set Elastic Block Store properties .'
             effect: '- (Required) The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute".'
@@ -2610,7 +2280,7 @@ resources:
                 The architectures that come from the Virtual Node Group's images will be taken into account when using this parameter. Cannot be configured together with Virtual Node Group's instanceTypes and with the Cluster's whitelist/blacklist/filters.
             iops: '- (Required for requests to create io1 volumes; it is not used in requests to create gp2, st1, sc1, or standard volumes) Int. The number of I/O operations per second (IOPS) that the volume supports.'
             is_ena_supported: '- (Optional) Ena is supported or not.'
-            is_enabled: '- (Required) Describes whether the task is enabled. When true, the task runs. When false, it does not run.'
+            is_enabled: '- (Required) Describes whether the task is enabled. When True, the task runs. When False, it does not run.'
             key: '- (Required) The label key.'
             kms_key_id: '- (Optional) String. Identifier (key ID, key alias, ID ARN, or alias ARN) for a customer managed CMK under which the EBS volume is encrypted.'
             labels: '- (Optional) Optionally adds labels to instances launched in the cluster.'
@@ -2631,13 +2301,10 @@ resources:
             no_device: '- (Optional) String. Suppresses the specified device included in the block device mapping of the AMI.'
             num_of_units: '- (Required) The number of units to retain as headroom, where each unit has the defined headroom CPU, memory and GPU.'
             ocean_id: '- (Required) The ID of the Ocean cluster.'
-            preferred_od_types: '- (Optional) A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
             preferred_spot_types: '- (Optional) A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
-            reserved_enis: '- (Optional, Default: 0) Specifies the count of ENIs to reserve per instance type for scaling purposes.'
             resource: '- (Required) String. Resource type to increase volume size dynamically by. (Valid values: CPU)'
             resource_limits: '- (Optional)'
-            respect_pdb: '- (Optional, Default: false) During the roll, if the parameter is set to true we honor PDB during the instance replacement.'
-            restrict_scale_down: '- (Optional) Boolean. When set to true, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.'
+            restrict_scale_down: '- (Optional) Boolean. When set to True, nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.'
             roll_config: '- (Required) Holds the roll configuration.'
             root_device_types: '- (Optional) The filtered instance types will have a root device types from this list. Valid values: ebs, or instance-store.'
             root_volume_size: '- (Optional) Set root volume size (in GB).'
@@ -2661,8 +2328,6 @@ resources:
             time_windows: '- (Required ) The times that the shutdown hours will apply.'
             update_policy: '- (Optional)'
             user_data: '- (Optional) Base64-encoded MIME user data to make available to the instances.'
-            utilize_commitments: '- (Optional, Default: false) When set as ‘true’, if savings plans commitments have available capacity, Ocean will utilize them alongside RIs (if exist) to maximize cost efficiency. If the value is set as ''null'', it will automatically be inherited from the cluster level.'
-            utilize_reserved_instances: '- (Optional, Default: true) When set as ‘true’, if reserved instances exist, Ocean will utilize them before launching spot instances. If the value is set as ''null'', it will automatically be inherited from the cluster level.'
             value: '- (Required) The label value.'
             virtualization_types: '- (Optional) The filtered instance types will support at least one of the virtualization types from this list. Valid values: hvm, paravirtual.'
             volume_size: '- (Optional) Int. The size, in GB of the volume.'
@@ -2708,7 +2373,6 @@ resources:
                   "desired_capacity": "0",
                   "draining_timeout": 120,
                   "ebs_optimized": true,
-                  "fallback_to_ondemand": true,
                   "iam_instance_profile": "iam-profile",
                   "image_id": "ami-12345",
                   "instanceTypes": [
@@ -2844,7 +2508,6 @@ resources:
             exclude_families: '- (Optional) Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.'
             exclude_metal: '- (Optional, Default: false) In case excludeMetal is set to true, metal types will not be available for scaling.'
             export: '- (Optional) Logging Export configuration.'
-            fallback_to_ondemand: '- (Optional, Default: true) If no Spot instance markets are available, enable Ocean to launch On-Demand instances instead.'
             filters: '- (Optional) List of filters. The Instance types that match with all filters compose the Ocean''s whitelist parameter. Cannot be configured together with whitelist/blacklist.'
             headroom: '- (Optional) Spare resource capacity management enabling fast assignment of tasks without waiting for new resources to launch.'
             http_put_response_hop_limit: '- (Optional) An integer from 1 through 64. The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further the instance metadata requests can travel.'
@@ -3054,7 +2717,7 @@ resources:
             instance_metadata_options: '- (Optional) Ocean instance metadata options object for IMDSv2.'
             instance_types: '- (Optional) A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the Ocean cluster.'
             iops: '- (Required for requests to create io1 volumes; it is not used in requests to create gp2, st1, sc1, or standard volumes) Int. The number of I/O operations per second (IOPS) that the volume supports.'
-            is_enabled: '- (Required) Describes whether the task is enabled. When true, the task runs. When false, it does not run.'
+            is_enabled: '- (Required) Describes whether the task is enabled. When True, the task runs. When False, it does not run.'
             key: '- (Required) The label key.'
             kms_key_id: '- (Optional) String. Identifier (key ID, key alias, ID ARN, or alias ARN) for a customer managed CMK under which the EBS volume is encrypted.'
             memory_per_unit: '- (Optional) Optionally configure the amount of memory (MiB) to allocate for each headroom unit.'
@@ -3064,7 +2727,7 @@ resources:
             ocean_id: '- (Required) The Ocean cluster ID .'
             preferred_spot_types: '- (Optional) When Ocean scales up instances, it takes your preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
             resource: '- (Required) String. Resource type to increase volume size dynamically by. (valid values: "CPU")'
-            restrict_scale_down: '- (Optional) Boolean. When set to true, VNG nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.'
+            restrict_scale_down: '- (Optional) Boolean. When set to “True”, VNG nodes will be treated as if all pods running have the restrict-scale-down label. Therefore, Ocean will not scale nodes down unless empty.'
             scheduling_task: '- (Optional) Used to define scheduled tasks such as a manual headroom update.'
             security_group_ids: '- (Optional) One or more security group ids.'
             size_per_resource_unit: '- (Required) Int. Additional size (in GB) per resource unit. (Example: baseSize= 50, sizePerResourceUnit=20, and instance with 2 CPU is launched - its total disk size will be: 90GB)'
@@ -3090,11 +2753,6 @@ resources:
             - name: example
               manifest: |-
                 {
-                  "auto_update": [
-                    {
-                      "is_enabled": true
-                    }
-                  ],
                   "backend_services": [
                     {
                       "location_type": "regional",
@@ -3114,21 +2772,6 @@ resources:
                   "cluster_name": "example-cluster-name",
                   "controller_cluster_id": "example-controller-123124",
                   "desired_capacity": 0,
-                  "filters": [
-                    {
-                      "exclude_families": [
-                        "n2"
-                      ],
-                      "include_families": [
-                        "c2",
-                        "c3"
-                      ],
-                      "max_memory_gib": 16,
-                      "max_vcpu": 16,
-                      "min_memory_gib": 8,
-                      "min_vcpu": 2
-                    }
-                  ],
                   "location": "us-central1-a",
                   "max_size": 2,
                   "min_size": 0,
@@ -3147,7 +2790,6 @@ resources:
                 }
         argumentDocs:
             auto_headroom_percentage: '- Optionally set the auto headroom percentage, set a number between 0-200 to control the headroom % from the cluster. Relevant when isAutoConfig=true.'
-            auto_update: '- (Optional) The Ocean Kubernetes AutoUpdate object. If set to ''true'', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.'
             autoscaler: '- (Optional) The Ocean Kubernetes Autoscaler object.'
             backend_services: '- (Optional) Describes the backend service configurations.'
             batch_min_healthy_percentage: '- (Optional, Default: 50)  Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the cluster roll will fail. If exists, the parameter value will be in range of 1-100. In case of null as value, the default value in the backend will be 50%. Value of param should represent the number in percentage (%) of the batch.'
@@ -3172,26 +2814,22 @@ resources:
             enable_integrity_monitoring: '- (Optional) Boolean. Enable the integrity monitoring parameter on the GCP instances.'
             enable_secure_boot: '- (Optional) Boolean. Enable the secure boot parameter on the GCP instances.'
             evaluation_periods: '- (Optional, Default: null) The number of evaluation periods that should accumulate before a scale down action takes place.'
-            exclude_families: '- (Optional) Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.'
-            filters: '- (Optional) List of filters. The Instance types that match with all filters compose the Ocean''s whitelist parameter. Cannot be configured together with whitelist/blacklist.'
             gpu_per_unit: '- (Optional) How much GPU allocate for headroom unit.'
             headroom: '- (Optional) Spare resource capacity management enabling fast assignment of Pods without waiting for new resources to launch.'
             id: '- The Spotinst Ocean ID.'
-            include_families: '- (Optional) Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.'
-            is_aggressive_scale_down_enabled: '- (Optional, Default: false) When set to ''true'', the Aggressive Scale Down feature is enabled.'
             is_auto_config: '- (Optional, Default: true) Automatically configure and optimize headroom resources.'
-            is_enabled: '- (Optional, Default:true) Enable the Ocean Kubernetes AutoUpdate.'
+            is_enabled: |-
+                - (Optional)  Flag to enable / disable the shutdown hours.
+                Example: True
             launch_spec_ids: '- (Optional) List of Virtual Node Group identifiers to be rolled.'
             location: '- (Required) The zone the master cluster is located in.'
             location_type: '- (Optional) Sets which location the backend services will be active. Valid values: regional, global.'
-            max_memory_gib: '- (Optional) Maximum amount of Memory (GiB).'
+            max_memory_gib: '- (Optional) The maximum memory in GiB units that can be allocated to the cluster.'
             max_scale_down_percentage: '- (Optional) Would represent the maximum % to scale-down. Number between 1-100.'
             max_size: '- (Optional, Default: 1000) The upper limit of instances the cluster can scale up to.'
-            max_vcpu: '- (Optional) Maximum number of vcpus available.'
+            max_vcpu: '- (Optional) The maximum cpu in vCpu units that can be allocated to the cluster.'
             memory_per_unit: '- (Optional) Optionally configure the amount of memory (MiB) to allocate the headroom.'
-            min_memory_gib: '- (Optional) Minimum amount of Memory (GiB).'
             min_size: '- (Optional) The lower limit of instances the cluster can scale down to.'
-            min_vcpu: '- (Optional) Minimum number of vcpus available.'
             named_port: '- (Optional) Describes a named port and a list of ports.'
             num_of_units: '- (Optional) The number of units to retain as headroom, where each unit has the defined headroom CPU and memory.'
             port_name: '- (Required) The name of the port.'
@@ -3207,14 +2845,13 @@ resources:
             service_name: '- (Required) The name of the backend service.'
             shielded_instance_config: '- (Optional) The Ocean shielded instance configuration object.'
             should_roll: '- (Required) Enables the roll.'
-            should_utilize_commitments: '- (Optional) Enable committed use discounts utilization.'
             shutdown_hours: '- (Optional) Set shutdown hours for cluster object.'
             strategy: '- (Optional) Strategy object.'
             task_parameters: '- (Optional) The scheduling parameters for the cluster.'
             task_type: '- (Required) Valid values: "clusterRoll". Required for cluster.scheduling.tasks object.'
             tasks: '- (Optional) The scheduling tasks for the cluster.'
             time_windows: |-
-                - (Required) Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+                - (Required) Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
                 Example: Fri:15:30-Wed:14:30
             update_policy: '- (Optional)'
             use_as_template_only: '- (Optional, Default: false) launch specification defined on the Ocean object will function only as a template for virtual node groups.'
@@ -3240,11 +2877,6 @@ resources:
                   "autoscale_headrooms_automatic": [
                     {
                       "auto_headroom_percentage": 5
-                    }
-                  ],
-                  "create_options": [
-                    {
-                      "initial_nodes": 1
                     }
                   ],
                   "instance_types": [
@@ -3345,17 +2977,15 @@ resources:
             autoscale_headrooms_automatic: '- (Optional) Set automatic headroom per launch spec.'
             batch_size_percentage: '- (Required) Sets the percentage of the instances to deploy in each batch.'
             cpu_per_unit: '- (Optional) Optionally configure the number of CPUs to allocate for each headroom unit. CPUs are denoted in millicores, where 1000 millicores = 1 vCPU.'
-            create_options: '- (Optional)'
             cron_expression: '- (Required) A valid cron expression. For example : " * * * * * ". The cron job runs in UTC time and is in Unix cron format.'
             effect: '- (Required) The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute".'
             enable_integrity_monitoring: '- (Optional) Boolean. Enable the integrity monitoring parameter on the GCP instances.'
             enable_secure_boot: '- (Optional) Boolean. Enable the secure boot parameter on the GCP instances.'
             gpu_per_unit: '- (Optional) Optionally configure the number of GPUS to allocate for each headroom unit.'
             id: '- The Spotinst LaunchSpec ID.'
-            initial_nodes: '- (Optional) When set to an integer greater than 0, a corresponding amount of nodes will be launched from the created Virtual Node Group.'
             instance_types: '- (Optional) List of supported machine types for the Launch Spec.'
             ip_cidr_range: '- (Required) specify the IP address range in CIDR notation that can be used for the alias IP addresses associated with the imported node pool.'
-            is_enabled: '- (Required) Describes whether the task is enabled. When true, the task runs. When false, it does not run.'
+            is_enabled: '- (Required) Describes whether the task is enabled. When True, the task runs. When False, it does not run.'
             key: '- (Required) The metadata key.'
             labels: '- (Optional) Optionally adds labels to instances launched in an Ocean cluster.'
             local_ssd_count: '- (Optional) Defines the number of local SSDs to be attached per node for this VNG.'
@@ -3408,122 +3038,6 @@ resources:
             id: '- The Spotinst LaunchSpec ID.'
             node_pool_name: '- (Required) The node pool you wish to use in your launchSpec.'
             ocean_id: '- (Required) The Ocean cluster ID required for launchSpec create.'
-        importStatements: []
-    spotinst_ocean_right_sizing_rule:
-        subCategory: Ocean
-        description: Provides a Spotinst Ocean Right Sizing resource.
-        name: spotinst_ocean_right_sizing_rule
-        title: ocean_right_sizing_rule
-        examples:
-            - name: example
-              manifest: |-
-                {
-                  "exclude_preliminary_recommendations": true,
-                  "ocean_id": "o-123456",
-                  "recommendation_application_boundaries": [
-                    {
-                      "cpu_max": 190,
-                      "cpu_min": 120,
-                      "memory_max": 190,
-                      "memory_min": 160
-                    }
-                  ],
-                  "recommendation_application_hpa": [
-                    {
-                      "allow_hpa_recommendations": true
-                    }
-                  ],
-                  "recommendation_application_intervals": [
-                    {
-                      "repetition_basis": "WEEKLY",
-                      "weekly_repetition_basis": [
-                        {
-                          "interval_days": [
-                            "MONDAY",
-                            "WEDNESDAY"
-                          ],
-                          "interval_hours_end_time": "14:00",
-                          "interval_hours_start_time": "12:00"
-                        }
-                      ]
-                    },
-                    {
-                      "monthly_repetition_basis": [
-                        {
-                          "interval_months": [
-                            2,
-                            6,
-                            9
-                          ],
-                          "week_of_the_month": [
-                            "FIRST",
-                            "LAST"
-                          ],
-                          "weekly_repetition_basis": [
-                            {
-                              "interval_days": [
-                                "MONDAY"
-                              ],
-                              "interval_hours_end_time": "04:00",
-                              "interval_hours_start_time": "03:00"
-                            }
-                          ]
-                        }
-                      ],
-                      "repetition_basis": "MONTHLY"
-                    }
-                  ],
-                  "recommendation_application_min_threshold": [
-                    {
-                      "cpu_percentage": 0.412,
-                      "memory_percentage": 0.36
-                    }
-                  ],
-                  "recommendation_application_overhead_values": [
-                    {
-                      "cpu_percentage": 0.8,
-                      "memory_percentage": 0.5
-                    }
-                  ],
-                  "restart_replicas": "ALL_MANIFEST",
-                  "rule_name": "test-rule"
-                }
-        argumentDocs:
-            allow_hpa_recommendations: '- Determines by the rule if recommendation application is allowed for workloads with HPA definition.'
-            attach_workloads: '- (Optional)'
-            cpu_max: '- (Optional) the maximal value of cpu in vCpu.'
-            cpu_min: '- (Optional) the minimal value of cpu in vCpu.'
-            cpu_percentage: '- (Optional, Default: 0.05) .'
-            detach_workloads: '- (Optional)'
-            exclude_preliminary_recommendations: '- (Optional) Exclude preliminary recommendations (recommendations based on less than 4 full days of data).'
-            interval_days: '- (Optional) Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.'
-            interval_hours_end_time: '- (Optional) End time.'
-            interval_hours_start_time: '- (Optional) Start time.'
-            interval_months: '- (Optional) Array of the months (in number), when we want to trigger the apply recommendations.'
-            key: '- (Optional).'
-            labels: '- (Optional).'
-            memory_max: '- (Optional) the maximal value of memory in Gib.'
-            memory_min: '- (Optional) the minimal value of memory in Gib.'
-            memory_percentage: '- (Optional, Default: 0.05) .'
-            monthly_repetition_basis: '- (Optional) Determines the Ocean Rightsizing rule monthly repetition basis.'
-            namespace_name: '- (Optional) List of namespaces.'
-            namespaces: '- (Optional)'
-            ocean_id: '- (Required) Identifier of the Ocean cluster.'
-            recommendation_application_boundaries: '- (Optional) Determines the Ocean Rightsizing rule recommendation application boundaries.'
-            recommendation_application_hpa: '- HPA Rightsizing Rule Recommendation Configuration'
-            recommendation_application_intervals: '- (Required) Determines the Ocean Rightsizing rule recommendation application intervals.'
-            recommendation_application_min_threshold: '- Determines the extent of difference between current request and recommendation to trigger a change in percentage.'
-            recommendation_application_overhead_values: '- Determines the Ocean Rightsizing rule recommendation application overhead values.'
-            regex_name: '- (Optional). The regex for the workload name. Not allowed when using workload_name.'
-            repetition_basis: '- (Optional) Valid values: "WEEKLY" "MONTHLY". The repetition basis.'
-            restart_replicas: '- (Optional) Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST" "NO_RESTART". Enable to sequentially restart pod batches according to recommendations, for all pods, only more than 1 replica, or not any pod.'
-            rule_name: '- (Required) The unique name of the rule.'
-            value: '- (Optional) .'
-            week_of_the_month: '- (Optional) Valid values: "FIRST" "SECOND" "THIRD" "FOURTH" "LAST". Array of the weeks in the month, when we want to trigger the apply recommendations.'
-            weekly_repetition_basis: '- (Optional) Determines the Ocean Rightsizing rule weekly repetition basis.'
-            workload_name: '- (Optional). The name of the workload.'
-            workload_type: '- (Optional). The type of the workload.'
-            workloads: '- (Optional) List of workloads.'
         importStatements: []
     spotinst_ocean_spark:
         subCategory: Ocean
@@ -3592,19 +3106,6 @@ resources:
                       ],
                       "use_host_network": false
                     }
-                  ],
-                  "workspaces": [
-                    {
-                      "storage": [
-                        {
-                          "defaults": [
-                            {
-                              "storage_class_name": "my-custom-storage-class"
-                            }
-                          ]
-                        }
-                      ]
-                    }
                   ]
                 }
         argumentDocs:
@@ -3627,631 +3128,6 @@ resources:
                   "virtual_node_group_id": "vng_id"
                 }
         argumentDocs: {}
-        importStatements: []
-    spotinst_oceancd_rollout_spec:
-        subCategory: OceanCD
-        description: Provides a Spotinst OceanCD Rollout Spec resource.
-        name: spotinst_oceancd_rollout_spec
-        title: oceancd_rollout_spec
-        examples:
-            - name: example
-              manifest: |-
-                {
-                  "ambassador": [
-                    {
-                      "mappings": [
-                        "test-mappong",
-                        "test2-mapping"
-                      ]
-                    }
-                  ],
-                  "failure_policy": [
-                    {
-                      "action": "abort"
-                    }
-                  ],
-                  "istio": [
-                    {
-                      "destination_rule": [
-                        {
-                          "canary_subset_name": "canary-subset",
-                          "destination_rule_name": "test-dest-rule",
-                          "stable_subset_name": "stable-subset"
-                        }
-                      ],
-                      "virtual_services": [
-                        {
-                          "tls_routes": [
-                            {
-                              "port": 80,
-                              "sni_hosts": "spot.io"
-                            }
-                          ],
-                          "virtual_service_name": "test-name",
-                          "virtual_service_routes": [
-                            "route1",
-                            "route2"
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "nginx": [
-                    {
-                      "additional_ingress_annotation": [
-                        {
-                          "canary_by_header": "x-canary-test",
-                          "key1": "test"
-                        }
-                      ],
-                      "nginx_annotation_prefix": "customIngress.nginx",
-                      "stable_ingress": "hello-ingress"
-                    }
-                  ],
-                  "ping_pong": [
-                    {
-                      "ping_service": "stable-service",
-                      "pong_service": "canary-service"
-                    }
-                  ],
-                  "rollout_spec_name": "test-rollout_spec",
-                  "smi": [
-                    {
-                      "smi_root_service": "stable-service",
-                      "traffic_split_name": "rollout-expample-traffic-split"
-                    }
-                  ],
-                  "spot_deployment": [
-                    {
-                      "spot_deployment_cluster_id": "Test-Cluster-Id",
-                      "spot_deployment_name": "TestDeployment",
-                      "spot_deployment_namespace": "default"
-                    }
-                  ],
-                  "spot_deployments": [
-                    {
-                      "spot_deployment_name": "TestDeployment",
-                      "spot_deployments_cluster_id": "Test-Cluster-Id",
-                      "spot_deployments_namespace": "default"
-                    }
-                  ],
-                  "strategy": [
-                    {
-                      "args": [
-                        {
-                          "arg_name": "Test-Arg",
-                          "arg_value": "TestArgValue",
-                          "value_from": [
-                            {
-                              "field_ref": [
-                                {
-                                  "field_path": "metatdata.labels['app']"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ],
-                      "strategy_name": "Test_Strategy"
-                    }
-                  ],
-                  "traffic": [
-                    {
-                      "alb": [
-                        {
-                          "alb_annotation_prefix": "custom-ingress-kubernates",
-                          "alb_ingress": "test-ingress",
-                          "alb_root_service": "test-root-service",
-                          "service_port": 8080,
-                          "stickiness_config": [
-                            {
-                              "duration_seconds": 3600,
-                              "enabled": true
-                            }
-                          ]
-                        }
-                      ],
-                      "canary_service": "canary-service-test",
-                      "stable_service": "stable-service-test"
-                    }
-                  ]
-                }
-        argumentDocs:
-            action: '- (Required) Choose an action to perform on failure. Default is abort.  Enum: "abort" "pause" "promote".'
-            additional_ingress_annotation: '- (Optional) Provides additional features to add to the canary ingress (such as routing by header, cookie, etc). You can add these Kubernetes annotations to specific Ingress objects to customize their behavior. Above are found examples of accepted k8s keys.For the full list of supported keys, you may reach the following documentation - https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#canary.'
-            alb: '- (Optional) Holds ALB Ingress specific configuration to route traffic.'
-            alb_annotation_prefix: '- (Optional) Has to match the configured annotation prefix on the alb ingress controller.'
-            alb_ingress: '- (Required) Refers to the name of an Ingress resource in the same namespace as the SpotDeployment.'
-            alb_root_service: '- (Required) References the service in the ingress to the controller should add the action to.'
-            ambassador: '- (Optional) Holds specific configuration to use Ambassador to route traffic.'
-            arg_name: '- (Required) Name of an argument.'
-            arg_value: '- (Optional) Value of an argument.'
-            args: '- (Optional) Arguments defined in Verification Templates.'
-            canary_by_header: '- (Optional) Allows customizing the header value instead of using hardcoded values.'
-            canary_service: '- (Optional) The canary service name.'
-            canary_subset_name: '- (Required) The subset name to modify labels with the canary version.'
-            destination_rule: '- (Optional) It references to an Istio DestinationRule to modify and shape traffic. DestinationRule field belongs only to the Subset Level approach.'
-            destination_rule_name: '- (Required) Holds the name of the DestinationRule.'
-            duration_seconds: '- (Optional) Defines how long the load balancer should consistently route the user''s request to the same target.'
-            enabled: '- (Optional) Enables the load balancer to bind a user''s session to a specific target.'
-            failure_policy: '- (Optional) Holds information on how to react when failure happens.'
-            field_path: '- (Required) Path to SpotDeployment''s field from where to get the value of an argument.'
-            field_ref: '- (Required) Defines the field path from where to get the value of an argument.'
-            istio: '- (Optional) Holds Istio specific configuration to route traffic.'
-            key1: '- (Optional) Any of supported annotations.'
-            mappings: '- (Required) A list of names of the Ambassador Mappings used to route traffic to the service.'
-            nginx: '- (Optional) Holds Nginx Ingress specific configuration to route traffic.'
-            nginx_annotation_prefix: '- (Optional) Has to match the configured annotation prefix on the Nginx ingress controller.'
-            ping_pong: '- (Optional) Holds the ping and pong services. You can use pingPong field only when using ALB as a traffic manager with the IP Mode approach.'
-            ping_service: '- (Required) Holds the name of the ping service.'
-            pong_service: '- (Required) Holds the name of the pong service.'
-            port: '- (Optional) The port of the TLS Route desired to be matched in the given Istio VirtualService.'
-            rollout_spec_name: '- (Required) Identifier name for Ocean CD Rollout Spec. Must be unique'
-            service_port: '- (Required) Refers to the port that the Ingress action should route traffic to.'
-            smi: '- (Optional) Holds TrafficSplit specific configuration to route traffic.'
-            smi_root_service: '- (Optional) Holds the name of service that clients use to communicate.'
-            sni_hosts: '- (Optional) A list of all the SNI Hosts of the TLS Route desired to be matched in the given Istio VirtualService.'
-            spot_deployment: '- (Optional) Represents the SpotDeployment selector.'
-            spot_deployment_cluster_id: '- (Optional) Ocean CD cluster identifier for the references SpotDeployment.'
-            spot_deployment_name: '- (Optional) The name of the SpotDeployment resource'
-            spot_deployment_namespace: '- (Optional) The namespace which the SpotDeployment resource exists within.'
-            spot_deployments: '- (Optional) You must specify either spotDeployment OR spotDeployments but not both. Every SpotDeployment has to be unique. If more than one SpotDeployment has been configured, no traffic managers can be set as part of the RolloutSpec.For such case ensure that each of the chosen SpotDeployments are being exposed with different Kubernetes services.'
-            spot_deployments_cluster_id: '- (Optional) Ocean CD cluster identifier for the references SpotDeployment.'
-            spot_deployments_name: '- (Optional) The name of the SpotDeployment resource'
-            spot_deployments_namespace: '- (Optional) The namespace which the SpotDeployment resource exists within.'
-            stable_ingress: '- (Required) Refers to the name of an Ingress resource in the same namespace as the SpotDeployment.'
-            stable_service: '- (Optional) The stable service name.'
-            stable_subset_name: '- (Required) The subset name to modify labels with the stable version.'
-            stickiness_config: '- (Optional) Allows to specify further settings on the ForwardConfig.'
-            strategy: '- (Optional) Determines the Ocean CD strategy'
-            strategy_name: '- (Required) Ocean CD strategy name identifier.'
-            tls_routes: '- (Optional) A list of HTTPS routes within VirtualService.'
-            traffic: '- (Optional) Hosts all of the supported service meshes needed to enable more fine-grained traffic routing. In case SpotDeployments contains more than one SpotDeployment the traffic manager may not be configured.'
-            traffic_split_name: '- (Optional) Holds the name of the TrafficSplit.'
-            value_from: '- (Optional) Defines from where to get the value of an argument.'
-            virtual_service_name: '- (Required) Holds the name of the VirtualService.'
-            virtual_service_routes: '- (Optional) A list of HTTP routes within VirtualService.'
-            virtual_services: '- (Required) Defines a set of traffic routing rules to apply when a host is addressed.'
-        importStatements: []
-    spotinst_oceancd_strategy:
-        subCategory: OceanCD
-        description: Provides a Spotinst OceanCD Strategy resource.
-        name: spotinst_oceancd_strategy
-        title: oceancd_strategy
-        examples:
-            - name: example
-              manifest: |-
-                {
-                  "canary": [
-                    {
-                      "background_verification": [
-                        {
-                          "template_names": [
-                            "test1",
-                            "test2"
-                          ]
-                        }
-                      ],
-                      "rolling": [
-                        {
-                          "steps": [
-                            {
-                              "pause": [
-                                {
-                                  "duration": "1s"
-                                }
-                              ],
-                              "steps_name": "test-step-1",
-                              "verification": [
-                                {
-                                  "template_names": [
-                                    "test1",
-                                    "test2"
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ],
-                      "steps": [
-                        {
-                          "pause": [
-                            {
-                              "duration": "1s"
-                            }
-                          ],
-                          "set_canary_scale": [
-                            {
-                              "match_traffic_weight": true,
-                              "replicas": 20,
-                              "weight": 20
-                            }
-                          ],
-                          "set_header_route": [
-                            {
-                              "header_route_name": "test",
-                              "match": [
-                                {
-                                  "header_name": "Test",
-                                  "header_value": [
-                                    {
-                                      "exact": "Test",
-                                      "prefix": "Test-",
-                                      "regex": "Test*"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ],
-                          "set_weight": 20,
-                          "step_name": "test-step-1",
-                          "verification": [
-                            {
-                              "template_names": [
-                                "test1",
-                                "test2"
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "strategy_name": "test-strategy"
-                }
-        argumentDocs:
-            background_verification: '- (Optional) A list of background verifications.'
-            canary: '- (Optional) Represents Canary strategy. Cannot be defined when Rolling object is defined.'
-            duration: '- (Optional) The amount of time to wait before moving to the next step.'
-            exact: '- (Optional)  The exact header value.'
-            header_name: '- (Required) The name of the header.'
-            header_route_name: '- (Required) The name of the HeaderRoute group.'
-            header_value: '- (Required) Defines a single header to add to the Rollout. Must be only one initialized from the following (exact, prefix, regex).'
-            match: '- (Required) The matching rules for the header route.'
-            match_traffic_weight: '- (Optional) Defines whether a rollout should match the current canary''s setWeight step.'
-            name: '- (Required) Identifier name for Ocean CD Strategy. Must be unique'
-            pause: '- (Optional) Defines the duration of time to freeze the rollout.'
-            prefix: '- (Optional) The prefix of the value.'
-            regex: '- (Optional)  The value in a regex format.'
-            replicas: '- (Optional) Sets the number of replicas the new version should have.'
-            rolling: '- (Optional) Represents Rolling Update strategy. Cannot be defined when Canary object is defined.'
-            set_canary_scale: '- (Optional) Defines how to scale the version without traffic weight changing.'
-            set_header_route: '- (Optional) Defines the list of HeaderRoutes to add to the Rollout.'
-            set_weight: '- (Optional) Defines the percentage that the new version should receive.'
-            steps: '- (Required) A set of separate conditions of rollout processing.'
-            template_names: '- (Required) List of Verification Template names.'
-            verification: '- (Optional) Represents the list of verifications to run in a step.'
-            weight: '- (Optional) Sets the percentage of replicas the new version should have.'
-        importStatements: []
-    spotinst_oceancd_verification_provider:
-        subCategory: OceanCD
-        description: Provides a Spotinst OceanCD Verification Provider resource.
-        name: spotinst_oceancd_verification_provider
-        title: oceancd_verification_provider
-        examples:
-            - name: example
-              manifest: |-
-                {
-                  "cloud_watch": [
-                    {
-                      "iam_arn": "arn:aws:iam::123456789012:role/GetMetricData"
-                    }
-                  ],
-                  "cluster_ids": [
-                    "Example-Cluster-Id-1",
-                    "Example-Cluster-Id-2",
-                    "Example-Cluster-Id-3"
-                  ],
-                  "datadog": [
-                    {
-                      "address": 1024,
-                      "api_key": 512,
-                      "app_key": 0
-                    }
-                  ],
-                  "jenkins": [
-                    {
-                      "api_token": "AbCDeeFFGG",
-                      "base_url": "http://localhost:9090",
-                      "username": "test-user"
-                    }
-                  ],
-                  "name": "test-verification-provider",
-                  "new_relic": [
-                    {
-                      "account_id": "account-0189718",
-                      "base_url_nerd_graph": "https://nerdgraph.api.newrelic.eu",
-                      "base_url_rest": "https://rest.api.newrelic.eu",
-                      "personal_api_key": "AUO32RN20oUMD-40283",
-                      "region": "eu"
-                    }
-                  ],
-                  "prometheus": [
-                    {
-                      "address": "http://localhost:9090"
-                    }
-                  ]
-                }
-        argumentDocs:
-            accound_id: '- (Required) The ID number New Relic assigns to their account.'
-            address: '- (Required) DataDog API URL.'
-            api_key: '- (Required) API key required by the Datadog Agent to submit metrics and events to Datadog.'
-            api_token: '- (Required) The Jenkins server’s access apiToken.'
-            app_key: '- (Required) API key that gives users access to Datadog’s programmatic API.'
-            base_url: '- (Required) The address of the Jenkins server within the cluster.'
-            base_url_nerd_graph: '- (Optional) The base URL for NerdGraph for a proxy.'
-            base_url_rest: '- (Optional) The base URL of the New Relic REST API for a proxy.'
-            cloud_watch: '- (Optional) Specify the credentials for CloudWatch verification provider.'
-            cluster_ids: '- (Required) List of cluster IDs that this Verification Provider will be applied to.'
-            datadog: '- (Optional) Specify the credentials for datadog verification provider.'
-            iam_arn: '- (Required) Set label key.'
-            jenkins: '- (Optional) Specify the credentials for Jenkins verification provider.'
-            name: '- (Required) Identifier name for Ocean CD Verification Provider. Must be unique.'
-            new_relic: '- (Optional) Specify the credentials for New Relic verification provider.'
-            personal_api_key: '- (Required) The NewRelic user key'
-            prometheus: '- (Optional) Specify the credentials for prometheus verification provider.'
-            region: '- (Optional) A region which the account is attached to. Default is "us".'
-            username: '- (Required) The Jenkins server’s access username.'
-        importStatements: []
-    spotinst_oceancd_verification_template:
-        subCategory: OceanCD
-        description: Provides a Spotinst OceanCD Verification Template resource.
-        name: spotinst_oceancd_verification_template
-        title: oceancd_verification_template
-        examples:
-            - name: test
-              manifest: |-
-                {
-                  "args": [
-                    {
-                      "arg_name": "test-arg",
-                      "value": "test",
-                      "value_from": [
-                        {
-                          "secret_key_ref": [
-                            {
-                              "key": "key-value-test",
-                              "name": "test_key"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "metrics": [
-                    {
-                      "baseline": [
-                        {
-                          "baseline_provider": [
-                            {
-                              "datadog": [
-                                {
-                                  "datadog_query": "avg:kubernetes.cpu.user",
-                                  "duration": "2m"
-                                }
-                              ],
-                              "new_relic": [
-                                {
-                                  "new_relic_query": "FROM Metric SELECT count*",
-                                  "profile": "test"
-                                }
-                              ],
-                              "prometheus": [
-                                {
-                                  "prometheus_query": "http_requests_total.status!"
-                                }
-                              ]
-                            }
-                          ],
-                          "max_range": 50,
-                          "min_range": 40,
-                          "threshold": "range"
-                        }
-                      ],
-                      "consecutive_error_limit": 1,
-                      "count": "10",
-                      "dry_run": false,
-                      "failure_condition": "result[0] \u003e= 0.95",
-                      "failure_limit": 2,
-                      "initial_delay": "1m",
-                      "interval": "10m",
-                      "metrics_name": "test-metrics-names",
-                      "provider": [
-                        {
-                          "cloud_watch": [
-                            {
-                              "duration": "5m",
-                              "metric_data_queries": [
-                                {
-                                  "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA",
-                                  "id": "utilization",
-                                  "label": "TestLabel",
-                                  "metric_stat": [
-                                    {
-                                      "metric": [
-                                        {
-                                          "dimensions": [
-                                            {
-                                              "dimension_name": "instandId",
-                                              "dimension_value": "i-123044"
-                                            }
-                                          ],
-                                          "metric_name": "Test",
-                                          "namespace": "AWS/EC2"
-                                        }
-                                      ],
-                                      "metric_period": 400,
-                                      "stat": "average",
-                                      "unit": "None"
-                                    }
-                                  ],
-                                  "period": 300,
-                                  "return_data": false
-                                }
-                              ]
-                            }
-                          ],
-                          "datadog": [
-                            {
-                              "datadog_query": "avg:kubernetes.cpu.user.total",
-                              "duration": "1m"
-                            }
-                          ],
-                          "jenkins": [
-                            {
-                              "jenkins_interval": "5s",
-                              "jenkins_parameters": [
-                                {
-                                  "parameter_key": "app",
-                                  "parameter_value": "my-app"
-                                }
-                              ],
-                              "pipeline_name": "testPipelineName",
-                              "timeout": "2m",
-                              "tls_verification": true
-                            }
-                          ],
-                          "job": [
-                            {
-                              "spec": [
-                                {
-                                  "backoff_limit": 1,
-                                  "job_template": [
-                                    {
-                                      "template_spec": [
-                                        {
-                                          "containers": [
-                                            {
-                                              "command": [
-                                                "sh",
-                                                "-c"
-                                              ],
-                                              "container_name": "hello",
-                                              "image": "nginx.2.1"
-                                            }
-                                          ],
-                                          "restart_policy": "never"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ],
-                          "new_relic": [
-                            {
-                              "new_relic_query": "FROM Metric SELECT count",
-                              "profile": "test"
-                            }
-                          ],
-                          "prometheus": [
-                            {
-                              "prometheus_query": "http_requests_new"
-                            }
-                          ],
-                          "web": [
-                            {
-                              "body": "{\"key\": \"test\"}",
-                              "insecure": false,
-                              "json_path": "$.data",
-                              "method": "GET",
-                              "timeout_seconds": 20,
-                              "url": "https://oceancd.com/api/v1/metrics?clusterId= args.clusterId",
-                              "web_header": [
-                                {
-                                  "web_header_key": "Autorization",
-                                  "web_header_value": "Bearer=args.token"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ],
-                      "success_condition": "result[0] \u003c= 0.95"
-                    }
-                  ],
-                  "name": "test-verification-template-tes"
-                }
-        argumentDocs:
-            arg_name: '- (Required) Name of an argument.'
-            args: '- (Optional) List of verification arguments. You may specify either value OR valueFrom but not both.In case args:value is already defined in the RolloutSpec entity, there is no need to also specify it in the VerificationTemplate entity.'
-            backoff_limit: '- (Optional) Specifies the number of retries before marking this job failed.'
-            baseline: '- (Optional) Baseline Object.'
-            baseline_provider: '- (Required) The name of the monitoring tool chosen for the metric.'
-            body: '- (Optional) The body of the web metric.'
-            cloud_watch: '- (Optional) The CloudWatch provider.'
-            command: '- (Required) The entry point of a container.'
-            consecutive_error_limit: '- (Optional) The maximum number of times the measurement is allowed to error in succession, before the metric is considered error.Default is 4.When choosing Jenkins as the provider, there is no need to send this variable.'
-            container_name: '- (Required) The name of a container.'
-            containers: '- (Required) A list of containers belonging to the pod.'
-            count: '- (Optional) The number of times to run the measurement. If both interval and count are omitted, the effective count is 1. If only interval is specified, metric runs indefinitely. If count > 1, interval must be specified. When choosing Jenkins as the provider, there is no need to send this variable.'
-            datadog: '- (Optional) The datadog provider.'
-            datadog_query: '- (Required) A request for information retrieved from Datadog.'
-            dimension_name: '- (Required) The name of the dimensions. These values must contain only ASCII characters and must include at least one non-whitespace characte'
-            dimension_value: '- (Required) The value of the dimensions.These values must contain only ASCII characters and must include at least one non-whitespace characte'
-            dimensions: '- (Optional) A dimension is a name/value pair that is part of the identity of a metric.You can assign upto 30 dimensions to a metric'
-            dry_run: '- (Optional) Defines whether the metric should have an impact on the result of the rollout.'
-            duration: '- (Optional) The window of time we are looking at in DataDog.'
-            expression: '- (Optional) This field can contain either a Metrics Insights query, or a metric math expression to be performed on the returned data. Within one metricdataquery object, you must specify either expression or metricstat but not both.'
-            failure_condition: '- (Optional) An expression which determines if a measurement is considered failed.If failureCondition is set, then successCondition is not allowed. When choosing Jenkins as the provider, there is no need to send this variable.'
-            failure_limit: '- (Optional) The maximum number of times the measurement is allowed to fail, before the entire metric is considered failed.Default is 0. When choosing Jenkins as the provider, there is no need to send this variable.'
-            id: '- (Required) The response ID. Must be unique and not null. This object can contain characters, letters, numbers and underscore. The first letter must be a lowercase letter.'
-            image: '- (Required) The image name of a container.'
-            initial_delay: '- (Optional) How long to wait before starting this metric measurements. When choosing Jenkins as the provider, there is no need to send this variable.'
-            insecure: '- (Optional) Skips host TLS verification.'
-            interval: '- (Optional) Defines an interval string (30s, 5m, 1h) between each verification measurements. If omitted, will perform a single measurement.When choosing Jenkins as the provider, there is no need to send this variable.'
-            jenkins: '- (Optional) The Jenkins provider. Default is "{$}"'
-            jenkins_interval: '- (Required) The interval time to poll status.'
-            jenkins_parameters: '- (Optional) List of parameters.'
-            job: '- (Optional) The Job provider.'
-            job_template: '- (Required) Describes the pod that will be created when executing a job.'
-            json_path: '- (Optional) A JSON Path to use as the result variable. Default is "{$}"'
-            key: '- (Required) The name of the field inside the secret.'
-            label: '- (Optional) A human-readable label for this metric or expression. If the metric or expression is shown in a CloudWatch dashboard widget, the label is shown'
-            max_range: '- (Optional) Number in percent we allow the new version’s data result to be under baseline data result.'
-            method: '- (Optional) The method of the web metric.  Enum: "GET" "POST" "PUT"'
-            metric: '- (Optional) The metric to return, including the metric name, namespace, and dimensions.'
-            metric_data_queries: '- (Required) The metric queries to be returned. A single MetricData call can include as many as 500 MetricDataQuery structures. Each of these structures can specify either a metric to retrieve, a Metrics Insights query, or a math expression to perform on retrieved data.'
-            metric_name: '- (Required) The name of the metric.'
-            metric_period: '- (Optional) The granularity, in seconds, of the returned data points.'
-            metric_stat: '- (Optional) The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.Within one metricdataquery object, you must specify either expression or metricstat but not both.'
-            metrics: '- (Required) List of verification metrics.'
-            metrics_name: '- (Required) The name of the verification metric.'
-            min_range: '- (Optional) Number in percent we allow the new version’s data result to be under baseline data result.*'
-            name: '- (Required) Identifier name for Ocean CD Verification Template. Must be unique.'
-            namespace: '- (Optional) The namespace of the metric.'
-            new_relic: '- (Optional) The New Relic provider.'
-            new_relic_query: '- (Required) A raw newrelic NRQL query to perform.'
-            parameter_key: '- (Required) Key of an argument.'
-            parameter_value: '- (Required) Value of an argument.'
-            period: '- (Optional) The granularity, in seconds, of the returned data points.'
-            pipeline_name: '- (Required) The Jenkins pipeline name.'
-            profile: '- (Optional) The name of the secret holding NR account configuration.'
-            prometheus: '- (Optional) The Prometheus provider.'
-            prometheus_query: '- (Required) A request for information retrieved from Prometheus.'
-            provider: '- (Required) The name of the monitoring tool chosen for the metric.'
-            restart_policy: '- (Required) Restart policy for all containers within the pod. Enum: "Never" "OnFailure"'
-            return_data: '- (Optional) This option indicates whether to return the timestamps and raw data values of this metric. If you are performing this call just to do math expressions and do not also need the raw data returned, you can specify false. If you omit this, the default of true is used.'
-            secret_key_ref: '- (Optional) Secret key to use.'
-            spec: '- (Required) The job spec require to run the metric.'
-            stat: '- (Optional) The statistic to return. It can include any CloudWatch statistic or extended statistic.'
-            success_condition: '- (Optional) An expression which determines if a measurement is considered successful. The keyword result is a variable reference to the value of measurement. Results can be both structured data or primitive. If successCondition is set, then failureCondition is not allowed. When choosing Jenkins as the provider, there is no need to send this variable.'
-            template_spec: '- (Required) Specification of the desired behavior of the pod.'
-            threshold: '- (Required) A mathematical expression needed for the comparison. Enum: "<" ">" "<=" ">=" "=" "range"'
-            timeout: '- (Required) The total jenkins timeout.'
-            timeout_seconds: '- (Optional) The timeout for the request in seconds. Default is 10.'
-            tls_verification: '- (Optional) Host TLS verification.'
-            unit: '- (Optional) This defines what unit you want to use when storing the metric.  Enum: "Seconds" "Microseconds" "Milliseconds" "Bytes" "Kilobytes" "Megabytes" "Gigabytes" "Terabytes" "Bits" "Kilobits" "Megabits" "Gigabits" "Terabits" "Percent" "Count" "Bytes/Second" "Kilobytes/Second" "Megabytes/Second" "Gigabytes/Second" "Terabytes/Second" "Bits/Second" "Kilobits/Second" "Megabits/Second" "Gigabits/Second" "Terabits/Second" "Count/Second" "None"'
-            url: '- (Required) The address of the web metric.'
-            value: '- (Optional) String representation of data.'
-            value_from: '- (Optional) ValueFrom object.'
-            web: '- (Optional) The Web provider.'
-            web_header: '- (Optional) Optional HTTP headers to use in the request.'
-            web_header_key: '- (Required) The name of a header'
-            web_header_value: '- (Required) The value of a header'
         importStatements: []
     spotinst_organization_policy:
         subCategory: Organization
@@ -4470,8 +3346,6 @@ resources:
                       "network_ttl_in_hours": 0,
                       "public_ip_should_deallocate": true,
                       "public_ip_ttl_in_hours": 0,
-                      "should_deregister_from_lb": true,
-                      "should_revert_to_od": false,
                       "should_terminate_vm": true,
                       "snapshot_should_deallocate": true,
                       "snapshot_ttl_in_hours": 0
@@ -4486,8 +3360,10 @@ resources:
                       "protected_settings": {
                         "script": "IyEvYmluL2Jhc2gKZWNobyAibmlyIiA+IC9ob29uaXIudHh0Cg=="
                       },
-                      "public_settings": {
-                        "fileUris": "https://testspot/Azuretest.sh"
+                      "publicSettings": {
+                        "fileUris": [
+                          "https://testspot/Azuretest.sh"
+                        ]
                       },
                       "publisher": "Microsoft.Azure.Extensions",
                       "type": "customScript"
@@ -4516,7 +3392,6 @@ resources:
                           "gallery_name": "galleryName",
                           "gallery_resource_group_name": "resourceGroupName",
                           "image_name": "imageName",
-                          "spot_account_id": "act-123456",
                           "version_name": "1.1.0"
                         }
                       ],
@@ -4598,6 +3473,10 @@ resources:
                       "virtual_network_name": "vname"
                     }
                   ],
+                  "od_sizes": [
+                    "standard_ds1_v2",
+                    "standard_ds2_v2"
+                  ],
                   "os": "Linux",
                   "os_disk": [
                     {
@@ -4607,6 +3486,9 @@ resources:
                     }
                   ],
                   "os_disk_persistence_mode": "reattach",
+                  "preferred_spot_sizes": [
+                    "standard_ds1_v2"
+                  ],
                   "preferred_zone": "1",
                   "proximity_placement_groups": [
                     {
@@ -4651,11 +3533,9 @@ resources:
                   ],
                   "security": [
                     {
-                      "confidential_os_disk_encryption": true,
-                      "encryption_at_host": false,
-                      "secure_boot_enabled": true,
-                      "security_type": "ConfidentialVM",
-                      "vtpm_enabled": true
+                      "secure_boot_enabled": false,
+                      "security_type": "Standard",
+                      "vtpm_enabled": false
                     }
                   ],
                   "should_persist_data_disks": true,
@@ -4671,6 +3551,10 @@ resources:
                       "timeout": 40,
                       "type": "vmReady"
                     }
+                  ],
+                  "spot_sizes": [
+                    "standard_ds1_v2",
+                    "standard_ds2_v2"
                   ],
                   "strategy": [
                     {
@@ -4701,10 +3585,6 @@ resources:
                         {
                           "perform_at": "timeWindow"
                         }
-                      ],
-                      "vm_admins": [
-                        "UbuntuUser",
-                        "TestUser"
                       ]
                     }
                   ],
@@ -4717,34 +3597,6 @@ resources:
                   "user_data": "",
                   "vm_name": "VMName",
                   "vm_name_prefix": "VMNamePrefix",
-                  "vm_sizes": [
-                    {
-                      "excluded_vm_sizes": [
-                        "standard_ds2_v3"
-                      ],
-                      "od_sizes": [
-                        "standard_ds1_v2",
-                        "standard_ds2_v2"
-                      ],
-                      "preferred_spot_sizes": [
-                        "standard_ds1_v2"
-                      ],
-                      "spot_size_attributes": [
-                        {
-                          "max_cpu": 16,
-                          "max_memory": 48,
-                          "max_storage": 1000,
-                          "min_cpu": 2,
-                          "min_memory": 2,
-                          "min_storage": 50
-                        }
-                      ],
-                      "spot_sizes": [
-                        "standard_ds1_v2",
-                        "standard_ds2_v2"
-                      ]
-                    }
-                  ],
                   "zones": [
                     "1",
                     "3"
@@ -4767,7 +3619,6 @@ resources:
             capacity_reservation_groups: '- (Optional) List of the desired CRGs to use under the associated Azure subscription. When null we will utilize any available reservation that matches the launch specification.'
             certificate_store: '- (Required) The certificate store directory the VM. The directory is created in the LocalMachine account.'
             certificate_url: '- (Optional) The URL of the certificate under the key vault.'
-            confidential_os_disk_encryption: '- (Optional) Confidential disk encryption binds the disk encryption keys to the VM''s TPM, ensuring VM-only access. The security type must be "ConfidentialVM" to enable defining this preference as “true”.'
             crg_name: '- (Required) The name of the CRG.'
             crg_resource_group_name: '- (Required) Azure resource group name'
             crg_should_prioritize: '- The desired CRG to utilize ahead of other CRGs in the subscription.'
@@ -4782,12 +3633,10 @@ resources:
             delete: '- (Required) Specify deallocation parameters for stateful node deletion.'
             description: '- (Optional) Describe your Azure stateful node.'
             detach_data_disk: '- (Optional) Detach a data disk from a stateful node.'
-            disk_should_deallocate: '- (Optional) Indicates whether to delete the stateful node''s disk resources.'
+            disk_should_deallocate: '- (Required) Indicates whether to delete the stateful node''s disk resources.'
             disk_ttl_in_hours: '- (Optional, Default: 96) Hours to keep the disk resource alive before deletion.'
             draining_timeout: '- (Optional, Default 120) Time (in seconds) to allow the VM be drained from incoming TCP connections and detached from MLB before terminating it during a scale down operation.'
             enable_ip_forwarding: '- (Optional) Enable IP Forwarding.'
-            encryption_at_host: '- (Optional) Enables the Host Encryption for the virtual machine. The Encryption at host will be disabled unless this property is set to true for the resource.'
-            excluded_vm_sizes: '- (Optional) Defines the VM sizes to exclude when defining spot types with spotSizeAttributes.'
             extension: '- (Optional) An object for an azure extension.'
             fallback_to_on_demand: '- (Required) In case of no spots available, Stateful Node will launch an On-demand instance instead.'
             gallery: '- (Optional) Gallery image definitions. Required if custom image or marketplace image are not specified.'
@@ -4807,19 +3656,13 @@ resources:
             lun: '- (Required) The LUN of the data disk.'
             managed_service_identities: '- (Optional) Add a user-assigned managed identity to the Stateful Node''s VM.'
             marketplace_image: '- (Optional) Select an image from Azure''s Marketplace image catalogue. Required if the custom image or gallery image are not specified.'
-            max_cpu: '- (Optional) Maximum amount of vCPU units.'
-            max_memory: '- (Optional) Maximum amount of memory in GiB.'
-            max_storage: '- (Optional) Maximum amount of storage in GiB.'
-            min_cpu: '- (Optional) Minimum amount of vCPU units.'
-            min_memory: '- (Optional) Minimum amount of memory in GiB.'
-            min_storage: '- (optional) Minimum amount of storage in GiB.'
             minor_version_auto_upgrade: '- (Required) Required on compute.launchSpecification.extensions object.'
             name: '- (Required) Azure stateful node name.'
             network: '- (Required) Define the Virtual Network and Subnet for your Stateful Node.'
             network_interface: '- (Required) Define a network interface'
             network_resource_group_name: '- (Required) Vnet Resource Group Name.'
             network_security_group: '- (Optional) Network Security Group.'
-            network_should_deallocate: '- (Optional) Indicates whether to delete the stateful node''s network resources.'
+            network_should_deallocate: '- (Required) Indicates whether to delete the stateful node''s network resources.'
             network_ttl_in_hours: '- (Optional, Default: 96) Hours to keep the network resource alive before deletion.'
             od_sizes: '- (Required) Available On-Demand sizes.'
             od_windows: |-
@@ -4840,7 +3683,7 @@ resources:
             private_ip_addresses: '- (Optional) A list with unique items that every item is a valid IP.'
             protected_settings: '- (Optional) Object for protected settings.'
             proximity_placement_groups: '- (Optional) Defines the proximity placement group in which the VM will be launched.'
-            public_ip_should_deallocate: '- (Optional) Indicates whether to delete the stateful node''s public ip resources.'
+            public_ip_should_deallocate: '- (Required) Indicates whether to delete the stateful node''s public ip resources.'
             public_ip_sku: '- (Optional) Required if assignPublicIp=true values=[Standard/Basic].'
             public_ip_ttl_in_hours: '- (Optional, Default: 96) Hours to keep the public ip alive before deletion.'
             public_ips: '- (Optional) Defined a pool of Public Ips (from Azure), that will be associated to the network interface. We will associate one public ip per instance until the pool is exhausted, in which case, we will create a new one.'
@@ -4854,25 +3697,21 @@ resources:
             secret: '- (Optional) Set of certificates that should be installed on the VM.'
             secure_boot_enabled: '- (Optional) Specifies whether secure boot should be enabled on the virtual machine.'
             security: '- (Optional) Specifies the Security related profile settings for the virtual machine.'
-            security_type: '- (Optional) Enum: "Standard", "TrustedLaunch", "ConfidentialVM" Security type refers to the different security features of a virtual machine. Security features like Trusted launch virtual machines help to improve the security of Azure generation 2 virtual machines.'
+            security_type: '- (Optional) Enum: "Standard", "TrustedLaunch" Security type refers to the different security features of a virtual machine. Security features like Trusted launch virtual machines help to improve the security of Azure generation 2 virtual machines.'
             should_deallocate: '- (Required) Indicates whether to delete the data disk in addition to detach.'
-            should_deregister_from_lb: '- (Optional, Default: true) Indicates whether to deregister the stateful node''s VM from any type of load balancer. Can be changed to false only when shouldTerminateVms is ''false''.'
             should_persist_data_disks: '- (Required) Should persist data disks.'
             should_persist_network: '- (Required) Should persist network.'
             should_persist_os_disk: '- (Required) Should persist os disk.'
-            should_revert_to_od: '- (Optional, Default: false) Indicates whether to change the stateful node''s VM lifecycle to on-demand. Can be changed to true only when should_terminate_vm is ''false''.'
             should_terminate_vm: '- (Required) Indicates whether to delete the stateful node''s VM.'
             should_utilize: '- (Required) Determines whether capacity reservations should be utilized.'
             shutdown_script: '- (Optional) Shutdown script for the stateful node. Value should be passed as a string encoded at Base64 only.'
             signal: '- (Optional) A signal object defined for the stateful node.'
             size_gb: '- (Required) The size of the data disk in GB, required if dataDisks is specified.'
             sku: '- (Required) Image Stock Keeping Unit, which is the specific version of the image.'
-            snapshot_should_deallocate: '- (Optional) Indicates whether to delete the stateful node''s snapshot resources.'
+            snapshot_should_deallocate: '- (Required) Indicates whether to delete the stateful node''s snapshot resources.'
             snapshot_ttl_in_hours: '- (Optional, Default: 96) Hours to keep the snapshots alive before deletion.'
             source_vault: '- (Required) The key vault reference, contains the required certificates.'
-            spot_account_id: '- (Optional) The Spot account ID that connected to the Azure subscription to which the gallery belongs. Relevant only in case of cross-subscription shared galleries. Read more about cross-subscription shared galleries in Elastigroup.'
-            spot_size_attributes: '- (Optional) Defines values and ranges for attributes of the spot sizes to use when launching VMs. Required if spotSizes isn''t specified.'
-            spot_sizes: '- (Optional) Available Spot-VM sizes. Required if spotSizeAttributes isn''t specified.'
+            spot_sizes: '- (Required) Available Spot-VM sizes.'
             ssh_public_key: '- (Optional) SSH for admin access to Linux VMs. Optional for Linux.'
             state: '- (Required, Enum "pause", "resume", "recycle") New state for the stateful node.'
             storage_account_type: '- (Required, Enum "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS") The type of the data disk.'
@@ -4894,10 +3733,8 @@ resources:
             version: '- (Required, Default "latest") Image''s version. if version not provided we use "latest".'
             version_name: '- (Required) Image''s version. Can be in the format x.x.x or ''latest''.'
             virtual_network_name: '- (Required) Virtual Network.'
-            vm_admins: '- (Optional) Defines Azure identities that are considered VM admins. If the list is empty, the defined behavior is NONE, If the list is null, the defined behavior is ALL. This applies if the object is not defined. If an identity contains the string, it will be considered permitted to perform the following actions: Stop VM: VM admins can move the VM to a "stopped (deallocated)" state using the Azure console. If triggered by someone else, it is considered an interruption.'
             vm_name: '- (Optional) Set a VM name that will be persisted throughout the entire node lifecycle. This can''t be set if vm_name_prefix is set.'
             vm_name_prefix: '- (Optional) Set a VM name prefix to be used for all launched VMs and the VM resources. This can''t be set if vm_name is set.'
-            vm_sizes: '- (Required) Defines the VM sizes to use when launching VMs.'
             vtpm_enabled: '- (Optional) Specifies whether vTPM should be enabled on the virtual machine.'
             zone: '- (Optional, Enum "1", "2", "3") The Availability Zone in which the data disk will be created. If not defined, the data disk will be created regionally.'
             zones: '- (Optional, Enum "1", "2", "3") List of Azure Availability Zones in the defined region. If not defined, Virtual machines will be launched regionally.'
@@ -4984,21 +3821,15 @@ resources:
                 - (Optional) Describes whether instance Enhanced Monitoring is enabled.
                 Default: false
             encrypted: '- (Optional) Enables EBS encryption on the volume.'
-            excluded_instance_families: '- (Optional) Instance families to exclude'
-            excluded_instance_generations: '- (Optional)Instance generations to exclude'
-            excluded_instance_types: '- (Optional) Instance types to exclude'
             fallback_to_ondemand: '- (Optional) In case of no spots available, Managed Instance will launch an On-demand instance instead. Default: "true".'
             frequency: '- (Optional) Set frequency for the task. Valid values: "hourly", "daily", "weekly", "continuous".'
             grace_period: '- (Optional) The amount of time, in seconds, after the instance has launched to starts and check its health, default "120".'
             health_check_type: '- (Optional) The service to use for the health check. Valid values: "EC2", "ELB", "TARGET_GROUP". Default: "EC2".'
             hosted_zone_id: '- (Required) The Route 53 Hosted Zone Id for the registered Domain.'
-            http_put_response_hop_limit: '- (Optional) An integer within 1,64 range (including). The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further instance metadata requests can travel.'
-            http_tokens: '- Required for IMDSv2. Can’t be null in Create or Update. Values can be optional or required.'
             iam_instance_profile: '- (Optional) Set IAM profile to instance. Set only one of ARN or Name.'
             id: '- The group ID.'
             image_id: '- (Required) The ID of the image used to launch the instance.'
-            instance_metadata_tags: '- (Optional) Valid values: enabled or disabled Indicates whether access to instance tags from the instance metadata is enabled or disabled. Can’t be null.'
-            instance_types: '- (Optional) Comma separated list of available instance types for instance.'
+            instance_types: '- (Required) Comma separated list of available instance types for instance.'
             integration_route53: '- (Optional) Describes the Route53 integration.'
             iops: '- (Optional) The amount of provisioned IOPS. This must be set with a volume_type of "io1".'
             is_enabled: '- (Optional) Describes whether the task is enabled. When true the task should run when false it should not run.'
@@ -5008,7 +3839,6 @@ resources:
             life_cycle: '- (Optional) Set lifecycle, valid values: "spot", "on_demand". Default "spot".'
             load_balancers: '- (Optional) List of load balancers configs.'
             managed_instance_action: '- (Optional)'
-            metadata_options: '- (Optional) Optional field. Used for IMDSv2.'
             minimum_instance_lifetime: '- (Optional) Defines the preferred minimum instance lifetime. Markets which comply with this preference will be prioritized. Optional values: 1, 3, 6, 12, 24.'
             name: '- (Required) The ManagedInstance name.'
             network-interface: '- (Optional) List of network interfaces in an EC2 instance.'
@@ -5021,20 +3851,12 @@ resources:
             placement_tenancy: |-
                 - (Optional) Valid values: "default", "dedicated".
                 Default: default
-            preferred_type: '- (Optional) Prioritized instance type. The instance type must be included in the selected instance types or meet the resource requirements if defined. Note: Either preferred_type or preferred_types can be defined, but not both.'
-            preferred_types: '- (Optional) Prioritized subset of instance types. The list must be a subset of the selected instance types or meet the resource requirements if defined. Note: Either preferred_type or preferred_types can be defined, but not both.'
+            preferred_type: '- (Required) Preferred instance types for the instance. We will automatically select optional similar instance types to ensure optimized cost efficiency'
             private_ip: '- (Optional) Private IP Allocation Id to associate to the instance.'
             product: '- (Required) Operation system type. Valid values: "Linux/UNIX", "SUSE Linux", "Windows", "Red Hat Enterprise Linux", "Linux/UNIX (Amazon VPC)", "SUSE Linux (Amazon VPC)", "Windows (Amazon VPC)",  "Red Hat Enterprise Linux (Amazon VPC)".'
             record_set_type: '- (Optional, Default: a) The type of the record set. Valid values: "a", "cname".'
             record_sets: '- (Required) List of record sets'
             region: '- (Required) The AWS region your group will be created in.'
-            required_gpu_maximum: '- (Optional) Required maximum instance GPU (<=16)'
-            required_gpu_minimum: '- (Optional) Required minimum instance GPU (>=1)'
-            required_memory_maximum: '- (Required) Required maximum instance memory (<=512)'
-            required_memory_minimum: '- (Required) Required minimum instance memory (>=1)'
-            required_vcpu_maximum: '- (Required) Required maximum instance vCPU (<=64)'
-            required_vcpu_minimum: '- (Required) Required minimum instance vCPU (>=1)'
-            resource_requirements: '- (Optional) Required instance attributes. Instance types will be selected based on these requirements.'
             resource_tag_specification: '- (Optional) User will specify which resources should be tagged with group tags.'
             security_group_ids: '- (Optional) One or more security group IDs.'
             should_delete_network_interfaces: '- (Optional) Flag to remove network interfaces.'

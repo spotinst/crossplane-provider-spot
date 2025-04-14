@@ -32,40 +32,29 @@ type DetachWorkloadsInitParameters struct {
 }
 
 type DetachWorkloadsNamespacesInitParameters struct {
-
-	// .
 	Labels []NamespacesLabelsInitParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	NamespaceName *string `json:"namespaceName,omitempty" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	Workloads []NamespacesWorkloadsInitParameters `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
 
 type DetachWorkloadsNamespacesObservation struct {
-
-	// .
 	Labels []NamespacesLabelsObservation `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	NamespaceName *string `json:"namespaceName,omitempty" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	Workloads []NamespacesWorkloadsObservation `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
 
 type DetachWorkloadsNamespacesParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	Labels []NamespacesLabelsParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	// +kubebuilder:validation:Optional
 	NamespaceName *string `json:"namespaceName" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	// +kubebuilder:validation:Optional
 	Workloads []NamespacesWorkloadsParameters `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
@@ -81,176 +70,127 @@ type DetachWorkloadsParameters struct {
 }
 
 type LabelsInitParameters struct {
-
-	// .
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// .
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type LabelsObservation struct {
-
-	// .
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// .
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type LabelsParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// .
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 type MonthlyRepetitionBasisInitParameters struct {
-
-	// Array of the months (in number), when we want to trigger the apply recommendations.
 	IntervalMonths []*float64 `json:"intervalMonths,omitempty" tf:"interval_months,omitempty"`
 
-	// Valid values: "FIRST" "SECOND" "THIRD" "FOURTH" "LAST". Array of the weeks in the month, when we want to trigger the apply recommendations.
 	WeekOfTheMonth []*string `json:"weekOfTheMonth,omitempty" tf:"week_of_the_month,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	WeeklyRepetitionBasis []WeeklyRepetitionBasisInitParameters `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type MonthlyRepetitionBasisObservation struct {
-
-	// Array of the months (in number), when we want to trigger the apply recommendations.
 	IntervalMonths []*float64 `json:"intervalMonths,omitempty" tf:"interval_months,omitempty"`
 
-	// Valid values: "FIRST" "SECOND" "THIRD" "FOURTH" "LAST". Array of the weeks in the month, when we want to trigger the apply recommendations.
 	WeekOfTheMonth []*string `json:"weekOfTheMonth,omitempty" tf:"week_of_the_month,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	WeeklyRepetitionBasis []WeeklyRepetitionBasisObservation `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type MonthlyRepetitionBasisParameters struct {
 
-	// Array of the months (in number), when we want to trigger the apply recommendations.
 	// +kubebuilder:validation:Optional
 	IntervalMonths []*float64 `json:"intervalMonths" tf:"interval_months,omitempty"`
 
-	// Valid values: "FIRST" "SECOND" "THIRD" "FOURTH" "LAST". Array of the weeks in the month, when we want to trigger the apply recommendations.
 	// +kubebuilder:validation:Optional
 	WeekOfTheMonth []*string `json:"weekOfTheMonth" tf:"week_of_the_month,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	// +kubebuilder:validation:Optional
 	WeeklyRepetitionBasis []WeeklyRepetitionBasisParameters `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type NamespacesInitParameters struct {
-
-	// .
 	Labels []LabelsInitParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	NamespaceName *string `json:"namespaceName,omitempty" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	Workloads []WorkloadsInitParameters `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
 
 type NamespacesLabelsInitParameters struct {
-
-	// .
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// .
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type NamespacesLabelsObservation struct {
-
-	// .
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// .
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type NamespacesLabelsParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// .
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 type NamespacesObservation struct {
-
-	// .
 	Labels []LabelsObservation `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	NamespaceName *string `json:"namespaceName,omitempty" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	Workloads []WorkloadsObservation `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
 
 type NamespacesParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	Labels []LabelsParameters `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of namespaces.
 	// +kubebuilder:validation:Optional
 	NamespaceName *string `json:"namespaceName" tf:"namespace_name,omitempty"`
 
-	// List of workloads.
 	// +kubebuilder:validation:Optional
 	Workloads []WorkloadsParameters `json:"workloads,omitempty" tf:"workloads,omitempty"`
 }
 
 type NamespacesWorkloadsInitParameters struct {
-
-	// . The regex for the workload name. Not allowed when using workload_name.
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	WorkloadType *string `json:"workloadType,omitempty" tf:"workload_type,omitempty"`
 }
 
 type NamespacesWorkloadsObservation struct {
-
-	// . The regex for the workload name. Not allowed when using workload_name.
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	WorkloadType *string `json:"workloadType,omitempty" tf:"workload_type,omitempty"`
 }
 
 type NamespacesWorkloadsParameters struct {
 
-	// . The regex for the workload name. Not allowed when using workload_name.
 	// +kubebuilder:validation:Optional
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	// +kubebuilder:validation:Optional
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	// +kubebuilder:validation:Optional
 	WorkloadType *string `json:"workloadType" tf:"workload_type,omitempty"`
 }
@@ -260,31 +200,22 @@ type OceanRightsizingRuleInitParameters struct {
 
 	DetachWorkloads []DetachWorkloadsInitParameters `json:"detachWorkloads,omitempty" tf:"detach_workloads,omitempty"`
 
-	// Exclude preliminary recommendations (recommendations based on less than 4 full days of data).
 	ExcludePreliminaryRecommendations *bool `json:"excludePreliminaryRecommendations,omitempty" tf:"exclude_preliminary_recommendations,omitempty"`
 
-	// Identifier of the Ocean cluster.
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application boundaries.
 	RecommendationApplicationBoundaries []RecommendationApplicationBoundariesInitParameters `json:"recommendationApplicationBoundaries,omitempty" tf:"recommendation_application_boundaries,omitempty"`
 
-	// HPA Rightsizing Rule Recommendation Configuration
 	RecommendationApplicationHpa []RecommendationApplicationHpaInitParameters `json:"recommendationApplicationHpa,omitempty" tf:"recommendation_application_hpa,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application intervals.
 	RecommendationApplicationIntervals []RecommendationApplicationIntervalsInitParameters `json:"recommendationApplicationIntervals,omitempty" tf:"recommendation_application_intervals,omitempty"`
 
-	// Determines the extent of difference between current request and recommendation to trigger a change in percentage.
 	RecommendationApplicationMinThreshold []RecommendationApplicationMinThresholdInitParameters `json:"recommendationApplicationMinThreshold,omitempty" tf:"recommendation_application_min_threshold,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application overhead values.
 	RecommendationApplicationOverheadValues []RecommendationApplicationOverheadValuesInitParameters `json:"recommendationApplicationOverheadValues,omitempty" tf:"recommendation_application_overhead_values,omitempty"`
 
-	// Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST" "NO_RESTART". Enable to sequentially restart pod batches according to recommendations, for all pods, only more than 1 replica, or not any pod.
 	RestartReplicas *string `json:"restartReplicas,omitempty" tf:"restart_replicas,omitempty"`
 
-	// The unique name of the rule.
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
 }
 
@@ -293,33 +224,24 @@ type OceanRightsizingRuleObservation struct {
 
 	DetachWorkloads []DetachWorkloadsObservation `json:"detachWorkloads,omitempty" tf:"detach_workloads,omitempty"`
 
-	// Exclude preliminary recommendations (recommendations based on less than 4 full days of data).
 	ExcludePreliminaryRecommendations *bool `json:"excludePreliminaryRecommendations,omitempty" tf:"exclude_preliminary_recommendations,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Identifier of the Ocean cluster.
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application boundaries.
 	RecommendationApplicationBoundaries []RecommendationApplicationBoundariesObservation `json:"recommendationApplicationBoundaries,omitempty" tf:"recommendation_application_boundaries,omitempty"`
 
-	// HPA Rightsizing Rule Recommendation Configuration
 	RecommendationApplicationHpa []RecommendationApplicationHpaObservation `json:"recommendationApplicationHpa,omitempty" tf:"recommendation_application_hpa,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application intervals.
 	RecommendationApplicationIntervals []RecommendationApplicationIntervalsObservation `json:"recommendationApplicationIntervals,omitempty" tf:"recommendation_application_intervals,omitempty"`
 
-	// Determines the extent of difference between current request and recommendation to trigger a change in percentage.
 	RecommendationApplicationMinThreshold []RecommendationApplicationMinThresholdObservation `json:"recommendationApplicationMinThreshold,omitempty" tf:"recommendation_application_min_threshold,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application overhead values.
 	RecommendationApplicationOverheadValues []RecommendationApplicationOverheadValuesObservation `json:"recommendationApplicationOverheadValues,omitempty" tf:"recommendation_application_overhead_values,omitempty"`
 
-	// Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST" "NO_RESTART". Enable to sequentially restart pod batches according to recommendations, for all pods, only more than 1 replica, or not any pod.
 	RestartReplicas *string `json:"restartReplicas,omitempty" tf:"restart_replicas,omitempty"`
 
-	// The unique name of the rule.
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
 }
 
@@ -331,321 +253,233 @@ type OceanRightsizingRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	DetachWorkloads []DetachWorkloadsParameters `json:"detachWorkloads,omitempty" tf:"detach_workloads,omitempty"`
 
-	// Exclude preliminary recommendations (recommendations based on less than 4 full days of data).
 	// +kubebuilder:validation:Optional
 	ExcludePreliminaryRecommendations *bool `json:"excludePreliminaryRecommendations,omitempty" tf:"exclude_preliminary_recommendations,omitempty"`
 
-	// Identifier of the Ocean cluster.
 	// +kubebuilder:validation:Optional
 	OceanID *string `json:"oceanId,omitempty" tf:"ocean_id,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application boundaries.
 	// +kubebuilder:validation:Optional
 	RecommendationApplicationBoundaries []RecommendationApplicationBoundariesParameters `json:"recommendationApplicationBoundaries,omitempty" tf:"recommendation_application_boundaries,omitempty"`
 
-	// HPA Rightsizing Rule Recommendation Configuration
 	// +kubebuilder:validation:Optional
 	RecommendationApplicationHpa []RecommendationApplicationHpaParameters `json:"recommendationApplicationHpa,omitempty" tf:"recommendation_application_hpa,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application intervals.
 	// +kubebuilder:validation:Optional
 	RecommendationApplicationIntervals []RecommendationApplicationIntervalsParameters `json:"recommendationApplicationIntervals,omitempty" tf:"recommendation_application_intervals,omitempty"`
 
-	// Determines the extent of difference between current request and recommendation to trigger a change in percentage.
 	// +kubebuilder:validation:Optional
 	RecommendationApplicationMinThreshold []RecommendationApplicationMinThresholdParameters `json:"recommendationApplicationMinThreshold,omitempty" tf:"recommendation_application_min_threshold,omitempty"`
 
-	// Determines the Ocean Rightsizing rule recommendation application overhead values.
 	// +kubebuilder:validation:Optional
 	RecommendationApplicationOverheadValues []RecommendationApplicationOverheadValuesParameters `json:"recommendationApplicationOverheadValues,omitempty" tf:"recommendation_application_overhead_values,omitempty"`
 
-	// Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST" "NO_RESTART". Enable to sequentially restart pod batches according to recommendations, for all pods, only more than 1 replica, or not any pod.
 	// +kubebuilder:validation:Optional
 	RestartReplicas *string `json:"restartReplicas,omitempty" tf:"restart_replicas,omitempty"`
 
-	// The unique name of the rule.
 	// +kubebuilder:validation:Optional
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
 }
 
 type RecommendationApplicationBoundariesInitParameters struct {
-
-	// the maximal value of cpu in vCpu.
 	CPUMax *float64 `json:"cpuMax,omitempty" tf:"cpu_max,omitempty"`
 
-	// the minimal value of cpu in vCpu.
 	CPUMin *float64 `json:"cpuMin,omitempty" tf:"cpu_min,omitempty"`
 
-	// the maximal value of memory in Gib.
 	MemoryMax *float64 `json:"memoryMax,omitempty" tf:"memory_max,omitempty"`
 
-	// the minimal value of memory in Gib.
 	MemoryMin *float64 `json:"memoryMin,omitempty" tf:"memory_min,omitempty"`
 }
 
 type RecommendationApplicationBoundariesObservation struct {
-
-	// the maximal value of cpu in vCpu.
 	CPUMax *float64 `json:"cpuMax,omitempty" tf:"cpu_max,omitempty"`
 
-	// the minimal value of cpu in vCpu.
 	CPUMin *float64 `json:"cpuMin,omitempty" tf:"cpu_min,omitempty"`
 
-	// the maximal value of memory in Gib.
 	MemoryMax *float64 `json:"memoryMax,omitempty" tf:"memory_max,omitempty"`
 
-	// the minimal value of memory in Gib.
 	MemoryMin *float64 `json:"memoryMin,omitempty" tf:"memory_min,omitempty"`
 }
 
 type RecommendationApplicationBoundariesParameters struct {
 
-	// the maximal value of cpu in vCpu.
 	// +kubebuilder:validation:Optional
 	CPUMax *float64 `json:"cpuMax,omitempty" tf:"cpu_max,omitempty"`
 
-	// the minimal value of cpu in vCpu.
 	// +kubebuilder:validation:Optional
 	CPUMin *float64 `json:"cpuMin,omitempty" tf:"cpu_min,omitempty"`
 
-	// the maximal value of memory in Gib.
 	// +kubebuilder:validation:Optional
 	MemoryMax *float64 `json:"memoryMax,omitempty" tf:"memory_max,omitempty"`
 
-	// the minimal value of memory in Gib.
 	// +kubebuilder:validation:Optional
 	MemoryMin *float64 `json:"memoryMin,omitempty" tf:"memory_min,omitempty"`
 }
 
 type RecommendationApplicationHpaInitParameters struct {
-
-	// Determines by the rule if recommendation application is allowed for workloads with HPA definition.
 	AllowHpaRecommendations *bool `json:"allowHpaRecommendations,omitempty" tf:"allow_hpa_recommendations,omitempty"`
 }
 
 type RecommendationApplicationHpaObservation struct {
-
-	// Determines by the rule if recommendation application is allowed for workloads with HPA definition.
 	AllowHpaRecommendations *bool `json:"allowHpaRecommendations,omitempty" tf:"allow_hpa_recommendations,omitempty"`
 }
 
 type RecommendationApplicationHpaParameters struct {
 
-	// Determines by the rule if recommendation application is allowed for workloads with HPA definition.
 	// +kubebuilder:validation:Optional
 	AllowHpaRecommendations *bool `json:"allowHpaRecommendations,omitempty" tf:"allow_hpa_recommendations,omitempty"`
 }
 
 type RecommendationApplicationIntervalsInitParameters struct {
-
-	// Determines the Ocean Rightsizing rule monthly repetition basis.
 	MonthlyRepetitionBasis []MonthlyRepetitionBasisInitParameters `json:"monthlyRepetitionBasis,omitempty" tf:"monthly_repetition_basis,omitempty"`
 
-	// Valid values: "WEEKLY" "MONTHLY". The repetition basis.
 	RepetitionBasis *string `json:"repetitionBasis,omitempty" tf:"repetition_basis,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	WeeklyRepetitionBasis []RecommendationApplicationIntervalsWeeklyRepetitionBasisInitParameters `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type RecommendationApplicationIntervalsObservation struct {
-
-	// Determines the Ocean Rightsizing rule monthly repetition basis.
 	MonthlyRepetitionBasis []MonthlyRepetitionBasisObservation `json:"monthlyRepetitionBasis,omitempty" tf:"monthly_repetition_basis,omitempty"`
 
-	// Valid values: "WEEKLY" "MONTHLY". The repetition basis.
 	RepetitionBasis *string `json:"repetitionBasis,omitempty" tf:"repetition_basis,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	WeeklyRepetitionBasis []RecommendationApplicationIntervalsWeeklyRepetitionBasisObservation `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type RecommendationApplicationIntervalsParameters struct {
 
-	// Determines the Ocean Rightsizing rule monthly repetition basis.
 	// +kubebuilder:validation:Optional
 	MonthlyRepetitionBasis []MonthlyRepetitionBasisParameters `json:"monthlyRepetitionBasis,omitempty" tf:"monthly_repetition_basis,omitempty"`
 
-	// Valid values: "WEEKLY" "MONTHLY". The repetition basis.
 	// +kubebuilder:validation:Optional
 	RepetitionBasis *string `json:"repetitionBasis" tf:"repetition_basis,omitempty"`
 
-	// Determines the Ocean Rightsizing rule weekly repetition basis.
 	// +kubebuilder:validation:Optional
 	WeeklyRepetitionBasis []RecommendationApplicationIntervalsWeeklyRepetitionBasisParameters `json:"weeklyRepetitionBasis,omitempty" tf:"weekly_repetition_basis,omitempty"`
 }
 
 type RecommendationApplicationIntervalsWeeklyRepetitionBasisInitParameters struct {
-
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	IntervalDays []*string `json:"intervalDays,omitempty" tf:"interval_days,omitempty"`
 
-	// End time.
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime,omitempty" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime,omitempty" tf:"interval_hours_start_time,omitempty"`
 }
 
 type RecommendationApplicationIntervalsWeeklyRepetitionBasisObservation struct {
-
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	IntervalDays []*string `json:"intervalDays,omitempty" tf:"interval_days,omitempty"`
 
-	// End time.
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime,omitempty" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime,omitempty" tf:"interval_hours_start_time,omitempty"`
 }
 
 type RecommendationApplicationIntervalsWeeklyRepetitionBasisParameters struct {
 
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	// +kubebuilder:validation:Optional
 	IntervalDays []*string `json:"intervalDays" tf:"interval_days,omitempty"`
 
-	// End time.
 	// +kubebuilder:validation:Optional
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	// +kubebuilder:validation:Optional
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime" tf:"interval_hours_start_time,omitempty"`
 }
 
 type RecommendationApplicationMinThresholdInitParameters struct {
-
-	// .
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type RecommendationApplicationMinThresholdObservation struct {
-
-	// .
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type RecommendationApplicationMinThresholdParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	// +kubebuilder:validation:Optional
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type RecommendationApplicationOverheadValuesInitParameters struct {
-
-	// .
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type RecommendationApplicationOverheadValuesObservation struct {
-
-	// .
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type RecommendationApplicationOverheadValuesParameters struct {
 
-	// .
 	// +kubebuilder:validation:Optional
 	CPUPercentage *float64 `json:"cpuPercentage,omitempty" tf:"cpu_percentage,omitempty"`
 
-	// .
 	// +kubebuilder:validation:Optional
 	MemoryPercentage *float64 `json:"memoryPercentage,omitempty" tf:"memory_percentage,omitempty"`
 }
 
 type WeeklyRepetitionBasisInitParameters struct {
-
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	IntervalDays []*string `json:"intervalDays,omitempty" tf:"interval_days,omitempty"`
 
-	// End time.
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime,omitempty" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime,omitempty" tf:"interval_hours_start_time,omitempty"`
 }
 
 type WeeklyRepetitionBasisObservation struct {
-
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	IntervalDays []*string `json:"intervalDays,omitempty" tf:"interval_days,omitempty"`
 
-	// End time.
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime,omitempty" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime,omitempty" tf:"interval_hours_start_time,omitempty"`
 }
 
 type WeeklyRepetitionBasisParameters struct {
 
-	// Valid values: "SUNDAY" "MONDAY" "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array of the days of the week, when we want to trigger the apply recommendations.
 	// +kubebuilder:validation:Optional
 	IntervalDays []*string `json:"intervalDays" tf:"interval_days,omitempty"`
 
-	// End time.
 	// +kubebuilder:validation:Optional
 	IntervalHoursEndTime *string `json:"intervalHoursEndTime" tf:"interval_hours_end_time,omitempty"`
 
-	// Start time.
 	// +kubebuilder:validation:Optional
 	IntervalHoursStartTime *string `json:"intervalHoursStartTime" tf:"interval_hours_start_time,omitempty"`
 }
 
 type WorkloadsInitParameters struct {
-
-	// . The regex for the workload name. Not allowed when using workload_name.
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	WorkloadType *string `json:"workloadType,omitempty" tf:"workload_type,omitempty"`
 }
 
 type WorkloadsObservation struct {
-
-	// . The regex for the workload name. Not allowed when using workload_name.
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	WorkloadType *string `json:"workloadType,omitempty" tf:"workload_type,omitempty"`
 }
 
 type WorkloadsParameters struct {
 
-	// . The regex for the workload name. Not allowed when using workload_name.
 	// +kubebuilder:validation:Optional
 	RegexName *string `json:"regexName,omitempty" tf:"regex_name,omitempty"`
 
-	// . The name of the workload.
 	// +kubebuilder:validation:Optional
 	WorkloadName *string `json:"workloadName,omitempty" tf:"workload_name,omitempty"`
 
-	// . The type of the workload.
 	// +kubebuilder:validation:Optional
 	WorkloadType *string `json:"workloadType" tf:"workload_type,omitempty"`
 }
@@ -677,7 +511,7 @@ type OceanRightsizingRuleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OceanRightsizingRule is the Schema for the OceanRightsizingRules API. Provides a Spotinst Ocean Right Sizing resource.
+// OceanRightsizingRule is the Schema for the OceanRightsizingRules API. <no value>
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

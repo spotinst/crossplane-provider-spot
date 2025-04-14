@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: OceanRightsizingRule is the Schema for the OceanRightsizingRules
-          API. Provides a Spotinst Ocean Right Sizing resource.
+          API. <no value>
         properties:
           apiVersion:
             description: |-
@@ -80,33 +80,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -121,33 +112,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -156,148 +138,96 @@ spec:
                       type: object
                     type: array
                   excludePreliminaryRecommendations:
-                    description: Exclude preliminary recommendations (recommendations
-                      based on less than 4 full days of data).
                     type: boolean
                   oceanId:
-                    description: Identifier of the Ocean cluster.
                     type: string
                   recommendationApplicationBoundaries:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application boundaries.
                     items:
                       properties:
                         cpuMax:
-                          description: the maximal value of cpu in vCpu.
                           type: number
                         cpuMin:
-                          description: the minimal value of cpu in vCpu.
                           type: number
                         memoryMax:
-                          description: the maximal value of memory in Gib.
                           type: number
                         memoryMin:
-                          description: the minimal value of memory in Gib.
                           type: number
                       type: object
                     type: array
                   recommendationApplicationHpa:
-                    description: HPA Rightsizing Rule Recommendation Configuration
                     items:
                       properties:
                         allowHpaRecommendations:
-                          description: Determines by the rule if recommendation application
-                            is allowed for workloads with HPA definition.
                           type: boolean
                       type: object
                     type: array
                   recommendationApplicationIntervals:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application intervals.
                     items:
                       properties:
                         monthlyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule monthly
-                            repetition basis.
                           items:
                             properties:
                               intervalMonths:
-                                description: Array of the months (in number), when
-                                  we want to trigger the apply recommendations.
                                 items:
                                   type: number
                                 type: array
                               weekOfTheMonth:
-                                description: 'Valid values: "FIRST" "SECOND" "THIRD"
-                                  "FOURTH" "LAST". Array of the weeks in the month,
-                                  when we want to trigger the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               weeklyRepetitionBasis:
-                                description: Determines the Ocean Rightsizing rule
-                                  weekly repetition basis.
                                 items:
                                   properties:
                                     intervalDays:
-                                      description: 'Valid values: "SUNDAY" "MONDAY"
-                                        "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY"
-                                        "SATURDAY". Array of the days of the week,
-                                        when we want to trigger the apply recommendations.'
                                       items:
                                         type: string
                                       type: array
                                     intervalHoursEndTime:
-                                      description: End time.
                                       type: string
                                     intervalHoursStartTime:
-                                      description: Start time.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         repetitionBasis:
-                          description: 'Valid values: "WEEKLY" "MONTHLY". The repetition
-                            basis.'
                           type: string
                         weeklyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule weekly
-                            repetition basis.
                           items:
                             properties:
                               intervalDays:
-                                description: 'Valid values: "SUNDAY" "MONDAY" "TUESDAY"
-                                  "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array
-                                  of the days of the week, when we want to trigger
-                                  the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               intervalHoursEndTime:
-                                description: End time.
                                 type: string
                               intervalHoursStartTime:
-                                description: Start time.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   recommendationApplicationMinThreshold:
-                    description: Determines the extent of difference between current
-                      request and recommendation to trigger a change in percentage.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   recommendationApplicationOverheadValues:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application overhead values.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   restartReplicas:
-                    description: 'Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST"
-                      "NO_RESTART". Enable to sequentially restart pod batches according
-                      to recommendations, for all pods, only more than 1 replica,
-                      or not any pod.'
                     type: string
                   ruleName:
-                    description: The unique name of the rule.
                     type: string
                 type: object
               initProvider:
@@ -320,33 +250,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -361,33 +282,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -396,148 +308,96 @@ spec:
                       type: object
                     type: array
                   excludePreliminaryRecommendations:
-                    description: Exclude preliminary recommendations (recommendations
-                      based on less than 4 full days of data).
                     type: boolean
                   oceanId:
-                    description: Identifier of the Ocean cluster.
                     type: string
                   recommendationApplicationBoundaries:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application boundaries.
                     items:
                       properties:
                         cpuMax:
-                          description: the maximal value of cpu in vCpu.
                           type: number
                         cpuMin:
-                          description: the minimal value of cpu in vCpu.
                           type: number
                         memoryMax:
-                          description: the maximal value of memory in Gib.
                           type: number
                         memoryMin:
-                          description: the minimal value of memory in Gib.
                           type: number
                       type: object
                     type: array
                   recommendationApplicationHpa:
-                    description: HPA Rightsizing Rule Recommendation Configuration
                     items:
                       properties:
                         allowHpaRecommendations:
-                          description: Determines by the rule if recommendation application
-                            is allowed for workloads with HPA definition.
                           type: boolean
                       type: object
                     type: array
                   recommendationApplicationIntervals:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application intervals.
                     items:
                       properties:
                         monthlyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule monthly
-                            repetition basis.
                           items:
                             properties:
                               intervalMonths:
-                                description: Array of the months (in number), when
-                                  we want to trigger the apply recommendations.
                                 items:
                                   type: number
                                 type: array
                               weekOfTheMonth:
-                                description: 'Valid values: "FIRST" "SECOND" "THIRD"
-                                  "FOURTH" "LAST". Array of the weeks in the month,
-                                  when we want to trigger the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               weeklyRepetitionBasis:
-                                description: Determines the Ocean Rightsizing rule
-                                  weekly repetition basis.
                                 items:
                                   properties:
                                     intervalDays:
-                                      description: 'Valid values: "SUNDAY" "MONDAY"
-                                        "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY"
-                                        "SATURDAY". Array of the days of the week,
-                                        when we want to trigger the apply recommendations.'
                                       items:
                                         type: string
                                       type: array
                                     intervalHoursEndTime:
-                                      description: End time.
                                       type: string
                                     intervalHoursStartTime:
-                                      description: Start time.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         repetitionBasis:
-                          description: 'Valid values: "WEEKLY" "MONTHLY". The repetition
-                            basis.'
                           type: string
                         weeklyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule weekly
-                            repetition basis.
                           items:
                             properties:
                               intervalDays:
-                                description: 'Valid values: "SUNDAY" "MONDAY" "TUESDAY"
-                                  "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array
-                                  of the days of the week, when we want to trigger
-                                  the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               intervalHoursEndTime:
-                                description: End time.
                                 type: string
                               intervalHoursStartTime:
-                                description: Start time.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   recommendationApplicationMinThreshold:
-                    description: Determines the extent of difference between current
-                      request and recommendation to trigger a change in percentage.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   recommendationApplicationOverheadValues:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application overhead values.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   restartReplicas:
-                    description: 'Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST"
-                      "NO_RESTART". Enable to sequentially restart pod batches according
-                      to recommendations, for all pods, only more than 1 replica,
-                      or not any pod.'
                     type: string
                   ruleName:
-                    description: The unique name of the rule.
                     type: string
                 type: object
               managementPolicies:
@@ -730,33 +590,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -771,33 +622,24 @@ spec:
                           items:
                             properties:
                               labels:
-                                description: .
                                 items:
                                   properties:
                                     key:
-                                      description: .
                                       type: string
                                     value:
-                                      description: .
                                       type: string
                                   type: object
                                 type: array
                               namespaceName:
-                                description: List of namespaces.
                                 type: string
                               workloads:
-                                description: List of workloads.
                                 items:
                                   properties:
                                     regexName:
-                                      description: . The regex for the workload name.
-                                        Not allowed when using workload_name.
                                       type: string
                                     workloadName:
-                                      description: . The name of the workload.
                                       type: string
                                     workloadType:
-                                      description: . The type of the workload.
                                       type: string
                                   type: object
                                 type: array
@@ -806,150 +648,98 @@ spec:
                       type: object
                     type: array
                   excludePreliminaryRecommendations:
-                    description: Exclude preliminary recommendations (recommendations
-                      based on less than 4 full days of data).
                     type: boolean
                   id:
                     type: string
                   oceanId:
-                    description: Identifier of the Ocean cluster.
                     type: string
                   recommendationApplicationBoundaries:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application boundaries.
                     items:
                       properties:
                         cpuMax:
-                          description: the maximal value of cpu in vCpu.
                           type: number
                         cpuMin:
-                          description: the minimal value of cpu in vCpu.
                           type: number
                         memoryMax:
-                          description: the maximal value of memory in Gib.
                           type: number
                         memoryMin:
-                          description: the minimal value of memory in Gib.
                           type: number
                       type: object
                     type: array
                   recommendationApplicationHpa:
-                    description: HPA Rightsizing Rule Recommendation Configuration
                     items:
                       properties:
                         allowHpaRecommendations:
-                          description: Determines by the rule if recommendation application
-                            is allowed for workloads with HPA definition.
                           type: boolean
                       type: object
                     type: array
                   recommendationApplicationIntervals:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application intervals.
                     items:
                       properties:
                         monthlyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule monthly
-                            repetition basis.
                           items:
                             properties:
                               intervalMonths:
-                                description: Array of the months (in number), when
-                                  we want to trigger the apply recommendations.
                                 items:
                                   type: number
                                 type: array
                               weekOfTheMonth:
-                                description: 'Valid values: "FIRST" "SECOND" "THIRD"
-                                  "FOURTH" "LAST". Array of the weeks in the month,
-                                  when we want to trigger the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               weeklyRepetitionBasis:
-                                description: Determines the Ocean Rightsizing rule
-                                  weekly repetition basis.
                                 items:
                                   properties:
                                     intervalDays:
-                                      description: 'Valid values: "SUNDAY" "MONDAY"
-                                        "TUESDAY" "WEDNESDAY" "THURSDAY" "FRIDAY"
-                                        "SATURDAY". Array of the days of the week,
-                                        when we want to trigger the apply recommendations.'
                                       items:
                                         type: string
                                       type: array
                                     intervalHoursEndTime:
-                                      description: End time.
                                       type: string
                                     intervalHoursStartTime:
-                                      description: Start time.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         repetitionBasis:
-                          description: 'Valid values: "WEEKLY" "MONTHLY". The repetition
-                            basis.'
                           type: string
                         weeklyRepetitionBasis:
-                          description: Determines the Ocean Rightsizing rule weekly
-                            repetition basis.
                           items:
                             properties:
                               intervalDays:
-                                description: 'Valid values: "SUNDAY" "MONDAY" "TUESDAY"
-                                  "WEDNESDAY" "THURSDAY" "FRIDAY" "SATURDAY". Array
-                                  of the days of the week, when we want to trigger
-                                  the apply recommendations.'
                                 items:
                                   type: string
                                 type: array
                               intervalHoursEndTime:
-                                description: End time.
                                 type: string
                               intervalHoursStartTime:
-                                description: Start time.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   recommendationApplicationMinThreshold:
-                    description: Determines the extent of difference between current
-                      request and recommendation to trigger a change in percentage.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   recommendationApplicationOverheadValues:
-                    description: Determines the Ocean Rightsizing rule recommendation
-                      application overhead values.
                     items:
                       properties:
                         cpuPercentage:
-                          description: .
                           type: number
                         memoryPercentage:
-                          description: .
                           type: number
                       type: object
                     type: array
                   restartReplicas:
-                    description: 'Valid values: "MORE_THAN_ONE_REPLICA" "ALL_MANIFEST"
-                      "NO_RESTART". Enable to sequentially restart pod batches according
-                      to recommendations, for all pods, only more than 1 replica,
-                      or not any pod.'
                     type: string
                   ruleName:
-                    description: The unique name of the rule.
                     type: string
                 type: object
               conditions:

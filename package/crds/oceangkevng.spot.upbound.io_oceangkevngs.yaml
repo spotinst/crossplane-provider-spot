@@ -113,9 +113,6 @@ spec:
                     items:
                       properties:
                         initialNodes:
-                          description: When set to an integer greater than 0, a corresponding
-                            amount of nodes will be launched from the created Virtual
-                            Node Group.
                           type: number
                       type: object
                     type: array
@@ -242,7 +239,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends
@@ -415,9 +412,6 @@ spec:
                     items:
                       properties:
                         initialNodes:
-                          description: When set to an integer greater than 0, a corresponding
-                            amount of nodes will be launched from the created Virtual
-                            Node Group.
                           type: number
                       type: object
                     type: array
@@ -544,7 +538,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends
@@ -881,9 +875,6 @@ spec:
                     items:
                       properties:
                         initialNodes:
-                          description: When set to an integer greater than 0, a corresponding
-                            amount of nodes will be launched from the created Virtual
-                            Node Group.
                           type: number
                       type: object
                     type: array
@@ -1013,7 +1004,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends

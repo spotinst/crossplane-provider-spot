@@ -24,7 +24,7 @@ type AMIAutoUpdateClusterRollInitParameters struct {
 	// Add a comment description for the roll. The comment is limited to 256 chars
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -39,7 +39,7 @@ type AMIAutoUpdateClusterRollObservation struct {
 	// Add a comment description for the roll. The comment is limited to 256 chars
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -57,7 +57,7 @@ type AMIAutoUpdateClusterRollParameters struct {
 	// +kubebuilder:validation:Optional
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	// +kubebuilder:validation:Optional
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
@@ -1038,7 +1038,6 @@ type OceanAwsInitParameters struct {
 	// The region the cluster will run in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.
@@ -1171,7 +1170,6 @@ type OceanAwsObservation struct {
 	// The region the cluster will run in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
 	// Specify which resources should be tagged with Virtual Node Group tags or Ocean tags. If tags are set on the VNG, the resources will be tagged with the VNG tags; otherwise, they will be tagged with the Ocean tags.
@@ -1329,7 +1327,6 @@ type OceanAwsParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// Specifies the count of ENIs to reserve per instance type for scaling purposes.
 	// +kubebuilder:validation:Optional
 	ReservedEnis *float64 `json:"reservedEnis,omitempty" tf:"reserved_enis,omitempty"`
 
@@ -1401,7 +1398,7 @@ type ParametersClusterRollInitParameters struct {
 	// Add a comment description for the roll. The comment is limited to 256 chars
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1416,7 +1413,7 @@ type ParametersClusterRollObservation struct {
 	// Add a comment description for the roll. The comment is limited to 256 chars
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1434,7 +1431,7 @@ type ParametersClusterRollParameters struct {
 	// +kubebuilder:validation:Optional
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	// +kubebuilder:validation:Optional
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
@@ -1527,7 +1524,7 @@ type RollConfigInitParameters struct {
 	// List of virtual node group identifiers to be rolled.
 	LaunchSpecIds []*string `json:"launchSpecIds,omitempty" tf:"launch_spec_ids,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1542,7 +1539,7 @@ type RollConfigObservation struct {
 	// List of virtual node group identifiers to be rolled.
 	LaunchSpecIds []*string `json:"launchSpecIds,omitempty" tf:"launch_spec_ids,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }
 
@@ -1560,7 +1557,7 @@ type RollConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	LaunchSpecIds []*string `json:"launchSpecIds,omitempty" tf:"launch_spec_ids,omitempty"`
 
-	// During the roll, if the parameter is set to true we honor PDB during the instance replacement.
+	// During the roll, if the parameter is set to True we honor PDB during the instance replacement.
 	// +kubebuilder:validation:Optional
 	RespectPdb *bool `json:"respectPdb,omitempty" tf:"respect_pdb,omitempty"`
 }

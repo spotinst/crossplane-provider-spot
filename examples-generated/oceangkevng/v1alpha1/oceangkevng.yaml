@@ -15,8 +15,6 @@ spec:
       numOfUnits: 5
     autoscaleHeadroomsAutomatic:
     - autoHeadroomPercentage: 5
-    createOptions:
-    - initialNodes: 1
     instanceTypes:
     - n1-standard-1, n1-standard-2
     labels:

@@ -74,13 +74,12 @@ spec:
               forProvider:
                 properties:
                   autoUpdate:
-                    description: The Ocean Kubernetes AutoUpdate object. If set to
-                      'true', Ocean will ensure that your clusters have an up-to-date
-                      configuration according to the respective GKE cluster.
                     items:
                       properties:
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                       type: object
                     type: array
@@ -106,8 +105,6 @@ spec:
                                   place.
                                 type: number
                               isAggressiveScaleDownEnabled:
-                                description: When set to 'true', the Aggressive Scale
-                                  Down feature is enabled.
                                 type: boolean
                               maxScaleDownPercentage:
                                 description: Would represent the maximum % to scale-down.
@@ -151,7 +148,9 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -159,10 +158,12 @@ spec:
                           items:
                             properties:
                               maxMemoryGib:
-                                description: Maximum amount of Memory (GiB).
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
                                 type: number
                               maxVcpu:
-                                description: Maximum number of vcpus available.
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
                                 type: number
                             type: object
                           type: array
@@ -219,40 +220,29 @@ spec:
                       the cluster.
                     type: number
                   filters:
-                    description: List of filters. The Instance types that match with
-                      all filters compose the Ocean's whitelist parameter. Cannot
-                      be configured together with whitelist/blacklist.
                     items:
                       properties:
                         excludeFamilies:
-                          description: 'Types belonging to a family from the ExcludeFamilies
-                            will not be available for scaling (asterisk wildcard is
-                            also supported). For example, C* will exclude instance
-                            types from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         includeFamilies:
-                          description: 'Types belonging to a family from the IncludeFamilies
-                            will be available for scaling (asterisk wildcard is also
-                            supported). For example, C* will include instance types
-                            from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         maxMemoryGib:
-                          description: Maximum amount of Memory (GiB).
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
                           type: number
                         maxVcpu:
-                          description: Maximum number of vcpus available.
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
                           type: number
                         minMemoryGib:
-                          description: Minimum amount of Memory (GiB).
                           type: number
                         minVcpu:
-                          description: Minimum number of vcpus available.
                           type: number
                       type: object
                     type: array
@@ -279,11 +269,13 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               timeWindows:
                                 description: |-
-                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
                                   Example: Fri:15:30-Wed:14:30
                                 items:
                                   type: string
@@ -300,7 +292,9 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.
@@ -384,7 +378,6 @@ spec:
                         scalingOrientation:
                           type: string
                         shouldUtilizeCommitments:
-                          description: Enable committed use discounts utilization.
                           type: boolean
                       type: object
                     type: array
@@ -459,13 +452,12 @@ spec:
                   autoscaler.
                 properties:
                   autoUpdate:
-                    description: The Ocean Kubernetes AutoUpdate object. If set to
-                      'true', Ocean will ensure that your clusters have an up-to-date
-                      configuration according to the respective GKE cluster.
                     items:
                       properties:
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                       type: object
                     type: array
@@ -491,8 +483,6 @@ spec:
                                   place.
                                 type: number
                               isAggressiveScaleDownEnabled:
-                                description: When set to 'true', the Aggressive Scale
-                                  Down feature is enabled.
                                 type: boolean
                               maxScaleDownPercentage:
                                 description: Would represent the maximum % to scale-down.
@@ -536,7 +526,9 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -544,10 +536,12 @@ spec:
                           items:
                             properties:
                               maxMemoryGib:
-                                description: Maximum amount of Memory (GiB).
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
                                 type: number
                               maxVcpu:
-                                description: Maximum number of vcpus available.
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
                                 type: number
                             type: object
                           type: array
@@ -604,40 +598,29 @@ spec:
                       the cluster.
                     type: number
                   filters:
-                    description: List of filters. The Instance types that match with
-                      all filters compose the Ocean's whitelist parameter. Cannot
-                      be configured together with whitelist/blacklist.
                     items:
                       properties:
                         excludeFamilies:
-                          description: 'Types belonging to a family from the ExcludeFamilies
-                            will not be available for scaling (asterisk wildcard is
-                            also supported). For example, C* will exclude instance
-                            types from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         includeFamilies:
-                          description: 'Types belonging to a family from the IncludeFamilies
-                            will be available for scaling (asterisk wildcard is also
-                            supported). For example, C* will include instance types
-                            from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         maxMemoryGib:
-                          description: Maximum amount of Memory (GiB).
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
                           type: number
                         maxVcpu:
-                          description: Maximum number of vcpus available.
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
                           type: number
                         minMemoryGib:
-                          description: Minimum amount of Memory (GiB).
                           type: number
                         minVcpu:
-                          description: Minimum number of vcpus available.
                           type: number
                       type: object
                     type: array
@@ -664,11 +647,13 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               timeWindows:
                                 description: |-
-                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
                                   Example: Fri:15:30-Wed:14:30
                                 items:
                                   type: string
@@ -685,7 +670,9 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.
@@ -769,7 +756,6 @@ spec:
                         scalingOrientation:
                           type: string
                         shouldUtilizeCommitments:
-                          description: Enable committed use discounts utilization.
                           type: boolean
                       type: object
                     type: array
@@ -1012,13 +998,12 @@ spec:
               atProvider:
                 properties:
                   autoUpdate:
-                    description: The Ocean Kubernetes AutoUpdate object. If set to
-                      'true', Ocean will ensure that your clusters have an up-to-date
-                      configuration according to the respective GKE cluster.
                     items:
                       properties:
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                       type: object
                     type: array
@@ -1044,8 +1029,6 @@ spec:
                                   place.
                                 type: number
                               isAggressiveScaleDownEnabled:
-                                description: When set to 'true', the Aggressive Scale
-                                  Down feature is enabled.
                                 type: boolean
                               maxScaleDownPercentage:
                                 description: Would represent the maximum % to scale-down.
@@ -1089,7 +1072,9 @@ spec:
                             resources.
                           type: boolean
                         isEnabled:
-                          description: Enable the Ocean Kubernetes AutoUpdate.
+                          description: |-
+                            Flag to enable / disable the shutdown hours.
+                            Example: True
                           type: boolean
                         resourceLimits:
                           description: Optionally set upper and lower bounds on the
@@ -1097,10 +1082,12 @@ spec:
                           items:
                             properties:
                               maxMemoryGib:
-                                description: Maximum amount of Memory (GiB).
+                                description: The maximum memory in GiB units that
+                                  can be allocated to the cluster.
                                 type: number
                               maxVcpu:
-                                description: Maximum number of vcpus available.
+                                description: The maximum cpu in vCpu units that can
+                                  be allocated to the cluster.
                                 type: number
                             type: object
                           type: array
@@ -1160,40 +1147,29 @@ spec:
                       the cluster.
                     type: number
                   filters:
-                    description: List of filters. The Instance types that match with
-                      all filters compose the Ocean's whitelist parameter. Cannot
-                      be configured together with whitelist/blacklist.
                     items:
                       properties:
                         excludeFamilies:
-                          description: 'Types belonging to a family from the ExcludeFamilies
-                            will not be available for scaling (asterisk wildcard is
-                            also supported). For example, C* will exclude instance
-                            types from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         includeFamilies:
-                          description: 'Types belonging to a family from the IncludeFamilies
-                            will be available for scaling (asterisk wildcard is also
-                            supported). For example, C* will include instance types
-                            from these families: c5, c4, c4a, etc.'
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         maxMemoryGib:
-                          description: Maximum amount of Memory (GiB).
+                          description: The maximum memory in GiB units that can be
+                            allocated to the cluster.
                           type: number
                         maxVcpu:
-                          description: Maximum number of vcpus available.
+                          description: The maximum cpu in vCpu units that can be allocated
+                            to the cluster.
                           type: number
                         minMemoryGib:
-                          description: Minimum amount of Memory (GiB).
                           type: number
                         minVcpu:
-                          description: Minimum number of vcpus available.
                           type: number
                       type: object
                     type: array
@@ -1223,11 +1199,13 @@ spec:
                           items:
                             properties:
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               timeWindows:
                                 description: |-
-                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+                                  Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
                                   Example: Fri:15:30-Wed:14:30
                                 items:
                                   type: string
@@ -1244,7 +1222,9 @@ spec:
                                   Example: 0 1 * * *
                                 type: string
                               isEnabled:
-                                description: Enable the Ocean Kubernetes AutoUpdate.
+                                description: |-
+                                  Flag to enable / disable the shutdown hours.
+                                  Example: True
                                 type: boolean
                               taskParameters:
                                 description: The scheduling parameters for the cluster.
@@ -1328,7 +1308,6 @@ spec:
                         scalingOrientation:
                           type: string
                         shouldUtilizeCommitments:
-                          description: Enable committed use discounts utilization.
                           type: boolean
                       type: object
                     type: array

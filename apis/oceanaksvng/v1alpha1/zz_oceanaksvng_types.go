@@ -237,20 +237,15 @@ type HeadroomsParameters struct {
 }
 
 type LinuxOsConfigInitParameters struct {
-
-	// System Controls
 	Sysctls []SysctlsInitParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
 }
 
 type LinuxOsConfigObservation struct {
-
-	// System Controls
 	Sysctls []SysctlsObservation `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
 }
 
 type LinuxOsConfigParameters struct {
 
-	// System Controls
 	// +kubebuilder:validation:Optional
 	Sysctls []SysctlsParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
 }
@@ -279,7 +274,6 @@ type OceanAksVngInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Custom Linux OS configuration.
 	LinuxOsConfig []LinuxOsConfigInitParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
 	// Maximum node count limit.
@@ -312,7 +306,6 @@ type OceanAksVngInitParameters struct {
 	// The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
 
-	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
 	Scheduling []SchedulingInitParameters `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
 
 	// Percentage of spot VMs to maintain.
@@ -356,7 +349,6 @@ type OceanAksVngObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Custom Linux OS configuration.
 	LinuxOsConfig []LinuxOsConfigObservation `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
 	// Maximum node count limit.
@@ -389,7 +381,6 @@ type OceanAksVngObservation struct {
 	// The IDs of subnets in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
 
-	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
 	Scheduling []SchedulingObservation `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
 
 	// Percentage of spot VMs to maintain.
@@ -438,7 +429,6 @@ type OceanAksVngParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Custom Linux OS configuration.
 	// +kubebuilder:validation:Optional
 	LinuxOsConfig []LinuxOsConfigParameters `json:"linuxOsConfig,omitempty" tf:"linux_os_config,omitempty"`
 
@@ -482,7 +472,6 @@ type OceanAksVngParameters struct {
 	// +kubebuilder:validation:Optional
 	PodSubnetIds []*string `json:"podSubnetIds,omitempty" tf:"pod_subnet_ids,omitempty"`
 
-	// An object used to specify times when the virtual node group will turn off all its node pools. Once the shutdown time will be over, the virtual node group will return to its previous state.
 	// +kubebuilder:validation:Optional
 	Scheduling []SchedulingParameters `json:"scheduling,omitempty" tf:"scheduling,omitempty"`
 
@@ -596,68 +585,50 @@ type RollConfigParameters struct {
 }
 
 type SchedulingInitParameters struct {
-
-	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	ShutdownHours []ShutdownHoursInitParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
 }
 
 type SchedulingObservation struct {
-
-	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	ShutdownHours []ShutdownHoursObservation `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
 }
 
 type SchedulingParameters struct {
 
-	// An object used to specify times that the nodes in the virtual node group will be stopped.
 	// +kubebuilder:validation:Optional
 	ShutdownHours []ShutdownHoursParameters `json:"shutdownHours,omitempty" tf:"shutdown_hours,omitempty"`
 }
 
 type ShutdownHoursInitParameters struct {
-
-	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type ShutdownHoursObservation struct {
-
-	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type ShutdownHoursParameters struct {
 
-	// Flag to enable or disable the shutdown hours mechanism. When false, the mechanism is deactivated, and the virtual node gorup remains in its current state.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// The times that the shutdown hours will apply. Required if isEnabled is true.
 	// +kubebuilder:validation:Optional
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type SysctlsInitParameters struct {
-
-	// Maximum number of memory map areas a process may have. Can be configured only if OS type is Linux.
 	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
 }
 
 type SysctlsObservation struct {
-
-	// Maximum number of memory map areas a process may have. Can be configured only if OS type is Linux.
 	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
 }
 
 type SysctlsParameters struct {
 
-	// Maximum number of memory map areas a process may have. Can be configured only if OS type is Linux.
 	// +kubebuilder:validation:Optional
 	VMMaxMapCount *float64 `json:"vmMaxMapCount,omitempty" tf:"vm_max_map_count,omitempty"`
 }

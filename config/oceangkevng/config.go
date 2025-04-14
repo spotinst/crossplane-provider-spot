@@ -7,8 +7,9 @@ Copyright 2021 Upbound Inc.
 import (
 	"encoding/base64"
 	"fmt"
-	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"reflect"
+
+	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
 
 // Configure configures the null group.

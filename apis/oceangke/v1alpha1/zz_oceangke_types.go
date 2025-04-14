@@ -15,19 +15,22 @@ import (
 
 type AutoUpdateInitParameters struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 }
 
 type AutoUpdateObservation struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 }
 
 type AutoUpdateParameters struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 }
@@ -52,7 +55,8 @@ type AutoscalerInitParameters struct {
 	// Automatically configure and optimize headroom resources.
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Optionally set upper and lower bounds on the resource usage of the cluster.
@@ -79,7 +83,8 @@ type AutoscalerObservation struct {
 	// Automatically configure and optimize headroom resources.
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// Optionally set upper and lower bounds on the resource usage of the cluster.
@@ -112,7 +117,8 @@ type AutoscalerParameters struct {
 	// +kubebuilder:validation:Optional
 	IsAutoConfig *bool `json:"isAutoConfig,omitempty" tf:"is_auto_config,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
@@ -227,7 +233,6 @@ type DownInitParameters struct {
 	// The number of evaluation periods that should accumulate before a scale down action takes place.
 	EvaluationPeriods *float64 `json:"evaluationPeriods,omitempty" tf:"evaluation_periods,omitempty"`
 
-	// When set to 'true', the Aggressive Scale Down feature is enabled.
 	IsAggressiveScaleDownEnabled *bool `json:"isAggressiveScaleDownEnabled,omitempty" tf:"is_aggressive_scale_down_enabled,omitempty"`
 
 	// Would represent the maximum % to scale-down. Number between 1-100.
@@ -239,7 +244,6 @@ type DownObservation struct {
 	// The number of evaluation periods that should accumulate before a scale down action takes place.
 	EvaluationPeriods *float64 `json:"evaluationPeriods,omitempty" tf:"evaluation_periods,omitempty"`
 
-	// When set to 'true', the Aggressive Scale Down feature is enabled.
 	IsAggressiveScaleDownEnabled *bool `json:"isAggressiveScaleDownEnabled,omitempty" tf:"is_aggressive_scale_down_enabled,omitempty"`
 
 	// Would represent the maximum % to scale-down. Number between 1-100.
@@ -252,7 +256,6 @@ type DownParameters struct {
 	// +kubebuilder:validation:Optional
 	EvaluationPeriods *float64 `json:"evaluationPeriods,omitempty" tf:"evaluation_periods,omitempty"`
 
-	// When set to 'true', the Aggressive Scale Down feature is enabled.
 	// +kubebuilder:validation:Optional
 	IsAggressiveScaleDownEnabled *bool `json:"isAggressiveScaleDownEnabled,omitempty" tf:"is_aggressive_scale_down_enabled,omitempty"`
 
@@ -263,75 +266,63 @@ type DownParameters struct {
 
 type FiltersInitParameters struct {
 
-	// Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.
 	// +listType=set
 	ExcludeFamilies []*string `json:"excludeFamilies,omitempty" tf:"exclude_families,omitempty"`
 
-	// Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.
 	// +listType=set
 	IncludeFamilies []*string `json:"includeFamilies,omitempty" tf:"include_families,omitempty"`
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 
-	// Minimum amount of Memory (GiB).
 	MinMemoryGib *float64 `json:"minMemoryGib,omitempty" tf:"min_memory_gib,omitempty"`
 
-	// Minimum number of vcpus available.
 	MinVcpu *float64 `json:"minVcpu,omitempty" tf:"min_vcpu,omitempty"`
 }
 
 type FiltersObservation struct {
 
-	// Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.
 	// +listType=set
 	ExcludeFamilies []*string `json:"excludeFamilies,omitempty" tf:"exclude_families,omitempty"`
 
-	// Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.
 	// +listType=set
 	IncludeFamilies []*string `json:"includeFamilies,omitempty" tf:"include_families,omitempty"`
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 
-	// Minimum amount of Memory (GiB).
 	MinMemoryGib *float64 `json:"minMemoryGib,omitempty" tf:"min_memory_gib,omitempty"`
 
-	// Minimum number of vcpus available.
 	MinVcpu *float64 `json:"minVcpu,omitempty" tf:"min_vcpu,omitempty"`
 }
 
 type FiltersParameters struct {
 
-	// Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	ExcludeFamilies []*string `json:"excludeFamilies,omitempty" tf:"exclude_families,omitempty"`
 
-	// Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	IncludeFamilies []*string `json:"includeFamilies,omitempty" tf:"include_families,omitempty"`
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	// +kubebuilder:validation:Optional
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	// +kubebuilder:validation:Optional
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 
-	// Minimum amount of Memory (GiB).
 	// +kubebuilder:validation:Optional
 	MinMemoryGib *float64 `json:"minMemoryGib,omitempty" tf:"min_memory_gib,omitempty"`
 
-	// Minimum number of vcpus available.
 	// +kubebuilder:validation:Optional
 	MinVcpu *float64 `json:"minVcpu,omitempty" tf:"min_vcpu,omitempty"`
 }
@@ -410,8 +401,6 @@ type NamedPortsParameters struct {
 }
 
 type OceanGkeInitParameters struct {
-
-	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
 	AutoUpdate []AutoUpdateInitParameters `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
 
 	// The Ocean Kubernetes Autoscaler object.
@@ -432,7 +421,6 @@ type OceanGkeInitParameters struct {
 	// The number of instances to launch and maintain in the cluster.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
-	// List of filters. The Instance types that match with all filters compose the Ocean's whitelist parameter. Cannot be configured together with whitelist/blacklist.
 	Filters []FiltersInitParameters `json:"filters,omitempty" tf:"filters,omitempty"`
 
 	// The zone the master cluster is located in.
@@ -466,8 +454,6 @@ type OceanGkeInitParameters struct {
 }
 
 type OceanGkeObservation struct {
-
-	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
 	AutoUpdate []AutoUpdateObservation `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
 
 	// The Ocean Kubernetes Autoscaler object.
@@ -491,7 +477,6 @@ type OceanGkeObservation struct {
 	// The number of instances to launch and maintain in the cluster.
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
-	// List of filters. The Instance types that match with all filters compose the Ocean's whitelist parameter. Cannot be configured together with whitelist/blacklist.
 	Filters []FiltersObservation `json:"filters,omitempty" tf:"filters,omitempty"`
 
 	// The Spotinst Ocean ID.
@@ -529,7 +514,6 @@ type OceanGkeObservation struct {
 
 type OceanGkeParameters struct {
 
-	// The Ocean Kubernetes AutoUpdate object. If set to 'true', Ocean will ensure that your clusters have an up-to-date configuration according to the respective GKE cluster.
 	// +kubebuilder:validation:Optional
 	AutoUpdate []AutoUpdateParameters `json:"autoUpdate,omitempty" tf:"auto_update,omitempty"`
 
@@ -557,7 +541,6 @@ type OceanGkeParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredCapacity *float64 `json:"desiredCapacity,omitempty" tf:"desired_capacity,omitempty"`
 
-	// List of filters. The Instance types that match with all filters compose the Ocean's whitelist parameter. Cannot be configured together with whitelist/blacklist.
 	// +kubebuilder:validation:Optional
 	Filters []FiltersParameters `json:"filters,omitempty" tf:"filters,omitempty"`
 
@@ -603,29 +586,29 @@ type OceanGkeParameters struct {
 
 type ResourceLimitsInitParameters struct {
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 }
 
 type ResourceLimitsObservation struct {
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 }
 
 type ResourceLimitsParameters struct {
 
-	// Maximum amount of Memory (GiB).
+	// The maximum memory in GiB units that can be allocated to the cluster.
 	// +kubebuilder:validation:Optional
 	MaxMemoryGib *float64 `json:"maxMemoryGib,omitempty" tf:"max_memory_gib,omitempty"`
 
-	// Maximum number of vcpus available.
+	// The maximum cpu in vCpu units that can be allocated to the cluster.
 	// +kubebuilder:validation:Optional
 	MaxVcpu *float64 `json:"maxVcpu,omitempty" tf:"max_vcpu,omitempty"`
 }
@@ -742,31 +725,34 @@ type ShieldedInstanceConfigParameters struct {
 
 type ShutdownHoursInitParameters struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
 	// Example: Fri:15:30-Wed:14:30
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type ShutdownHoursObservation struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
 	// Example: Fri:15:30-Wed:14:30
 	TimeWindows []*string `json:"timeWindows,omitempty" tf:"time_windows,omitempty"`
 }
 
 type ShutdownHoursParameters struct {
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
-	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = true. API Times are in UTC
+	// Set time windows for shutdown hours. specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. Time windows should not overlap. required on cluster.scheduling.isEnabled = True. API Times are in UTC
 	// Example: Fri:15:30-Wed:14:30
 	// +kubebuilder:validation:Optional
 	TimeWindows []*string `json:"timeWindows" tf:"time_windows,omitempty"`
@@ -785,7 +771,6 @@ type StrategyInitParameters struct {
 
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 
-	// Enable committed use discounts utilization.
 	ShouldUtilizeCommitments *bool `json:"shouldUtilizeCommitments,omitempty" tf:"should_utilize_commitments,omitempty"`
 }
 
@@ -802,7 +787,6 @@ type StrategyObservation struct {
 
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 
-	// Enable committed use discounts utilization.
 	ShouldUtilizeCommitments *bool `json:"shouldUtilizeCommitments,omitempty" tf:"should_utilize_commitments,omitempty"`
 }
 
@@ -823,7 +807,6 @@ type StrategyParameters struct {
 	// +kubebuilder:validation:Optional
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 
-	// Enable committed use discounts utilization.
 	// +kubebuilder:validation:Optional
 	ShouldUtilizeCommitments *bool `json:"shouldUtilizeCommitments,omitempty" tf:"should_utilize_commitments,omitempty"`
 }
@@ -853,7 +836,8 @@ type TasksInitParameters struct {
 	// Example: 0 1 * * *
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The scheduling parameters for the cluster.
@@ -869,7 +853,8 @@ type TasksObservation struct {
 	// Example: 0 1 * * *
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The scheduling parameters for the cluster.
@@ -886,7 +871,8 @@ type TasksParameters struct {
 	// +kubebuilder:validation:Optional
 	CronExpression *string `json:"cronExpression" tf:"cron_expression,omitempty"`
 
-	// Enable the Ocean Kubernetes AutoUpdate.
+	// Flag to enable / disable the shutdown hours.
+	// Example: True
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
 

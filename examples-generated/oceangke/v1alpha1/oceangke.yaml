@@ -8,8 +8,6 @@ metadata:
   name: example
 spec:
   forProvider:
-    autoUpdate:
-    - isEnabled: true
     backendServices:
     - locationType: regional
       namedPorts:
@@ -22,16 +20,6 @@ spec:
     clusterName: example-cluster-name
     controllerClusterId: example-controller-123124
     desiredCapacity: 0
-    filters:
-    - excludeFamilies:
-      - n2
-      includeFamilies:
-      - c2
-      - c3
-      maxMemoryGib: 16
-      maxVcpu: 16
-      minMemoryGib: 8
-      minVcpu: 2
     location: us-central1-a
     maxSize: 2
     minSize: 0

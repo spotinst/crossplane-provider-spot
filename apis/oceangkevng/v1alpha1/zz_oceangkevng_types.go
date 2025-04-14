@@ -140,20 +140,15 @@ type AutoscaleHeadroomsParameters struct {
 }
 
 type CreateOptionsInitParameters struct {
-
-	// When set to an integer greater than 0, a corresponding amount of nodes will be launched from the created Virtual Node Group.
 	InitialNodes *float64 `json:"initialNodes,omitempty" tf:"initial_nodes,omitempty"`
 }
 
 type CreateOptionsObservation struct {
-
-	// When set to an integer greater than 0, a corresponding amount of nodes will be launched from the created Virtual Node Group.
 	InitialNodes *float64 `json:"initialNodes,omitempty" tf:"initial_nodes,omitempty"`
 }
 
 type CreateOptionsParameters struct {
 
-	// When set to an integer greater than 0, a corresponding amount of nodes will be launched from the created Virtual Node Group.
 	// +kubebuilder:validation:Optional
 	InitialNodes *float64 `json:"initialNodes,omitempty" tf:"initial_nodes,omitempty"`
 }
@@ -554,7 +549,7 @@ type SchedulingTaskInitParameters struct {
 	// A valid cron expression. For example : " * * * * * ". The cron job runs in UTC time and is in Unix cron format.
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The config of this scheduled task. Depends on the value of taskType.
@@ -569,7 +564,7 @@ type SchedulingTaskObservation struct {
 	// A valid cron expression. For example : " * * * * * ". The cron job runs in UTC time and is in Unix cron format.
 	CronExpression *string `json:"cronExpression,omitempty" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
 
 	// The config of this scheduled task. Depends on the value of taskType.
@@ -585,7 +580,7 @@ type SchedulingTaskParameters struct {
 	// +kubebuilder:validation:Optional
 	CronExpression *string `json:"cronExpression" tf:"cron_expression,omitempty"`
 
-	// Describes whether the task is enabled. When true, the task runs. When false, it does not run.
+	// Describes whether the task is enabled. When True, the task runs. When False, it does not run.
 	// +kubebuilder:validation:Optional
 	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
 

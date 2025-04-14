@@ -434,9 +434,6 @@ spec:
                     description: The ID of the Ocean cluster.
                     type: string
                   preferredOdTypes:
-                    description: A list of instance types. Takes the preferred types
-                      into consideration while maintaining a variety of machine types
-                      running for optimized distribution.
                     items:
                       type: string
                     type: array
@@ -448,8 +445,6 @@ spec:
                       type: string
                     type: array
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceLimits:
                     items:
@@ -467,7 +462,7 @@ spec:
                       type: object
                     type: array
                   restrictScaleDown:
-                    description: Boolean. When set to true, nodes will be treated
+                    description: Boolean. When set to True, nodes will be treated
                       as if all pods running have the restrict-scale-down label. Therefore,
                       Ocean will not scale nodes down unless empty.
                     type: boolean
@@ -481,7 +476,7 @@ spec:
                       properties:
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         timeWindows:
                           description: The times that the shutdown hours will apply.
@@ -502,7 +497,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends
@@ -544,10 +539,6 @@ spec:
                     items:
                       properties:
                         drainingTimeout:
-                          description: The configurable amount of time that Ocean
-                            will wait for the draining process to complete before
-                            terminating an instance. If you have not defined a draining
-                            timeout, the default of 300 seconds will be used.
                           type: number
                         spotPercentage:
                           description: The desired percentage of the Spot instances
@@ -555,17 +546,8 @@ spec:
                             when the field is not set in the cluster directly (cluster.strategy.spotPercentage).
                           type: number
                         utilizeCommitments:
-                          description: When set as ‘true’, if savings plans commitments
-                            have available capacity, Ocean will utilize them alongside
-                            RIs (if exist) to maximize cost efficiency. If the value
-                            is set as 'null', it will automatically be inherited from
-                            the cluster level.
                           type: boolean
                         utilizeReservedInstances:
-                          description: When set as ‘true’, if reserved instances exist,
-                            Ocean will utilize them before launching spot instances.
-                            If the value is set as 'null', it will automatically be
-                            inherited from the cluster level.
                           type: boolean
                       type: object
                     type: array
@@ -615,8 +597,6 @@ spec:
                                   to deploy in each batch.
                                 type: number
                               respectPdb:
-                                description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array
@@ -1004,9 +984,6 @@ spec:
                     description: The ID of the Ocean cluster.
                     type: string
                   preferredOdTypes:
-                    description: A list of instance types. Takes the preferred types
-                      into consideration while maintaining a variety of machine types
-                      running for optimized distribution.
                     items:
                       type: string
                     type: array
@@ -1018,8 +995,6 @@ spec:
                       type: string
                     type: array
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceLimits:
                     items:
@@ -1037,7 +1012,7 @@ spec:
                       type: object
                     type: array
                   restrictScaleDown:
-                    description: Boolean. When set to true, nodes will be treated
+                    description: Boolean. When set to True, nodes will be treated
                       as if all pods running have the restrict-scale-down label. Therefore,
                       Ocean will not scale nodes down unless empty.
                     type: boolean
@@ -1051,7 +1026,7 @@ spec:
                       properties:
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         timeWindows:
                           description: The times that the shutdown hours will apply.
@@ -1072,7 +1047,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends
@@ -1114,10 +1089,6 @@ spec:
                     items:
                       properties:
                         drainingTimeout:
-                          description: The configurable amount of time that Ocean
-                            will wait for the draining process to complete before
-                            terminating an instance. If you have not defined a draining
-                            timeout, the default of 300 seconds will be used.
                           type: number
                         spotPercentage:
                           description: The desired percentage of the Spot instances
@@ -1125,17 +1096,8 @@ spec:
                             when the field is not set in the cluster directly (cluster.strategy.spotPercentage).
                           type: number
                         utilizeCommitments:
-                          description: When set as ‘true’, if savings plans commitments
-                            have available capacity, Ocean will utilize them alongside
-                            RIs (if exist) to maximize cost efficiency. If the value
-                            is set as 'null', it will automatically be inherited from
-                            the cluster level.
                           type: boolean
                         utilizeReservedInstances:
-                          description: When set as ‘true’, if reserved instances exist,
-                            Ocean will utilize them before launching spot instances.
-                            If the value is set as 'null', it will automatically be
-                            inherited from the cluster level.
                           type: boolean
                       type: object
                     type: array
@@ -1185,8 +1147,6 @@ spec:
                                   to deploy in each batch.
                                 type: number
                               respectPdb:
-                                description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array
@@ -1741,9 +1701,6 @@ spec:
                     description: The ID of the Ocean cluster.
                     type: string
                   preferredOdTypes:
-                    description: A list of instance types. Takes the preferred types
-                      into consideration while maintaining a variety of machine types
-                      running for optimized distribution.
                     items:
                       type: string
                     type: array
@@ -1755,8 +1712,6 @@ spec:
                       type: string
                     type: array
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceLimits:
                     items:
@@ -1774,7 +1729,7 @@ spec:
                       type: object
                     type: array
                   restrictScaleDown:
-                    description: Boolean. When set to true, nodes will be treated
+                    description: Boolean. When set to True, nodes will be treated
                       as if all pods running have the restrict-scale-down label. Therefore,
                       Ocean will not scale nodes down unless empty.
                     type: boolean
@@ -1788,7 +1743,7 @@ spec:
                       properties:
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         timeWindows:
                           description: The times that the shutdown hours will apply.
@@ -1809,7 +1764,7 @@ spec:
                           type: string
                         isEnabled:
                           description: Describes whether the task is enabled. When
-                            true, the task runs. When false, it does not run.
+                            True, the task runs. When False, it does not run.
                           type: boolean
                         taskHeadroom:
                           description: The config of this scheduled task. Depends
@@ -1851,10 +1806,6 @@ spec:
                     items:
                       properties:
                         drainingTimeout:
-                          description: The configurable amount of time that Ocean
-                            will wait for the draining process to complete before
-                            terminating an instance. If you have not defined a draining
-                            timeout, the default of 300 seconds will be used.
                           type: number
                         spotPercentage:
                           description: The desired percentage of the Spot instances
@@ -1862,17 +1813,8 @@ spec:
                             when the field is not set in the cluster directly (cluster.strategy.spotPercentage).
                           type: number
                         utilizeCommitments:
-                          description: When set as ‘true’, if savings plans commitments
-                            have available capacity, Ocean will utilize them alongside
-                            RIs (if exist) to maximize cost efficiency. If the value
-                            is set as 'null', it will automatically be inherited from
-                            the cluster level.
                           type: boolean
                         utilizeReservedInstances:
-                          description: When set as ‘true’, if reserved instances exist,
-                            Ocean will utilize them before launching spot instances.
-                            If the value is set as 'null', it will automatically be
-                            inherited from the cluster level.
                           type: boolean
                       type: object
                     type: array
@@ -1922,8 +1864,6 @@ spec:
                                   to deploy in each batch.
                                 type: number
                               respectPdb:
-                                description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array

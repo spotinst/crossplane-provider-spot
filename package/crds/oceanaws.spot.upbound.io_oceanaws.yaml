@@ -540,8 +540,6 @@ spec:
                     description: The region the cluster will run in.
                     type: string
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
@@ -643,7 +641,7 @@ spec:
                                                   type: string
                                                 respectPdb:
                                                   description: During the roll, if
-                                                    the parameter is set to true we
+                                                    the parameter is set to True we
                                                     honor PDB during the instance
                                                     replacement.
                                                   type: boolean
@@ -697,7 +695,7 @@ spec:
                                             type: string
                                           respectPdb:
                                             description: During the roll, if the parameter
-                                              is set to true we honor PDB during the
+                                              is set to True we honor PDB during the
                                               instance replacement.
                                             type: boolean
                                         type: object
@@ -796,7 +794,7 @@ spec:
                                 type: array
                               respectPdb:
                                 description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
+                                  set to True we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array
@@ -1309,8 +1307,6 @@ spec:
                     description: The region the cluster will run in.
                     type: string
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
@@ -1412,7 +1408,7 @@ spec:
                                                   type: string
                                                 respectPdb:
                                                   description: During the roll, if
-                                                    the parameter is set to true we
+                                                    the parameter is set to True we
                                                     honor PDB during the instance
                                                     replacement.
                                                   type: boolean
@@ -1466,7 +1462,7 @@ spec:
                                             type: string
                                           respectPdb:
                                             description: During the roll, if the parameter
-                                              is set to true we honor PDB during the
+                                              is set to True we honor PDB during the
                                               instance replacement.
                                             type: boolean
                                         type: object
@@ -1565,7 +1561,7 @@ spec:
                                 type: array
                               respectPdb:
                                 description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
+                                  set to True we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array
@@ -2254,8 +2250,6 @@ spec:
                     description: The region the cluster will run in.
                     type: string
                   reservedEnis:
-                    description: Specifies the count of ENIs to reserve per instance
-                      type for scaling purposes.
                     type: number
                   resourceTagSpecification:
                     description: Specify which resources should be tagged with Virtual
@@ -2357,7 +2351,7 @@ spec:
                                                   type: string
                                                 respectPdb:
                                                   description: During the roll, if
-                                                    the parameter is set to true we
+                                                    the parameter is set to True we
                                                     honor PDB during the instance
                                                     replacement.
                                                   type: boolean
@@ -2411,7 +2405,7 @@ spec:
                                             type: string
                                           respectPdb:
                                             description: During the roll, if the parameter
-                                              is set to true we honor PDB during the
+                                              is set to True we honor PDB during the
                                               instance replacement.
                                             type: boolean
                                         type: object
@@ -2510,7 +2504,7 @@ spec:
                                 type: array
                               respectPdb:
                                 description: During the roll, if the parameter is
-                                  set to true we honor PDB during the instance replacement.
+                                  set to True we honor PDB during the instance replacement.
                                 type: boolean
                             type: object
                           type: array

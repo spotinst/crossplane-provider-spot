@@ -59,13 +59,9 @@ spec:
       value: value1
     name: example
     oceanId: o-123456
-    preferredOdTypes:
-    - c3.large
-    - m4.large
     preferredSpotTypes:
     - m4.large
     - m4.xlarge
-    reservedEnis: 1
     resourceLimits:
     - maxInstanceCount: 4
       minInstanceCount: 0
@@ -88,10 +84,7 @@ spec:
     securityGroups:
     - sg-987654321
     strategy:
-    - drainingTimeout: 300
-      spotPercentage: 70
-      utilizeCommitments: false
-      utilizeReservedInstances: true
+    - spotPercentage: 70
     subnetIds:
     - subnet-1234
     tags:
