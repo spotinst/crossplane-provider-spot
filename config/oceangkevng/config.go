@@ -38,7 +38,7 @@ func (m *metadataConverter) Convert(params map[string]any, r *ujconfig.Resource,
 	if mode == ujconfig.FromTerraform {
 		metadata := params["metadata"].([]metadataItem)
 		fmt.Println("~~~~~~", reflect.TypeOf(metadata).Name())
-		newMetadata := make([]metadataItem, len(metadata))
+		newMetadata := make([]metadataItem, 0, len(metadata))
 
 		for _, mi := range metadata {
 			newMetadata = append(newMetadata, metadataItem{
@@ -51,7 +51,7 @@ func (m *metadataConverter) Convert(params map[string]any, r *ujconfig.Resource,
 
 	} else if mode == ujconfig.ToTerraform {
 		metadata := params["metadata"].([]metadataItem)
-		newMetadata := make([]metadataItem, len(metadata))
+		newMetadata := make([]metadataItem, 0, len(metadata))
 
 		for _, mi := range metadata {
 			decodeString, err := base64.StdEncoding.DecodeString(mi.Value)
