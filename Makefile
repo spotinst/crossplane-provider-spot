@@ -10,6 +10,8 @@ export TERRAFORM_VERSION := 1.5.7
 # licensed under BSL, which is not permitted.
 TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
+GO_TERRAFORM_PROVIDER_VERSION := $(shell go list -m -u github.com/spotinst/terraform-provider-spotinst | cut -d' ' -f2- | sed s/v//)
+
 export TERRAFORM_PROVIDER_SOURCE := spotinst/spotinst
 export TERRAFORM_PROVIDER_REPO := https://github.com/spotinst/terraform-provider-spotinst
 export TERRAFORM_PROVIDER_VERSION := 1.211.0
@@ -18,6 +20,9 @@ export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := $(TERRAFORM_PROVIDER_REPO)/rele
 export TERRAFORM_NATIVE_PROVIDER_BINARY := $(TERRAFORM_PROVIDER_DOWNLOAD_NAME)_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_DOCS_PATH := docs/resources
 
+ifneq ($(GO_TERRAFORM_PROVIDER_VERSION),$(TERRAFORM_PROVIDER_VERSION))
+$(error ERROR: Spot terraform provider version mismatch. CLI version is $(TERRAFORM_PROVIDER_VERSION) and go dependency version is $(GO_TERRAFORM_PROVIDER_VERSION))
+endif
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
