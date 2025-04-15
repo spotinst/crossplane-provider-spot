@@ -877,6 +877,25 @@ type InstanceMetadataOptionsParameters struct {
 	HTTPTokens *string `json:"httpTokens" tf:"http_tokens,omitempty"`
 }
 
+type InstanceStorePolicyInitParameters struct {
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
+type InstanceStorePolicyObservation struct {
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
+type InstanceStorePolicyParameters struct {
+
+	// Can be set to CLASSIC or TARGET_GROUP
+	// +kubebuilder:validation:Optional
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
 type LoadBalancersInitParameters struct {
 
 	// Required if type is set to TARGET_GROUP
@@ -992,6 +1011,8 @@ type OceanAwsInitParameters struct {
 
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsInitParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
+
+	InstanceStorePolicy []InstanceStorePolicyInitParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// The key pair to attach the instances.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
@@ -1123,6 +1144,8 @@ type OceanAwsObservation struct {
 
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsObservation `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
+
+	InstanceStorePolicy []InstanceStorePolicyObservation `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// The key pair to attach the instances.
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
@@ -1270,6 +1293,9 @@ type OceanAwsParameters struct {
 	// Ocean instance metadata options object for IMDSv2.
 	// +kubebuilder:validation:Optional
 	InstanceMetadataOptions []InstanceMetadataOptionsParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	InstanceStorePolicy []InstanceStorePolicyParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// The key pair to attach the instances.
 	// +kubebuilder:validation:Optional

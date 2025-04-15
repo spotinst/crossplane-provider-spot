@@ -381,6 +381,8 @@ spec:
                           description: 'Define the provisioning model of the launched
                             instances. Valid values: SPOT, PREEMPTIBLE.'
                           type: string
+                        scalingOrientation:
+                          type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.
                           type: boolean
@@ -763,6 +765,8 @@ spec:
                         provisioningModel:
                           description: 'Define the provisioning model of the launched
                             instances. Valid values: SPOT, PREEMPTIBLE.'
+                          type: string
+                        scalingOrientation:
                           type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.
@@ -1320,6 +1324,8 @@ spec:
                         provisioningModel:
                           description: 'Define the provisioning model of the launched
                             instances. Valid values: SPOT, PREEMPTIBLE.'
+                          type: string
+                        scalingOrientation:
                           type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.
