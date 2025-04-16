@@ -314,6 +314,8 @@ spec:
                           description: Defines the desired preemptible percentage
                             for this launch specification.
                           type: number
+                        scalingOrientation:
+                          type: string
                       type: object
                     type: array
                   tags:
@@ -614,6 +616,8 @@ spec:
                           description: Defines the desired preemptible percentage
                             for this launch specification.
                           type: number
+                        scalingOrientation:
+                          type: string
                       type: object
                     type: array
                   tags:
@@ -1081,6 +1085,8 @@ spec:
                           description: Defines the desired preemptible percentage
                             for this launch specification.
                           type: number
+                        scalingOrientation:
+                          type: string
                       type: object
                     type: array
                   tags:

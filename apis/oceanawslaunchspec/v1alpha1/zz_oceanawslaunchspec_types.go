@@ -421,6 +421,20 @@ type InstanceMetadataOptionsParameters struct {
 	HTTPTokens *string `json:"httpTokens" tf:"http_tokens,omitempty"`
 }
 
+type InstanceStorePolicyInitParameters struct {
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
+type InstanceStorePolicyObservation struct {
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
+type InstanceStorePolicyParameters struct {
+
+	// +kubebuilder:validation:Optional
+	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
+}
+
 type InstanceTypesFiltersInitParameters struct {
 
 	// The filtered instance types will belong to one of the categories types from this list. Valid values: Accelerated_computing, Compute_optimized, General_purpose, Memory_optimized, Storage_optimized.
@@ -699,6 +713,8 @@ type OceanAwsLaunchSpecInitParameters struct {
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsInitParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
 
+	InstanceStorePolicy []InstanceStorePolicyInitParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
+
 	// A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster.
 	InstanceTypes []*string `json:"instanceTypes,omitempty" tf:"instance_types,omitempty"`
 
@@ -799,6 +815,8 @@ type OceanAwsLaunchSpecObservation struct {
 
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsObservation `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
+
+	InstanceStorePolicy []InstanceStorePolicyObservation `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster.
 	InstanceTypes []*string `json:"instanceTypes,omitempty" tf:"instance_types,omitempty"`
@@ -910,6 +928,9 @@ type OceanAwsLaunchSpecParameters struct {
 	// Ocean instance metadata options object for IMDSv2.
 	// +kubebuilder:validation:Optional
 	InstanceMetadataOptions []InstanceMetadataOptionsParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	InstanceStorePolicy []InstanceStorePolicyParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster.
 	// +kubebuilder:validation:Optional

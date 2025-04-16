@@ -650,12 +650,16 @@ type StrategyInitParameters struct {
 
 	// Defines the desired preemptible percentage for this launch specification.
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
+
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }
 
 type StrategyObservation struct {
 
 	// Defines the desired preemptible percentage for this launch specification.
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
+
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }
 
 type StrategyParameters struct {
@@ -663,6 +667,9 @@ type StrategyParameters struct {
 	// Defines the desired preemptible percentage for this launch specification.
 	// +kubebuilder:validation:Optional
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }
 
 type TaintsInitParameters struct {

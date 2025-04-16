@@ -1904,6 +1904,11 @@ func (in *StrategyInitParameters) DeepCopyInto(out *StrategyInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ScalingOrientation != nil {
+		in, out := &in.ScalingOrientation, &out.ScalingOrientation
+		*out = new(string)
+		**out = **in
+	}
 	if in.ShouldUtilizeCommitments != nil {
 		in, out := &in.ShouldUtilizeCommitments, &out.ShouldUtilizeCommitments
 		*out = new(bool)
@@ -1939,6 +1944,11 @@ func (in *StrategyObservation) DeepCopyInto(out *StrategyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ScalingOrientation != nil {
+		in, out := &in.ScalingOrientation, &out.ScalingOrientation
+		*out = new(string)
+		**out = **in
+	}
 	if in.ShouldUtilizeCommitments != nil {
 		in, out := &in.ShouldUtilizeCommitments, &out.ShouldUtilizeCommitments
 		*out = new(bool)
@@ -1971,6 +1981,11 @@ func (in *StrategyParameters) DeepCopyInto(out *StrategyParameters) {
 	}
 	if in.ProvisioningModel != nil {
 		in, out := &in.ProvisioningModel, &out.ProvisioningModel
+		*out = new(string)
+		**out = **in
+	}
+	if in.ScalingOrientation != nil {
+		in, out := &in.ScalingOrientation, &out.ScalingOrientation
 		*out = new(string)
 		**out = **in
 	}
