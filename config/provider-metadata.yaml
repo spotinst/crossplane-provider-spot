@@ -198,6 +198,7 @@ resources:
                       ]
                     }
                   ],
+                  "max_replacements_percentage": 10,
                   "max_size": 0,
                   "metadata_options": [
                     {
@@ -423,6 +424,7 @@ resources:
             master_port: '- (Required) Network port used by your swarm.'
             max_capacity: '- (Optional; Only valid for statefulUpdateCapacity) The maximum number of instances the group should have.'
             max_capacity_per_scale: '- (Optional) String, restrict the maximal number of instances which can be added in each scale-up action.'
+            max_replacements_percentage: '- (Optional) The percentage of active instances that can be replaced in parallel. This is used to prevent a large number of instances from being replaced at once. Default value is set to -1 intentionally, which will appear in the terminal during a terraform plan if this field is not configured. This prevents confusion, as Terraform otherwise defaults integer data types to 0 when a field is not explicitly set.'
             max_scale_down_percentage: '- (Optional) Represents the maximum percent to scale-down. Number between 1-100.'
             max_size: '- (Optional, Required if using scaling policies) The maximum number of instances the group should have at any time.'
             max_target_capacity: '- (Optional)  The desired target capacity of a group. Required if using "setMaxTarget" as action type'
@@ -2304,6 +2306,8 @@ resources:
             image_id: '- (Required) ID of the image used to launch the instances.'
             include_families: '- (Optional) Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.'
             instance_metadata_options: '- (Optional) Ocean instance metadata options object for IMDSv2.'
+            instance_store_policy: '- (Optional) Determines the utilization of instance store volumes. If not defined, instance store volumes will not be used.'
+            instance_store_policy_type: '- (Optional) Value: "RAID0" The method for using the instance store volumes (must also be defined in the userData).'
             instanceTypes: '- (Optional) The type of instances that may or may not be a part of the Ocean cluster.'
             iops: '- (Required for requests to create io1 volumes; it is not used in requests to create gp2, st1, sc1, or standard volumes) Int. The number of I/O operations per second (IOPS) that the volume supports.'
             is_aggressive_scale_down_enabled: '- (Optional, Default: false) When set to ''true'', the Aggressive Scale Down feature is enabled.'
@@ -2613,6 +2617,8 @@ resources:
             include_families: '- (Optional) Types belonging to a family from the IncludeFamilies will be available for scaling (asterisk wildcard is also supported). For example, C* will include instance types from these families: c5, c4, c4a, etc.'
             initial_nodes: '- (Optional) When set to an integer greater than 0, a corresponding amount of nodes will be launched from the created Virtual Node Group. The parameter is recommended in case the use_as_template_only (in spotinst_ocean_aws resource) is set to true during Ocean resource creation.'
             instance_metadata_options: '- (Optional) Ocean instance metadata options object for IMDSv2.'
+            instance_store_policy: '- (Optional) Determines the utilization of instance store volumes. If not defined, instance store volumes will not be used.'
+            instance_store_policy_type: '- (Optional) Value: "RAID0" The method for using the instance store volumes (must also be defined in the userData).'
             instance_types: '- (Optional) A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster.'
             instance_types_filters: |-
                 - The instance types that match with all filters compose the Virtual Node Group's instanceTypes parameter.
@@ -3211,6 +3217,7 @@ resources:
             respect_pdb: '- (Optional, Default: ''false'' )  During the roll, if the parameter is set to true we honor PDB during the instance replacement.'
             roll_config: '- (Required) Holds the roll configuration.'
             root_volume_type: '- (Optional) The root volume disk type.'
+            scaling_orientation: '- (Optional, Default: balanced) Valid Values: "cost", "availability", "balanced". Set this value to control the approach that Ocean takes when launching nodes.'
             scheduled_task: '- (Optional) Set scheduling object.'
             scheme: '- (Optional) Use when location_type is regional. Set the traffic for the backend service to either between the instances in the vpc or to traffic from the internet. Valid values: INTERNAL, EXTERNAL.'
             service_name: '- (Required) The name of the backend service.'
@@ -3331,7 +3338,8 @@ resources:
                   ],
                   "strategy": [
                     {
-                      "preemptible_percentage": 30
+                      "preemptible_percentage": 30,
+                      "scaling_orientation": "balanced"
                     }
                   ],
                   "tags": [
@@ -3385,6 +3393,7 @@ resources:
             roll_config: '- (Required) Holds the roll configuration.'
             root_volume_size: '- (Optional) Root volume size (in GB).'
             root_volume_type: '- (Optional) Root volume disk type. Valid values: "pd-standard", "pd-ssd".'
+            scaling_orientation: '- (Optional, Default: balanced) Valid Values: "cost", "availability", "balanced". Set this value to control the approach that Ocean takes when launching nodes.'
             scheduling_task: '- (Optional) Used to define scheduled tasks such as a manual headroom update.'
             service_account: '- (Optional) The account used by applications running on the VM to call GCP APIs.'
             shielded_instance_config: '- (Optional) The Ocean shielded instance configuration object.'

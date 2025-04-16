@@ -315,6 +315,9 @@ spec:
                             for this launch specification.
                           type: number
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                       type: object
                     type: array
@@ -617,6 +620,9 @@ spec:
                             for this launch specification.
                           type: number
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                       type: object
                     type: array
@@ -1086,6 +1092,9 @@ spec:
                             for this launch specification.
                           type: number
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                       type: object
                     type: array

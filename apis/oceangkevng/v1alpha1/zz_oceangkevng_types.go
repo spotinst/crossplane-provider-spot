@@ -651,6 +651,7 @@ type StrategyInitParameters struct {
 	// Defines the desired preemptible percentage for this launch specification.
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
 
+	// Valid Values: "cost", "availability", "balanced". Set this value to control the approach that Ocean takes when launching nodes.
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }
 
@@ -659,6 +660,7 @@ type StrategyObservation struct {
 	// Defines the desired preemptible percentage for this launch specification.
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
 
+	// Valid Values: "cost", "availability", "balanced". Set this value to control the approach that Ocean takes when launching nodes.
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }
 
@@ -668,6 +670,7 @@ type StrategyParameters struct {
 	// +kubebuilder:validation:Optional
 	PreemptiblePercentage *float64 `json:"preemptiblePercentage,omitempty" tf:"preemptible_percentage,omitempty"`
 
+	// Valid Values: "cost", "availability", "balanced". Set this value to control the approach that Ocean takes when launching nodes.
 	// +kubebuilder:validation:Optional
 	ScalingOrientation *string `json:"scalingOrientation,omitempty" tf:"scaling_orientation,omitempty"`
 }

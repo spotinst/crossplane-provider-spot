@@ -382,6 +382,9 @@ spec:
                             instances. Valid values: SPOT, PREEMPTIBLE.'
                           type: string
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.
@@ -767,6 +770,9 @@ spec:
                             instances. Valid values: SPOT, PREEMPTIBLE.'
                           type: string
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.
@@ -1326,6 +1332,9 @@ spec:
                             instances. Valid values: SPOT, PREEMPTIBLE.'
                           type: string
                         scalingOrientation:
+                          description: 'Valid Values: "cost", "availability", "balanced".
+                            Set this value to control the approach that Ocean takes
+                            when launching nodes.'
                           type: string
                         shouldUtilizeCommitments:
                           description: Enable committed use discounts utilization.

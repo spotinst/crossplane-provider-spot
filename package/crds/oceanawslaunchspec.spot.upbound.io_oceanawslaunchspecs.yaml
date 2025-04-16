@@ -302,9 +302,13 @@ spec:
                       type: object
                     type: array
                   instanceStorePolicy:
+                    description: Determines the utilization of instance store volumes.
+                      If not defined, instance store volumes will not be used.
                     items:
                       properties:
                         instanceStorePolicyType:
+                          description: 'Value: "RAID0" The method for using the instance
+                            store volumes (must also be defined in the userData).'
                           type: string
                       type: object
                     type: array
@@ -872,9 +876,13 @@ spec:
                       type: object
                     type: array
                   instanceStorePolicy:
+                    description: Determines the utilization of instance store volumes.
+                      If not defined, instance store volumes will not be used.
                     items:
                       properties:
                         instanceStorePolicyType:
+                          description: 'Value: "RAID0" The method for using the instance
+                            store volumes (must also be defined in the userData).'
                           type: string
                       type: object
                     type: array
@@ -1609,9 +1617,13 @@ spec:
                       type: object
                     type: array
                   instanceStorePolicy:
+                    description: Determines the utilization of instance store volumes.
+                      If not defined, instance store volumes will not be used.
                     items:
                       properties:
                         instanceStorePolicyType:
+                          description: 'Value: "RAID0" The method for using the instance
+                            store volumes (must also be defined in the userData).'
                           type: string
                       type: object
                     type: array

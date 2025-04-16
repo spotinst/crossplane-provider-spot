@@ -87,7 +87,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-lint-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-lint-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-lint-
 
       - name: Cache Go Dependencies
@@ -135,7 +135,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-check-diff-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-check-diff-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-check-diff-
 
       - name: Cache Go Dependencies
@@ -149,7 +149,7 @@ jobs:
         run: make vendor vendor.check
 
       - name: Check Diff
-        run: make check-diff
+        run: make check-diff || (echo "If running 'make check-diff' locally succeeds try to remove the '.work' directory and run 'make generate' again." && exit 1)
 
   unit-tests:
     runs-on: ubuntu-24.04
@@ -178,7 +178,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-unit-tests-
 
       - name: Cache Go Dependencies
@@ -227,7 +227,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-unit-tests-
 
       - name: Cache Go Dependencies
@@ -295,7 +295,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-publish-artifacts-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-publish-artifacts-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-publish-artifacts-
 
       - name: Cache Go Dependencies

@@ -879,19 +879,19 @@ type InstanceMetadataOptionsParameters struct {
 
 type InstanceStorePolicyInitParameters struct {
 
-	// Can be set to CLASSIC or TARGET_GROUP
+	// Value: "RAID0" The method for using the instance store volumes (must also be defined in the userData).
 	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
 }
 
 type InstanceStorePolicyObservation struct {
 
-	// Can be set to CLASSIC or TARGET_GROUP
+	// Value: "RAID0" The method for using the instance store volumes (must also be defined in the userData).
 	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
 }
 
 type InstanceStorePolicyParameters struct {
 
-	// Can be set to CLASSIC or TARGET_GROUP
+	// Value: "RAID0" The method for using the instance store volumes (must also be defined in the userData).
 	// +kubebuilder:validation:Optional
 	InstanceStorePolicyType *string `json:"instanceStorePolicyType,omitempty" tf:"instance_store_policy_type,omitempty"`
 }
@@ -1012,6 +1012,7 @@ type OceanAwsInitParameters struct {
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsInitParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
 
+	// Determines the utilization of instance store volumes. If not defined, instance store volumes will not be used.
 	InstanceStorePolicy []InstanceStorePolicyInitParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// The key pair to attach the instances.
@@ -1145,6 +1146,7 @@ type OceanAwsObservation struct {
 	// Ocean instance metadata options object for IMDSv2.
 	InstanceMetadataOptions []InstanceMetadataOptionsObservation `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
 
+	// Determines the utilization of instance store volumes. If not defined, instance store volumes will not be used.
 	InstanceStorePolicy []InstanceStorePolicyObservation `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
 	// The key pair to attach the instances.
@@ -1294,6 +1296,7 @@ type OceanAwsParameters struct {
 	// +kubebuilder:validation:Optional
 	InstanceMetadataOptions []InstanceMetadataOptionsParameters `json:"instanceMetadataOptions,omitempty" tf:"instance_metadata_options,omitempty"`
 
+	// Determines the utilization of instance store volumes. If not defined, instance store volumes will not be used.
 	// +kubebuilder:validation:Optional
 	InstanceStorePolicy []InstanceStorePolicyParameters `json:"instanceStorePolicy,omitempty" tf:"instance_store_policy,omitempty"`
 
