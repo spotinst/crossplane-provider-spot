@@ -43,6 +43,9 @@ jobs:
         with:
           submodules: true
 
+      - name: Check Spot terraform SDK version conflicts
+        run: make check-sdk-version
+
       - name: Get modified CRDs
         id: modified-crds
         uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 #v46.0.1

@@ -20,10 +20,6 @@ export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := $(TERRAFORM_PROVIDER_REPO)/rele
 export TERRAFORM_NATIVE_PROVIDER_BINARY := $(TERRAFORM_PROVIDER_DOWNLOAD_NAME)_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_DOCS_PATH := docs/resources
 
-ifneq ($(GO_TERRAFORM_PROVIDER_VERSION),$(TERRAFORM_PROVIDER_VERSION))
-$(error ERROR: Spot terraform provider version mismatch. CLI version is $(TERRAFORM_PROVIDER_VERSION) and go dependency version is $(GO_TERRAFORM_PROVIDER_VERSION))
-endif
-
 PLATFORMS ?= linux_amd64 linux_arm64
 
 # -include will silently skip missing files, which allows us
@@ -114,6 +110,11 @@ check-terraform-version:
 ifneq ($(TERRAFORM_VERSION_VALID),1)
 	$(error invalid TERRAFORM_VERSION $(TERRAFORM_VERSION), must be less than 1.6.0 since that version introduced a not permitted BSL license))
 endif
+
+check-sdk-version:
+	ifneq ($(GO_TERRAFORM_PROVIDER_VERSION),$(TERRAFORM_PROVIDER_VERSION))
+	$(error ERROR: Spot terraform provider version mismatch. CLI version is $(TERRAFORM_PROVIDER_VERSION) and go dependency version is $(GO_TERRAFORM_PROVIDER_VERSION))
+	endif
 
 $(TERRAFORM): check-terraform-version
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
