@@ -112,9 +112,10 @@ ifneq ($(TERRAFORM_VERSION_VALID),1)
 endif
 
 check-sdk-version:
-	ifneq ($(GO_TERRAFORM_PROVIDER_VERSION),$(TERRAFORM_PROVIDER_VERSION))
-	$(error ERROR: Spot terraform provider version mismatch. CLI version is $(TERRAFORM_PROVIDER_VERSION) and go dependency version is $(GO_TERRAFORM_PROVIDER_VERSION))
-	endif
+	@if [ "$(TERRAFORM_PROVIDER_VERSION)" != "$(GO_TERRAFORM_PROVIDER_VERSION)" ]; then\
+        echo ERROR: Spot terraform provider version mismatch. CLI version is "$(TERRAFORM_PROVIDER_VERSION)" and go dependency version is "$(GO_TERRAFORM_PROVIDER_VERSION)" && \
+		exit 1;\
+    fi
 
 $(TERRAFORM): check-terraform-version
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
