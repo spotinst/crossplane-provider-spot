@@ -61,6 +61,7 @@ spec:
     - localSsdCount: 5
     strategy:
     - preemptiblePercentage: 30
+      scalingOrientation: balanced
     tags:
     - tag1
     - tag2

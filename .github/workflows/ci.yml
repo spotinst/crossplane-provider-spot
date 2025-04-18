@@ -10,8 +10,8 @@ on:
 
 env:
   # Common versions
-  GO_VERSION: '1.21'
-  GOLANGCI_VERSION: 'v1.54.0'
+  GO_VERSION: '1.23'
+  GOLANGCI_VERSION: 'v1.64.8'
   DOCKER_BUILDX_VERSION: 'v0.8.2'
 
   # Common users. We can't run a step 'if secrets.XXX != ""' but we can run a
@@ -42,6 +42,9 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
           submodules: true
+
+      - name: Check Spot terraform SDK version conflicts
+        run: make check-sdk-version
 
       - name: Get modified CRDs
         id: modified-crds
@@ -84,14 +87,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-lint-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-lint-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-lint-
 
       - name: Cache Go Dependencies
         uses: actions/cache@v4
         with:
           path: .work/pkg
-          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-pkg-
 
       - name: Vendor Dependencies
@@ -103,6 +106,7 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: ${{ env.GOLANGCI_VERSION }}
+          args: --timeout=10m
 
   check-diff:
     runs-on: ubuntu-24.04
@@ -131,21 +135,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-check-diff-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-check-diff-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-check-diff-
 
       - name: Cache Go Dependencies
         uses: actions/cache@v4
         with:
           path: .work/pkg
-          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-pkg-
 
       - name: Vendor Dependencies
         run: make vendor vendor.check
 
       - name: Check Diff
-        run: make check-diff
+        run: make check-diff || (echo "If running 'make check-diff' locally succeeds try to remove the '.work' directory and run 'make generate' again." && exit 1)
 
   unit-tests:
     runs-on: ubuntu-24.04
@@ -174,14 +178,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-unit-tests-
 
       - name: Cache Go Dependencies
         uses: actions/cache@v4
         with:
           path: .work/pkg
-          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-pkg-
 
       - name: Vendor Dependencies
@@ -223,14 +227,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-unit-tests-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-unit-tests-
 
       - name: Cache Go Dependencies
         uses: actions/cache@v4
         with:
           path: .work/pkg
-          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-pkg-
 
       - name: Vendor Dependencies
@@ -291,14 +295,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.go.outputs.cache }}
-          key: ${{ runner.os }}-build-publish-artifacts-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-build-publish-artifacts-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-build-publish-artifacts-
 
       - name: Cache Go Dependencies
         uses: actions/cache@v4
         with:
           path: .work/pkg
-          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum', 'Makefile') }}
           restore-keys: ${{ runner.os }}-pkg-
 
       - name: Vendor Dependencies

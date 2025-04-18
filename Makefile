@@ -10,14 +10,15 @@ export TERRAFORM_VERSION := 1.5.7
 # licensed under BSL, which is not permitted.
 TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
+GO_TERRAFORM_PROVIDER_VERSION := $(shell go list -m -u github.com/spotinst/terraform-provider-spotinst | cut -d' ' -f2- | sed s/v//)
+
 export TERRAFORM_PROVIDER_SOURCE := spotinst/spotinst
 export TERRAFORM_PROVIDER_REPO := https://github.com/spotinst/terraform-provider-spotinst
-export TERRAFORM_PROVIDER_VERSION := 1.211.0
+export TERRAFORM_PROVIDER_VERSION := 1.216.1
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-spotinst
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := $(TERRAFORM_PROVIDER_REPO)/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_NATIVE_PROVIDER_BINARY := $(TERRAFORM_PROVIDER_DOWNLOAD_NAME)_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_DOCS_PATH := docs/resources
-
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -44,8 +45,8 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.21
-GOLANGCILINT_VERSION ?= 1.54.0
+GO_REQUIRED_VERSION ?= 1.23
+GOLANGCILINT_VERSION ?= 1.64.8
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
@@ -110,6 +111,12 @@ ifneq ($(TERRAFORM_VERSION_VALID),1)
 	$(error invalid TERRAFORM_VERSION $(TERRAFORM_VERSION), must be less than 1.6.0 since that version introduced a not permitted BSL license))
 endif
 
+check-sdk-version:
+	@if [ "$(TERRAFORM_PROVIDER_VERSION)" != "$(GO_TERRAFORM_PROVIDER_VERSION)" ]; then\
+        echo ERROR: Spot terraform provider version mismatch. CLI version is "$(TERRAFORM_PROVIDER_VERSION)" and go dependency version is "$(GO_TERRAFORM_PROVIDER_VERSION)" && \
+		exit 1;\
+    fi
+
 $(TERRAFORM): check-terraform-version
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
 	@mkdir -p $(TOOLS_HOST_DIR)/tmp-terraform
@@ -123,8 +130,8 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(INFO) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 	@mkdir -p $(TERRAFORM_WORKDIR)
 	@echo '{"terraform":[{"required_providers":[{"provider":{"source":"'"$(TERRAFORM_PROVIDER_SOURCE)"'","version":"'"$(TERRAFORM_PROVIDER_VERSION)"'"}}],"required_version":"'"$(TERRAFORM_VERSION)"'"}]}' > $(TERRAFORM_WORKDIR)/main.tf.json
-	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) init > $(TERRAFORM_WORKDIR)/terraform-logs.txt 2>&1
-	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TERRAFORM_WORKDIR)/terraform-logs.txt
+	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) init > $(TERRAFORM_WORKDIR)/terraform-logs.txt 2>&1 || (cat $(TERRAFORM_WORKDIR)/terraform-logs.txt && exit 1)
+	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TERRAFORM_WORKDIR)/terraform-logs.txt || (cat $(TERRAFORM_WORKDIR)/terraform-logs.txt && exit 1)
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 
 pull-docs:

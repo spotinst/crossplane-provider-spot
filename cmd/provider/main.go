@@ -37,6 +37,7 @@ import (
 	"github.com/spotinst/crossplane-provider-spot/internal/clients"
 	"github.com/spotinst/crossplane-provider-spot/internal/controller"
 	"github.com/spotinst/crossplane-provider-spot/internal/features"
+	"github.com/spotinst/terraform-provider-spotinst/spotinst"
 )
 
 func main() {
@@ -94,7 +95,11 @@ func main() {
 	metrics.Registry.MustRegister(metricRecorder)
 	metrics.Registry.MustRegister(stateMetrics)
 
+	sdkProvider := spotinst.Provider()
+
 	o := tjcontroller.Options{
+		OperationTrackerStore: tjcontroller.NewOperationStore(log),
+
 		Options: xpcontroller.Options{
 			Logger:                  log,
 			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
@@ -107,11 +112,11 @@ func main() {
 				MRStateMetrics:          stateMetrics,
 			},
 		},
-		Provider: config.GetProvider(),
+		Provider: config.GetProvider(sdkProvider, false),
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
 		WorkspaceStore: terraform.NewWorkspaceStore(log),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
+		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, sdkProvider),
 	}
 
 	if *enableExternalSecretStores {
