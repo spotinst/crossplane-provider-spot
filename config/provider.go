@@ -65,7 +65,7 @@ func GetProvider(sdkProvider *schema.Provider, generationProvider bool) *ujconfi
 	// gke resources because gke resources contain some fields which don't translate well when
 	// trying to write them to the file system but do work when using the sdk
 	for _, externalName := range ExternalNameConfigured() {
-		if strings.Contains(externalName, "ocean_gke") {
+		if strings.Contains(externalName, "ocean_gke") || strings.Contains(externalName, "ocean_aws") {
 			sdkPluginIncludeList = append(sdkPluginIncludeList, externalName)
 		} else {
 			includeList = append(includeList, externalName)
