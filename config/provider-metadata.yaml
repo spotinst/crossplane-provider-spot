@@ -58,6 +58,7 @@ resources:
                   "account_id": "act-123456",
                   "client_id": "redacted",
                   "client_secret": "redacted",
+                  "expiration_date": "2025-12-31T23:59:00.000Z",
                   "subscription_id": "redacted",
                   "tenant_id": "redacted"
                 }
@@ -65,6 +66,7 @@ resources:
             account_id: '- (Required) The ID of the account associated with your token.'
             client_id: '- (Required) Set the application ID.'
             client_secret: '- (Required) Set the key secret.'
+            expiration_date: '- (Required) Set the key secret expiration date.'
             subscription_id: '- (Required) Set the subscription ID.'
             tenant_id: '- (Required) Set the directory ID.'
         importStatements: []
@@ -851,6 +853,7 @@ resources:
                   "security": [
                     {
                       "confidential_os_disk_encryption": false,
+                      "encryption_at_host": false,
                       "secure_boot_enabled": false,
                       "security_type": "Standard",
                       "vtpm_enabled": false
@@ -877,12 +880,25 @@ resources:
                   "vm_name_prefix": "prefixName",
                   "vm_sizes": [
                     {
+                      "excluded_vm_sizes": [
+                        "standard_ds2_v3"
+                      ],
                       "od_sizes": [
                         "standard_a1_v1",
                         "standard_a1_v2"
                       ],
                       "preferred_spot_sizes": [
                         "standard_a1_v2"
+                      ],
+                      "spot_size_attributes": [
+                        {
+                          "max_cpu": 16,
+                          "max_memory": 64,
+                          "max_storage": 512,
+                          "min_cpu": 2,
+                          "min_memory": 8,
+                          "min_storage": 32
+                        }
                       ],
                       "spot_sizes": [
                         "standard_a1_v1",
@@ -915,7 +931,7 @@ resources:
             capacity_reservation_groups: '- List of the desired CRGs to use under the associated Azure subscription. When null we will utilize any available reservation that matches the Virtual Node Group.'
             certificate_store: '- (Required) The certificate store directory the VM. The directory is created in the LocalMachine account. This field is required only when using windows OS type. This field must be ‘null’ when the OS type is Linux'
             certificate_url: '- (Required) The URL of the certificate under the key vault.'
-            confidential_os_disk_encryption: '- Confidential disk encryption binds the disk encryption keys to the VM''s TPM, ensuring VM-only access. The security type must be "ConfidentialVM" to enable defining this preference as “true”.'
+            confidential_os_disk_encryption: '- (Optional, Default: false) Confidential disk encryption binds the disk encryption keys to the VM''s TPM, ensuring VM-only access. The security type must be "ConfidentialVM" to enable defining this preference as “true”.'
             cooldown: '- (Required) Time (seconds) to wait after a scaling action before resuming monitoring.'
             crg_name: '- (Required) The name of the CRG.'
             crg_resource_group_name: '- (Required) Azure resource group name.'
@@ -930,7 +946,9 @@ resources:
             draining_timeout: '- (Optional, Default 120) Time (seconds) to allow the instance to be drained from incoming TCP connections and detached from MLB before terminating it during a scale-down operation.'
             enable_automatic_upgrade: '- (Optional) Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.'
             enable_ip_forwarding: '- (Optional) Enable IP Forwarding.'
+            encryption_at_host: '- (Optional, Default: false) Enables the Host Encryption for the virtual machine. The Encryption at host will be disabled unless this property is set to true for the resource.'
             evaluation_periods: '- (Required) Amount of time (seconds) for which the threshold must be met in order to trigger the scaling action.'
+            excluded_vm_sizes: '- (Optional) Exclude these spot VM sizes when using attribute-based VM sizes.'
             extensions: '- (Optional) An object for an Azure extensions.'
             fallback_to_on_demand: '- (Optional, Default: true) When set to true Elastigroup will launch On Demand instances if no spot market is available.'
             gallery_image: '- (Optional) Gallery image to launch Elastigroup with. Cannot be used with marketplace or custom.'
@@ -948,10 +966,16 @@ resources:
             lun: '- (Required) The LUN of the data disk.'
             managed_service_identity: '- (Optional) List of Managed Service Identity objects.'
             marketplace: '- (Optional) Select an image from Azure''s Marketplace image catalogue. Cannot be used with custom or gallery'
+            max_cpu: '- (Optional) Maximum instance CPU units.'
+            max_memory: '- (Optional) Maximum amount of memory in GiB.'
             max_size: '- (Required) The maximum number of instances the group should have at any time.'
+            max_storage: '- (Optional) Maximum amount of storage in GiB.'
             maximum: '- (Optional)  Upper limit of instances that you can scale down to. Also you must indicate “minimum” and “target” amounts. Required if selected as action type: "updateCapacity"'
             metric_name: '- (Required) Metric to monitor by Azure metric display name.'
+            min_cpu: '- (Optional) Minimum instance CPU units.'
+            min_memory: '- (Optional) Minimum amount of memory in GiB.'
             min_size: '- (Required) The minimum number of instances the group should have at any time.'
+            min_storage: '- (optional) Minimum amount of storage in GiB.'
             minimum: '- (Optional)  Lower limit of instances that you can scale down to. Also you must indicate “target” and “maximum” amounts. Required if selected as action type: "updateCapacity"'
             minor_version_auto_upgrade: '- (Required) Enable minor version upgrades of the extension. Required if extension specified.'
             name: '- (Required) The group name.'
@@ -989,7 +1013,7 @@ resources:
             scheduling_task: '- (Optional) A list of scheduling tasks. Note: The type of each task defines the behavior of the cron execution.'
             secret: '- (Optional) Set of certificates that should be installed the VM'
             secret_url: '- (Required) The URL referencing a secret in a Key Vault.'
-            secure_boot_enabled: '- Specifies whether secure boot should be enabled on the virtual machine.'
+            secure_boot_enabled: '- (Optional, Default: false) Specifies whether secure boot should be enabled on the virtual machine.'
             security: '- (Optional) Specifies the Security related profile settings for the virtual machine.'
             security_group: '- (Optional) Network Security Group.'
             security_type: '- Security type refers to the different security features of a virtual machine. Security features like Trusted launch virtual machines help to improve the security of Azure generation 2 virtual machines. Valid values: "Standard", "TrustedLaunch", "ConfidentialVM"'
@@ -1003,7 +1027,8 @@ resources:
             sourcevault: '- (Required) The relative URL of the Key Vault containing the secret.'
             spot_account_id: '- (Optional) The Spot account ID that connected to the Azure subscription to which the gallery belongs. Relevant only in case of cross-subscription shared galleries. Read more (https://docs.spot.io/elastigroup/features-azure/shared-image-galleries) about cross-subscription shared galleries in Elastigroup.'
             spot_percentage: '- (Optional) Percentage of Spot-VMs to maintain. Required if on_demand_count is not specified.'
-            spot_sizes: '- (Required) Available Low-Priority sizes.'
+            spot_size_attributes: '- (Optional) The values and ranges for spot size attributes when launching VMs. Required if spotSizes isn''t specified.'
+            spot_sizes: '- (Optional) Available Low-Priority sizes.'
             ssh_public_key: '- (Optional) SSH for admin access to Linux VMs. Required for Linux OS types.'
             statistic: '- (Required) Statistic by which to evaluate the selected metric. Valid Values: "average", "sampleCount", "sum", "minimum", "maximum"'
             storage_url: '- (Optional) The storage URI that is used if a type is unmanaged. The storage URI must follow the blob storage URI format ("https://.blob.core.windows.net/"). StorageUri is required if the type is unmanaged. StorageUri must be ‘null’ in case the boot diagnostics type is managed.'
@@ -1024,7 +1049,7 @@ resources:
             virtual_network_name: '- (Required) Name of Vnet.'
             vm_name_prefix: '- (Optional) Set a VM name prefix to be used for all launched VMs and the VM resources.'
             vm_sizes: '- (Required) Sizes of On-Demand and Low-Priority VMs.'
-            vtpm_enabled: '- Specifies whether vTPM should be enabled on the virtual machine.'
+            vtpm_enabled: '- (Optional) Specifies whether vTPM should be enabled on the virtual machine.'
             zones: '- (Optional) List of Azure Availability Zones in the defined region; If not defined, Virtual machines will be launched regionally.'
         importStatements: []
     spotinst_elastigroup_gcp:
@@ -2287,6 +2312,7 @@ resources:
             dynamic_volume_size: '- (Optional) Object. Set dynamic volume size properties. When using this object, you cannot use volumeSize. You must use one or the other.'
             ebs: '- (Optional) Object. Set Elastic Block Store properties .'
             ebs_optimized: '- (Optional) Enable EBS optimized for cluster. Flag will enable optimized capacity for high bandwidth connectivity to the EB service for non EBS optimized instance types. For instances that are EBS optimized this flag will be ignored.'
+            effect: '- (Optional) Set startup taint effect.'
             enable_automatic_and_manual_headroom: '- (Optional, Default: false) enables automatic and manual headroom to work in parallel. When set to false, automatic headroom overrides all other headroom definitions manually configured, whether they are at cluster or VNG level.'
             encrypted: '- (Optional) Boolean. Enables EBS encryption on the volume.'
             exclude_families: '- (Optional) Types belonging to a family from the ExcludeFamilies will not be available for scaling (asterisk wildcard is also supported). For example, C* will exclude instance types from these families: c5, c4, c4a, etc.'
@@ -2358,6 +2384,7 @@ resources:
             snapshot_id: '- (Optional) (Optional) String. The Snapshot ID to mount by.'
             spot_percentage: '- (Optional) The desired percentage of Spot instances out of all running instances. Only available when the field is not set in any VNG directly (launchSpec.strategy.spotPercentage).'
             spread_nodes_by: '- (Optional, Default: count) Ocean will spread the nodes across markets by this value. Possible values: vcpu or count.'
+            startup_taints: '- (Optional) Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.'
             subnet_ids: '- (Required) A comma-separated list of subnet identifiers for the Ocean cluster. Subnet IDs should be configured with auto assign public IP.'
             tags: '- (Optional) Optionally adds tags to instances launched in an Ocean cluster.'
             task_type: '- (Required) Valid values: clusterRoll amiAutoUpdate. Required for cluster.scheduling.tasks'
@@ -2549,6 +2576,13 @@ resources:
                   "security_groups": [
                     "sg-987654321"
                   ],
+                  "startup_taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "another-key",
+                      "value": "another-value"
+                    }
+                  ],
                   "strategy": [
                     {
                       "draining_timeout": 300,
@@ -2643,7 +2677,7 @@ resources:
             min_network_performance: '- (Optional, >=0) Minimum Bandwidth in Gib/s of network performance.'
             min_vcpu: '- (Optional, >=0) Minimum number of vcpus available.'
             name: '- (Optional) The name of the Virtual Node Group.'
-            no_device: '- (Optional) String. Suppresses the specified device included in the block device mapping of the AMI.'
+            no_device: '- (Optional) String. Suppresses the specified device included in the block device mapping of the AMI. Default value is set to unset intentionally, which will appear in the terminal during a terraform plan if this field is not configured or removed. This prevents confusion, as Terraform otherwise considers empty string as null.'
             num_of_units: '- (Required) The number of units to retain as headroom, where each unit has the defined headroom CPU, memory and GPU.'
             ocean_id: '- (Required) The ID of the Ocean cluster.'
             preferred_od_types: '- (Optional) A list of instance types. Takes the preferred types into consideration while maintaining a variety of machine types running for optimized distribution.'
@@ -2663,6 +2697,7 @@ resources:
             size_per_resource_unit: '- (Required) Int. Additional size (in GB) per resource unit. (Example: baseSize=50, sizePerResourceUnit=20, and instance with 2 CPU is launched; its total disk size will be: 90GB)'
             snapshot_id: '- (Optional) (Optional) String. The Snapshot ID to mount by.'
             spot_percentage: '- (Optional) The desired percentage of the Spot instances out of all running instances for this VNG. Only available when the field is not set in the cluster directly (cluster.strategy.spotPercentage).'
+            startup_taints: '- (Optional) Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.'
             strategy: '- (Optional)'
             subnet_ids: '- (Optional) A list of subnet IDs.'
             tag_key: '- (Required) Elastic IP tag key. The Virtual Node Group will consider all Elastic IPs tagged with this tag as a part of the Elastic IP pool to use.'

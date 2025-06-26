@@ -544,6 +544,24 @@ spec:
                     items:
                       type: string
                     type: array
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: 'The effect of the taint. Valid values: "NoSchedule",
+                            "PreferNoSchedule", "NoExecute".'
+                          type: string
+                        key:
+                          description: The label key.
+                          type: string
+                        value:
+                          description: The label value.
+                          type: string
+                      type: object
+                    type: array
                   strategy:
                     items:
                       properties:
@@ -1117,6 +1135,24 @@ spec:
                     description: Optionally adds security group IDs.
                     items:
                       type: string
+                    type: array
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: 'The effect of the taint. Valid values: "NoSchedule",
+                            "PreferNoSchedule", "NoExecute".'
+                          type: string
+                        key:
+                          description: The label key.
+                          type: string
+                        value:
+                          description: The label value.
+                          type: string
+                      type: object
                     type: array
                   strategy:
                     items:
@@ -1858,6 +1894,24 @@ spec:
                     description: Optionally adds security group IDs.
                     items:
                       type: string
+                    type: array
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: 'The effect of the taint. Valid values: "NoSchedule",
+                            "PreferNoSchedule", "NoExecute".'
+                          type: string
+                        key:
+                          description: The label key.
+                          type: string
+                        value:
+                          description: The label value.
+                          type: string
+                      type: object
                     type: array
                   strategy:
                     items:

@@ -729,6 +729,23 @@ spec:
                     description: 'Ocean will spread the nodes across markets by this
                       value. Possible values: vcpu or count.'
                     type: string
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: Set startup taint effect.
+                          type: string
+                        key:
+                          description: The tag key.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
                   subnetIds:
                     description: A comma-separated list of subnet identifiers for
                       the Ocean cluster. Subnet IDs should be configured with auto
@@ -1501,6 +1518,23 @@ spec:
                     description: 'Ocean will spread the nodes across markets by this
                       value. Possible values: vcpu or count.'
                     type: string
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: Set startup taint effect.
+                          type: string
+                        key:
+                          description: The tag key.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
                   subnetIds:
                     description: A comma-separated list of subnet identifiers for
                       the Ocean cluster. Subnet IDs should be configured with auto
@@ -2449,6 +2483,23 @@ spec:
                     description: 'Ocean will spread the nodes across markets by this
                       value. Possible values: vcpu or count.'
                     type: string
+                  startupTaints:
+                    description: Temporary taints applied to a node during its initialization
+                      phase. For a startup taint to work, it must also be set as a
+                      regular taint in the userData for the cluster.
+                    items:
+                      properties:
+                        effect:
+                          description: Set startup taint effect.
+                          type: string
+                        key:
+                          description: The tag key.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
                   subnetIds:
                     description: A comma-separated list of subnet identifiers for
                       the Ocean cluster. Subnet IDs should be configured with auto
