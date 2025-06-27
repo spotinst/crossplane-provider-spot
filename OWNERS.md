@@ -7,5 +7,6 @@ organization](https://github.com/upbound/) will list their repository maintainer
 
 ## Maintainers
 
-* Anurag Sharma <anurag.sharma@netapp.com> ([anuragsharma-123](https://github.com/anuragsharma-123))
-* Sharad Kesarwani <sharad.kesarwani@netapp.com> ([sharadkesarwani](https://github.com/sharadkesarwani))
+* Roi Kramer <roi.kramer@flexera.com> ([rkrmr33](https://github.com/rkrmr33))
+* Anurag Sharma <anurag.sharma@flexera.com> ([anuragsharma-123](https://github.com/anuragsharma-123))
+* Chandra N <chandra.n@flexera.com> ([chandra1-n](https://github.com/chandra1-n))
