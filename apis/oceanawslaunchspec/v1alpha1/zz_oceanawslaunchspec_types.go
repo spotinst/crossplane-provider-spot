@@ -763,6 +763,9 @@ type OceanAwsLaunchSpecInitParameters struct {
 	// Optionally adds security group IDs.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	StartupTaints []StartupTaintsInitParameters `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
+
 	Strategy []StrategyInitParameters `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
 	// A list of subnet IDs.
@@ -866,6 +869,9 @@ type OceanAwsLaunchSpecObservation struct {
 
 	// Optionally adds security group IDs.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	StartupTaints []StartupTaintsObservation `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
 
 	Strategy []StrategyObservation `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
@@ -995,6 +1001,10 @@ type OceanAwsLaunchSpecParameters struct {
 	// Optionally adds security group IDs.
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	// +kubebuilder:validation:Optional
+	StartupTaints []StartupTaintsParameters `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Strategy []StrategyParameters `json:"strategy,omitempty" tf:"strategy,omitempty"`
@@ -1153,6 +1163,45 @@ type SchedulingTaskParameters struct {
 	// The activity that you are scheduling. Valid values: "manualHeadroomUpdate".
 	// +kubebuilder:validation:Optional
 	TaskType *string `json:"taskType" tf:"task_type,omitempty"`
+}
+
+type StartupTaintsInitParameters struct {
+
+	// The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute".
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The label key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The label value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type StartupTaintsObservation struct {
+
+	// The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute".
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The label key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The label value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type StartupTaintsParameters struct {
+
+	// The effect of the taint. Valid values: "NoSchedule", "PreferNoSchedule", "NoExecute".
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The label key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The label value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type StrategyInitParameters struct {

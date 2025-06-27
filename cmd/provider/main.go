@@ -76,6 +76,8 @@ func main() {
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
+	ctrl.SetLogger(zl)
+
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
 		LeaderElectionID: "crossplane-leader-election-crossplane-provider-spot",
@@ -113,10 +115,7 @@ func main() {
 			},
 		},
 		Provider: config.GetProvider(sdkProvider, false),
-		// use the following WorkspaceStoreOption to enable the shared gRPC mode
-		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		WorkspaceStore: terraform.NewWorkspaceStore(log),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, sdkProvider),
+		SetupFn:  clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, sdkProvider),
 	}
 
 	if *enableExternalSecretStores {
@@ -152,6 +151,10 @@ func main() {
 		o.Features.Enable(features.EnableBetaManagementPolicies)
 		log.Info("Beta feature enabled", "flag", features.EnableBetaManagementPolicies)
 	}
+
+	// use the following WorkspaceStoreOption to enable the shared gRPC mode
+	// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
+	o.WorkspaceStore = terraform.NewWorkspaceStore(log, terraform.WithFeatures(o.Features))
 
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Spot controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")

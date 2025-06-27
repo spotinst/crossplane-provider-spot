@@ -87,6 +87,10 @@ spec:
       taskType: manualHeadroomUpdate
     securityGroups:
     - sg-987654321
+    startupTaints:
+    - effect: NoSchedule
+      key: another-key
+      value: another-value
     strategy:
     - drainingTimeout: 300
       spotPercentage: 70

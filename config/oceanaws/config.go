@@ -16,5 +16,10 @@ func Configure(p *ujconfig.Provider) {
 		// this resource, which would be "spotinst"
 		r.ShortGroup = "oceanaws"
 		r.Kind = "OceanAws"
+		r.LateInitializer = ujconfig.LateInitializer{
+			IgnoredFields: []string{
+				"desired_capacity",
+			},
+		}
 	})
 }

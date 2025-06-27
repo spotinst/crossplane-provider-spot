@@ -1060,6 +1060,9 @@ type OceanAwsInitParameters struct {
 	// Ocean will spread the nodes across markets by this value. Possible values: vcpu or count.
 	SpreadNodesBy *string `json:"spreadNodesBy,omitempty" tf:"spread_nodes_by,omitempty"`
 
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	StartupTaints []StartupTaintsInitParameters `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
+
 	// A comma-separated list of subnet identifiers for the Ocean cluster. Subnet IDs should be configured with auto assign public IP.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
@@ -1193,6 +1196,9 @@ type OceanAwsObservation struct {
 
 	// Ocean will spread the nodes across markets by this value. Possible values: vcpu or count.
 	SpreadNodesBy *string `json:"spreadNodesBy,omitempty" tf:"spread_nodes_by,omitempty"`
+
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	StartupTaints []StartupTaintsObservation `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
 
 	// A comma-separated list of subnet identifiers for the Ocean cluster. Subnet IDs should be configured with auto assign public IP.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
@@ -1359,6 +1365,10 @@ type OceanAwsParameters struct {
 	// Ocean will spread the nodes across markets by this value. Possible values: vcpu or count.
 	// +kubebuilder:validation:Optional
 	SpreadNodesBy *string `json:"spreadNodesBy,omitempty" tf:"spread_nodes_by,omitempty"`
+
+	// Temporary taints applied to a node during its initialization phase. For a startup taint to work, it must also be set as a regular taint in the userData for the cluster.
+	// +kubebuilder:validation:Optional
+	StartupTaints []StartupTaintsParameters `json:"startupTaints,omitempty" tf:"startup_taints,omitempty"`
 
 	// A comma-separated list of subnet identifiers for the Ocean cluster. Subnet IDs should be configured with auto assign public IP.
 	// +kubebuilder:validation:Optional
@@ -1643,6 +1653,45 @@ type ShutdownHoursParameters struct {
 	// Set time windows for shutdown hours. Specify a list of timeWindows with at least one time window Each string is in the format of: ddd:hh:mm-ddd:hh:mm where ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat, hh = hour 24 = 0 -23, mm = minute = 0 - 59. Time windows should not overlap. Required if cluster.scheduling.isEnabled is true. (Example: Fri:15:30-Wed:14:30).
 	// +kubebuilder:validation:Optional
 	TimeWindows []*string `json:"timeWindows" tf:"time_windows,omitempty"`
+}
+
+type StartupTaintsInitParameters struct {
+
+	// Set startup taint effect.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type StartupTaintsObservation struct {
+
+	// Set startup taint effect.
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The tag key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The tag value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type StartupTaintsParameters struct {
+
+	// Set startup taint effect.
+	// +kubebuilder:validation:Optional
+	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
+
+	// The tag key.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The tag value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type TagsInitParameters struct {
